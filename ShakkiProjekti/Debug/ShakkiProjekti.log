@@ -1,2 +1,5 @@
-﻿  Main.cpp
-  ShakkiProjekti.vcxproj -> C:\Users\Veli-Matti\Desktop\Opetus\Shakki\ShakkiProjekti\Debug\ShakkiProjekti.exe
+﻿  KayttoLiittyma.cpp
+  Main.cpp
+c:\users\vellu\desktop\koulujutut\c++projekti\shakki\shakkiprojekti\main.cpp(9): warning C4930: 'KayttoLiittyma kayttis(Asema (__cdecl *)(void))': prototyped function not called (was a variable definition intended?)
+  Generating Code...
+  ShakkiProjekti.vcxproj -> C:\Users\vellu\Desktop\Koulujutut\C++Projekti\Shakki\Debug\ShakkiProjekti.exe
