@@ -1,7 +1,5 @@
 #include "Asema.h"
 
-
-
 Asema::Asema()
 {
 	//nollaa ylimääräinen 'tauhka'
@@ -25,7 +23,7 @@ Asema::Asema()
 	//Aseta ne Asemaan
 	for (size_t i = 0; i < 8; i++)
 	{
-		lauta[1][i] = vs;
+		lauta[i][1] = vs;
 	}
 	
 	lauta[0][0] = vt;
@@ -59,7 +57,7 @@ Asema::Asema()
 	lauta[5][7] = ml;
 	lauta[6][7] = mr;
 	lauta[7][7] = mt;
-
+	
 }
 
 

@@ -1,7 +1,5 @@
 #include "Nappula.h"
 
-
-
 Nappula::Nappula(std::wstring uni, int col, int code)
 {
 
