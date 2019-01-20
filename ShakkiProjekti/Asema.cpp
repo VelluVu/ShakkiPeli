@@ -7,13 +7,46 @@ Asema::Asema()
 	{
 		for (size_t y = 0; y < 8; y++)
 		{
-			lauta[x][y] = 0;
+			lauta[x][y] = nullptr;
 		}
 	}
 
+	//Alusta valkoiset nappulat
+	for (size_t i = 0; i < 8; i++)
+	{
+		lauta[i][1] = new Nappula(L"\u2659", 0, VS);
+	}
+
+	lauta[0][0] = new Nappula(L"\u2656", 0, VT);
+	lauta[1][0] = new Nappula(L"\u2658", 0, VR);
+	lauta[2][0] = new Nappula(L"\u2657", 0, VL);
+	lauta[3][0] = new Nappula(L"\u2654", 0, VK);
+	lauta[4][0] = new Nappula(L"\u2655", 0, VD);
+	lauta[5][0] = new Nappula(L"\u2656", 0, VT);
+	lauta[6][0] = new Nappula(L"\u2658", 0, VR);
+	lauta[7][0] = new Nappula(L"\u2656", 0, VT);
+
+	//Alusta mustat nappulat
+	for (size_t i = 0; i < 8; i++)
+	{
+		lauta[i][6] = new Nappula(L"\u265F", 1, MS);
+	}
+
+	lauta[0][7] = new Nappula(L"\u265C", 1, MT);
+	lauta[1][7] = new Nappula(L"\u265E", 1, MR);
+	lauta[2][7] = new Nappula(L"\u265D", 1, ML);
+	lauta[4][7] = new Nappula(L"\u265A", 1, MK);
+	lauta[3][7] = new Nappula(L"\u265B", 1, MD);
+	lauta[5][7] = new Nappula(L"\u265D", 1, ML);
+	lauta[6][7] = new Nappula(L"\u265E", 1, MR);
+	lauta[7][7] = new Nappula(L"\u265C", 1, MT);
+
+
+	//vanha malli...
+
 	//alusta valkoiset nappulat
 	
-	vs = new Nappula(L"\u2659", 0, VS);
+	/*vs = new Nappula(L"\u2659", 0, VS);
 	vt = new Nappula(L"\u2656", 0, VT);
 	vr = new Nappula(L"\u2658", 0, VR);
 	vl = new Nappula(L"\u2657", 0, VL);
@@ -56,29 +89,34 @@ Asema::Asema()
 	lauta[3][7] = md;
 	lauta[5][7] = ml;
 	lauta[6][7] = mr;
-	lauta[7][7] = mt;
+	lauta[7][7] = mt;*/
 	
 }
 
 
 Asema::~Asema()
 {
+
+	//Vanha malli
+
 	//Tyhjää kaikki muistipaikat
-	delete mk, md, vk, vd;
+	/*delete mk, md, vk, vd;
 	mk, md, vk, vd = 0;
 	
 	delete vt, vr, vl, mt, mr, ml;
 	vt, vr, vl, mt, mr, ml = 0;
 	
 	delete vs, ms;
-	vs, ms = 0;
+	vs, ms = 0;*/
 	
+
+	// Tyhjää paikat ja nullaa...
 	for (size_t x = 0; x < 8; x++)
 	{
 		for (size_t y = 0; y < 8; y++)
 		{
 			delete lauta[x][y];
-			lauta[x][y] = 0;
+			lauta[x][y] = nullptr;
 		}
 	}
 	

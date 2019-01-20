@@ -1,5 +1,4 @@
 #include "KayttoLiittyma.h"
-#include <string>
 
 KayttoLiittyma::KayttoLiittyma(Asema * asema)
 {
@@ -14,23 +13,26 @@ KayttoLiittyma::~KayttoLiittyma()
 
 void KayttoLiittyma::PiirraLauta()
 {
+
 	_setmode(_fileno(stdout), _O_U16TEXT);
 
-	for (size_t x = 0; x < 8; x++)
+	for (int x = 0; x < 8; x++)
 	{
-		for (size_t y = 0; y < 8; y++)
+		for (int y = 0; y < 8; y++)
 		{
-			if (x % 2 == 0  &&  y % 2 == 0) {
-				std::cout << "0";
-				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+			if (x % 2 == 0 && y % 2 == 0) {
+				std::wcout << "0";
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 			}
 			else {
-				std::cout << "1";
+				std::wcout << "1";
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED |
-				BACKGROUND_GREEN | BACKGROUND_BLUE);
+					BACKGROUND_GREEN | BACKGROUND_BLUE);
 			}
-			//std::wcout << asema->lauta[x][y]->getUnicode();
+			if (asema->lauta[x][y] != nullptr) {
+				std::wcout << asema->lauta[x][y]->getUnicode();
+			}
 		}
-		std::cout << std::endl;
+		std::wcout << std::endl;
 	}
 }

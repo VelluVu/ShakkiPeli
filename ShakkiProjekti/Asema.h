@@ -1,5 +1,6 @@
 #pragma once
 #include "Nappula.h"
+#include <string>
 
 class Asema
 {
@@ -9,7 +10,7 @@ public:
 	Asema();
 	~Asema();
 	Nappula* lauta[8][8];
-	Nappula* vs;
+	/*Nappula* vs;
 	Nappula* vt;
 	Nappula* vr;
 	Nappula* vl;
@@ -21,6 +22,6 @@ public:
 	Nappula* mr;
 	Nappula* ml;
 	Nappula* mk;
-	Nappula* md;
+	Nappula* md;*/
 };
 
