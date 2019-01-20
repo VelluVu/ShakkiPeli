@@ -18,21 +18,37 @@ void KayttoLiittyma::PiirraLauta()
 
 	for (int x = 0; x < 8; x++)
 	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
+		std::wcout << 8 - x;
 		for (int y = 0; y < 8; y++)
 		{
-			if (x % 2 == 0 && y % 2 == 0) {
-				std::wcout << "0";
-				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
+
+			if ((x + y) % 2 == 0) {
+
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
 			}
 			else {
-				std::wcout << "1";
-				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_RED |
-					BACKGROUND_GREEN | BACKGROUND_BLUE);
+
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),  BACKGROUND_GREEN | BACKGROUND_RED);
+
+
 			}
 			if (asema->lauta[x][y] != nullptr) {
 				std::wcout << asema->lauta[x][y]->getUnicode();
 			}
+			else {
+				std::wcout << " ";
+			}
 		}
 		std::wcout << std::endl;
 	}
+	
+	std::wcout << " ";
+	char arr[] = { 'a','b','c','d','e','f','g','h' };
+	for (size_t i = 0; i < 8; i++)
+	{
+		std::wcout << arr[i];
+	}
+	
+	std::wcout << std::endl << std::endl;
 }
