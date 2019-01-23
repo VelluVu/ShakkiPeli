@@ -36,10 +36,10 @@ void KayttoLiittyma::PiirraLauta()
 
 			}
 			if (asema->lauta[x][y] != nullptr) {
-				std::wcout << asema->lauta[x][y]->GetUnicode();
+				std::wcout << " " << asema->lauta[x][y]->GetUnicode() << " ";
 			}
 			else {
-				std::wcout << " ";
+				std::wcout << "   ";
 			}
 		}
 		std::wcout << std::endl;
@@ -49,7 +49,7 @@ void KayttoLiittyma::PiirraLauta()
 	char arr[] = { 'a','b','c','d','e','f','g','h' };
 	for (size_t i = 0; i < 8; i++)
 	{
-		std::wcout << arr[i];
+		std::wcout  << " " << arr[i] << " ";
 	}
 	
 	std::wcout << std::endl << std::endl;
@@ -57,9 +57,77 @@ void KayttoLiittyma::PiirraLauta()
 
 Siirto KayttoLiittyma::AnnaVastustajanSiirto()
 {
+	char arr[] = { 'a','b','c','d','e','f','g','h' };
+	char arrn[] = { '1','2','3','4','5','6','7','8' };
+	std::wstring siirto;
+	wchar_t startCoord1Input, startCoord2Input;
+	wchar_t endCoord1Input, endCoord2Input;
+	int startCoord1 = 0, startCoord2 = 0, endCoord1 = 0, endCoord2 = 0;
+	wchar_t nappi;
+
+	std::wcout << "Anna siirto muodossa: (Napin etumerkki<T/R/L/D/K> / Alkukoordinaatti<'char',int> / Loppukoordinaatti<'char',int>)" << std::endl;
+	std::wcin >> siirto;
+
+	nappi = siirto[0];
+	startCoord1Input = siirto[1];
+	startCoord2Input = siirto[2];
+	endCoord1Input = siirto[3];
+	endCoord2Input = siirto[4];
+
+	std::wcout << nappi << startCoord1Input << startCoord2Input << "-" << endCoord1Input << endCoord2Input << std::endl;
+
+	//Testaa input arvo ja aseta se vastaavaksi koordinaatiston kokonaisluvuksi??
+	for (int i = 0; i < 8; i++)
+	{
+		if (arr[i] == startCoord1Input) {
+			startCoord1 = i;
+		}
+	}
+	for (int i = 0; i < 8; i++)
+	{
+		if (arr[i] == endCoord1Input) {
+			endCoord1 = i;
+		}
+	}
+
+	for (int i = 0; i < 8; i++)
+	{
+		if (arrn[i] == startCoord2Input) {
+			startCoord2 = i;
+		}
+	}
+
+	for (int i = 0; i < 8; i++)
+	{
+		if (arrn[i] == endCoord2Input) {
+			endCoord2 = i;
+		}
+	}
+
+	std::wcout << startCoord1 << startCoord2 << "-" << endCoord1 << endCoord2 << std::endl;
 	
-	std::wcout << "Anna siirto muodossa: (Napin etumerkki/Alkukoordinaatti/Loppukoordinaatti)" << std::endl;
-	
-	Siirto siirto = new Siirto();
-	return Siirto();
+	//Testaa onko lyhytlinna vai pitkälinna
+	if (startCoord1Input == 'O' && startCoord2Input == 'O') {
+		Siirto lyhytLinna(true, false);
+		return lyhytLinna;
+	} 
+	else if (startCoord1Input == 'O' && startCoord2Input == 'O' && endCoord1Input == 'O') {
+		Siirto pitkaLinna(false, true);
+		return pitkaLinna;
+	}
+	//Testaa onko sotilas viimesellä rivillä
+	if (startCoord2 == 6 && endCoord2 == 7 || startCoord2 == 1 && endCoord2 == 0) {
+		//Muuta sotilas miksi haluat...
+		 
+	}
+	if (startCoord2 == 1 && endCoord2 == 3 || startCoord2 == 6 && endCoord2 == 4) {
+		//Sotilas liikkuu ensimmäistä kertaa 2 ruutua
+
+	}
+
+	Ruutu alku(startCoord1, startCoord2);
+	Ruutu end(endCoord1, endCoord2);
+	Siirto move(alku, end);
+
+	return move;
 }

@@ -2,6 +2,22 @@
 
 
 
+Siirto::Siirto(Ruutu pos, Ruutu target)
+{
+	
+	alkuRuutu = pos;
+	loppuRuutu = target;
+
+}
+
+Siirto::Siirto(bool lyhytLinna, bool pitkaLinna)
+{
+
+	this->lyhytLinna = lyhytLinna;
+	this->pitkaLinna = pitkaLinna;
+
+}
+
 Siirto::Siirto()
 {
 }

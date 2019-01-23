@@ -8,6 +8,8 @@ int main() {
 	KayttoLiittyma kayttis(asema);
 	kayttis.PiirraLauta();
 	
+	
+
 	system("Pause");
 	delete asema;
 	return 0;

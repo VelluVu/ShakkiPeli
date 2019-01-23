@@ -10,10 +10,10 @@ public:
 	Asema();
 	~Asema();
 
-	//vai jäsenmuuttujaosoitinlistaa hyödyntäen?
+	//jäsenmuuttujaosoitinlistaa hyödyntäen?
 	Nappula* lauta[8][8];
 
-	//jäsenmuuttujat muuttujat erikseen listasta osoittimina?
+	//vai jäsenmuuttujat muuttujat erikseen listasta osoittimina?
 	/*Nappula* vs;
 	Nappula* vt;
 	Nappula* vr;
