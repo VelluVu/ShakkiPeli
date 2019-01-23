@@ -5,6 +5,7 @@
 #include <fcntl.h>
 #include <iostream>
 #include <string>
+#include "Siirto.h"
 
 class KayttoLiittyma
 {
@@ -13,5 +14,6 @@ public:
 	~KayttoLiittyma();
 	Asema* asema;
 	void PiirraLauta();	
+	Siirto AnnaVastustajanSiirto();
 };
 

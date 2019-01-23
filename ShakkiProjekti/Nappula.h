@@ -18,12 +18,12 @@ public:
 	Nappula(std::wstring uni, int col, int code);
 	Nappula();
 	~Nappula();
-	void setKoodi(int code);
-	int getKoodi();
-	void setUnicode(std::wstring uni);
-	std::wstring getUnicode();
-	void setVari(int col);
-	int getVari();
+	void SetKoodi(int code);
+	int GetKoodi();
+	void SetUnicode(std::wstring uni);
+	std::wstring GetUnicode();
+	void SetVari(int col);
+	int GetVari();
 };
 
 

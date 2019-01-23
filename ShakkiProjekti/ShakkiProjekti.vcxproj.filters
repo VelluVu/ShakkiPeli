@@ -24,6 +24,12 @@
     <ClInclude Include="KayttoLiittyma.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Ruutu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Siirto.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Nappula.cpp">
@@ -36,6 +42,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="KayttoLiittyma.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Ruutu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Siirto.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

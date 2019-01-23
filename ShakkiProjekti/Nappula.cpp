@@ -13,38 +13,38 @@ Nappula::Nappula()
 {
 }
 
-void Nappula::setKoodi(int code)
+void Nappula::SetKoodi(int code)
 {
 
 	_koodi = code;
 
 }
 
-int Nappula::getKoodi()
+int Nappula::GetKoodi()
 {
 	return _koodi;
 }
 
-void Nappula::setUnicode(std::wstring uni)
+void Nappula::SetUnicode(std::wstring uni)
 {
 
 	unicode = uni;
 
 }
 
-std::wstring Nappula::getUnicode()
+std::wstring Nappula::GetUnicode()
 {
 	return std::wstring(unicode);
 }
 
-void Nappula::setVari(int col)
+void Nappula::SetVari(int col)
 {
 
 	vari = col;
 
 }
 
-int Nappula::getVari()
+int Nappula::GetVari()
 {
 	return vari;
 }

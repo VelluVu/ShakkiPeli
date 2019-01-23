@@ -18,8 +18,10 @@ void KayttoLiittyma::PiirraLauta()
 
 	for (int x = 0; x < 8; x++)
 	{
+
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
 		std::wcout << 8 - x;
+
 		for (int y = 0; y < 8; y++)
 		{
 
@@ -34,7 +36,7 @@ void KayttoLiittyma::PiirraLauta()
 
 			}
 			if (asema->lauta[x][y] != nullptr) {
-				std::wcout << asema->lauta[x][y]->getUnicode();
+				std::wcout << asema->lauta[x][y]->GetUnicode();
 			}
 			else {
 				std::wcout << " ";
@@ -51,4 +53,13 @@ void KayttoLiittyma::PiirraLauta()
 	}
 	
 	std::wcout << std::endl << std::endl;
+}
+
+Siirto KayttoLiittyma::AnnaVastustajanSiirto()
+{
+	
+	std::wcout << "Anna siirto muodossa: (Napin etumerkki/Alkukoordinaatti/Loppukoordinaatti)" << std::endl;
+	
+	Siirto siirto = new Siirto();
+	return Siirto();
 }
