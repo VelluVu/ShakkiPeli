@@ -57,15 +57,19 @@ void KayttoLiittyma::PiirraLauta()
 
 Siirto KayttoLiittyma::AnnaVastustajanSiirto()
 {
+	//equal vertausta varten 2 array
 	char arr[] = { 'a','b','c','d','e','f','g','h' };
 	char arrn[] = { '1','2','3','4','5','6','7','8' };
+	//Tähän tallennetaan koko siirtopätkä
 	std::wstring siirto;
-	wchar_t startCoord1Input, startCoord2Input;
-	wchar_t endCoord1Input, endCoord2Input;
+	//puretaan wstring siirto[] näihin kirjaimiin
+	wchar_t startCoord1Input, startCoord2Input, endCoord1Input, endCoord2Input;
+	//mapataan kirjaimien paikkakoordinaattiarvot näihin muuttujiin
 	int startCoord1 = 0, startCoord2 = 0, endCoord1 = 0, endCoord2 = 0;
+	//nappulan etumerkki
 	wchar_t nappi;
 
-	std::wcout << "Anna siirto muodossa: (Napin etumerkki<T/R/L/D/K> / Alkukoordinaatti<'char',int> / Loppukoordinaatti<'char',int>)" << std::endl;
+	std::wcout << "Anna siirto muodossa: (Napin etumerkki<T/R/L/D/K/S> / Alkukoordinaatti<'char',int> / Loppukoordinaatti<'char',int>)" << std::endl;
 	std::wcin >> siirto;
 
 	nappi = siirto[0];
@@ -76,7 +80,7 @@ Siirto KayttoLiittyma::AnnaVastustajanSiirto()
 
 	std::wcout << nappi << startCoord1Input << startCoord2Input << "-" << endCoord1Input << endCoord2Input << std::endl;
 
-	//Testaa input arvo ja aseta se vastaavaksi koordinaatiston kokonaisluvuksi??
+	//Vertaa inputdataa arrayn indexissä olevaan arvoon ja aseta indexi koordinaatin arvoksi
 	for (int i = 0; i < 8; i++)
 	{
 		if (arr[i] == startCoord1Input) {
@@ -127,7 +131,7 @@ Siirto KayttoLiittyma::AnnaVastustajanSiirto()
 
 	Ruutu alku(startCoord1, startCoord2);
 	Ruutu end(endCoord1, endCoord2);
-	Siirto move(alku, end);
+	Siirto move(alku, end, nappi);
 
 	return move;
 }

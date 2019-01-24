@@ -7,7 +7,9 @@ int main() {
 	Asema* asema = new Asema();
 	KayttoLiittyma kayttis(asema);
 	kayttis.PiirraLauta();
-	
+	Siirto move = kayttis.AnnaVastustajanSiirto();
+	kayttis.asema->PaivitaAsema(&move);
+
 	
 
 	system("Pause");

@@ -1,9 +1,20 @@
 #pragma once
 #include "Nappula.h"
+#include "Siirto.h"
 #include <string>
 
 class Asema
 {
+private:
+
+	int siirtovuoro;
+	bool OnkoValkeaKuningasLiikkunut;
+	bool OnkoMustaKuningasLiikkunut;
+	bool OnkoValkeaDTLiikkunut;
+	bool OnkoValkeaKTLiikkunut;
+	bool OnkoMustaDTLiikkunut;
+	bool OnkoMustaKTLiikkunut;
+
 public:
 	
 	//Konstruktori luo alkuaseman laudalle
@@ -27,5 +38,16 @@ public:
 	Nappula* ml;
 	Nappula* mk;
 	Nappula* md;*/
+
+	void PaivitaAsema(Siirto* siirto);
+	int GetSiirtovuoro();
+	void SetSiirtovuoro(int vari);
+	bool GetOnkoValkeaKuningasLiikkunut();
+	bool GetOnkoMustaKuningasLiikkunut();
+	bool GetOnkoValkeaDTliikkunut();
+	bool GetOnkoValkeaKTliikkunut();
+	bool GetOnkoMustaDTliikkunut();
+	bool GetOnkoMustaKTliikkunut();
+
 };
 

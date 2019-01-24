@@ -1,10 +1,11 @@
 #include "Siirto.h"
 
 
-
-Siirto::Siirto(Ruutu pos, Ruutu target)
+//Lisäsin napin etumerkin että voi hyödyntää
+Siirto::Siirto(Ruutu pos, Ruutu target, wchar_t nappi)
 {
-	
+
+	napinEtumerkki = nappi;
 	alkuRuutu = pos;
 	loppuRuutu = target;
 
@@ -35,6 +36,11 @@ Ruutu Siirto::GetAlkuRuutu()
 Ruutu Siirto::GetLoppuRuutu()
 {
 	return loppuRuutu;
+}
+
+wchar_t Siirto::GetNappi()
+{
+	return napinEtumerkki;
 }
 
 bool Siirto::OnkoLyhytLinna()

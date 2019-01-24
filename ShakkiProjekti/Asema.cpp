@@ -121,3 +121,95 @@ Asema::~Asema()
 	}
 	
 }
+
+void Asema::PaivitaAsema(Siirto* siirto)
+{
+	//Näin pääset siirtoon ja ruutuihin käsiksi...
+	//std::wcout << siirto->GetAlkuRuutu().GetRivi() << siirto->GetAlkuRuutu().GetSarake() << std::endl;
+
+	//Testaa minkä napin siirto on kyseessä
+	switch (siirto->GetNappi())
+	{
+	case 'K':
+		std::wcout << "Valitsit Kuninkaan" << std::endl;
+		break;
+	case 'D':
+		std::wcout << "Valitsit Daamin" << std::endl;
+		break;
+	case 'L':
+		std::wcout << "Valitsit Lähetin" << std::endl;
+		break;
+	case 'R':
+		std::wcout << "Valitsit Ratsun" << std::endl;
+		break;
+	case 'T':
+		std::wcout << "Valitsit Tornin" << std::endl;
+		break;
+	case 'S':
+		std::wcout << "Valitsit Sotilaan" << std::endl;
+		break;
+	default:
+		std::wcout << "Valitsit jonkun random, en tiiä..." << std::endl;
+		break;
+	}
+
+
+}
+
+int Asema::GetSiirtovuoro()
+{
+	return siirtovuoro;
+}
+
+void Asema::SetSiirtovuoro(int vari)
+{
+	siirtovuoro = vari;
+}
+
+bool Asema::GetOnkoValkeaKuningasLiikkunut()
+{
+	if (OnkoValkeaKuningasLiikkunut) {
+		return true;
+	}
+	return false;
+}
+
+bool Asema::GetOnkoMustaKuningasLiikkunut()
+{
+	if (OnkoMustaKuningasLiikkunut) {
+		return true;
+	}
+	return false;
+}
+
+bool Asema::GetOnkoValkeaDTliikkunut()
+{
+	if (OnkoValkeaDTLiikkunut) {
+		return true;
+	}
+	return false;
+}
+
+bool Asema::GetOnkoValkeaKTliikkunut()
+{
+	if (OnkoValkeaKTLiikkunut) {
+		return true;
+	}
+	return false;
+}
+
+bool Asema::GetOnkoMustaDTliikkunut()
+{
+	if (OnkoMustaDTLiikkunut) {
+		return true;
+	}
+	return false;
+}
+
+bool Asema::GetOnkoMustaKTliikkunut()
+{
+	if (OnkoMustaKTLiikkunut) {
+		return true;
+	}
+	return false;
+}
