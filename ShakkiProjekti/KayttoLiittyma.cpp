@@ -97,14 +97,14 @@ Siirto KayttoLiittyma::AnnaVastustajanSiirto()
 	for (int i = 0; i < 8; i++)
 	{
 		if (arrn[i] == startCoord2Input) {
-			startCoord2 = i;
+			startCoord2 = 7-i;
 		}
 	}
 
 	for (int i = 0; i < 8; i++)
 	{
 		if (arrn[i] == endCoord2Input) {
-			endCoord2 = i;
+			endCoord2 = 7-i;
 		}
 	}
 

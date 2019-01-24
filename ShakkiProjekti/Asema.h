@@ -25,7 +25,7 @@ public:
 	Nappula* lauta[8][8];
 
 	//vai jäsenmuuttujat muuttujat erikseen listasta osoittimina?
-	/*Nappula* vs;
+	Nappula* vs;
 	Nappula* vt;
 	Nappula* vr;
 	Nappula* vl;
@@ -37,7 +37,7 @@ public:
 	Nappula* mr;
 	Nappula* ml;
 	Nappula* mk;
-	Nappula* md;*/
+	Nappula* md;
 
 	void PaivitaAsema(Siirto* siirto);
 	int GetSiirtovuoro();

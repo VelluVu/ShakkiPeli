@@ -12,7 +12,7 @@ Asema::Asema()
 	}
 
 	//Alusta valkoiset nappulat
-	for (size_t i = 0; i < 8; i++)
+	/*for (size_t i = 0; i < 8; i++)
 	{
 		lauta[6][i] = new Nappula(L"\u2659", 0, VS);
 	}
@@ -40,13 +40,13 @@ Asema::Asema()
 	lauta[0][5] = new Nappula(L"\u265D", 1, ML);
 	lauta[0][6] = new Nappula(L"\u265E", 1, MR);
 	lauta[0][7] = new Nappula(L"\u265C", 1, MT);
-
+	*/
 
 	//vanha malli...
 
 	//alusta valkoiset nappulat
 	
-	/*vs = new Nappula(L"\u2659", 0, VS);
+	vs = new Nappula(L"\u2659", 0, VS);
 	vt = new Nappula(L"\u2656", 0, VT);
 	vr = new Nappula(L"\u2658", 0, VR);
 	vl = new Nappula(L"\u2657", 0, VL);
@@ -56,17 +56,17 @@ Asema::Asema()
 	//Aseta ne Asemaan
 	for (size_t i = 0; i < 8; i++)
 	{
-		lauta[i][1] = vs;
+		lauta[6][i] = vs;
 	}
 	
-	lauta[0][0] = vt;
-	lauta[1][0] = vr;
-	lauta[2][0] = vl;
-	lauta[3][0] = vk;
-	lauta[4][0] = vd;
-	lauta[5][0] = vl;
-	lauta[6][0] = vr;
 	lauta[7][0] = vt;
+	lauta[7][1] = vr;
+	lauta[7][2] = vl;
+	lauta[7][3] = vk;
+	lauta[7][4] = vd;
+	lauta[7][5] = vl;
+	lauta[7][6] = vr;
+	lauta[7][7] = vt;
 
 	//alusta mustat nappulat
 	
@@ -80,16 +80,16 @@ Asema::Asema()
 	//Aseta ne Asemaan
 	for (size_t i = 0; i < 8; i++)
 	{
-		lauta[i][6] = ms;
+		lauta[1][i] = ms;
 	}
+	lauta[0][0] = mt;
+	lauta[0][1] = mr;
+	lauta[0][2] = ml;
+	lauta[0][3] = mk;
+	lauta[0][4] = md;
+	lauta[0][5] = ml;
+	lauta[0][6] = mr;
 	lauta[0][7] = mt;
-	lauta[1][7] = mr;
-	lauta[2][7] = ml;
-	lauta[4][7] = mk;
-	lauta[3][7] = md;
-	lauta[5][7] = ml;
-	lauta[6][7] = mr;
-	lauta[7][7] = mt;*/
 	
 }
 
@@ -100,14 +100,14 @@ Asema::~Asema()
 	//Vanha malli
 
 	//Tyhjää kaikki muistipaikat
-	/*delete mk, md, vk, vd;
-	mk, md, vk, vd = 0;
+	delete mk, md, vk, vd;
+	mk, md, vk, vd = nullptr;
 	
 	delete vt, vr, vl, mt, mr, ml;
-	vt, vr, vl, mt, mr, ml = 0;
+	vt, vr, vl, mt, mr, ml = nullptr;
 	
 	delete vs, ms;
-	vs, ms = 0;*/
+	vs, ms = nullptr;
 	
 
 	// Tyhjää paikat ja nullaa...
@@ -115,7 +115,7 @@ Asema::~Asema()
 	{
 		for (size_t y = 0; y < 8; y++)
 		{
-			delete lauta[x][y];
+			delete [] lauta[x][y];
 			lauta[x][y] = nullptr;
 		}
 	}
@@ -127,33 +127,129 @@ void Asema::PaivitaAsema(Siirto* siirto)
 	//Näin pääset siirtoon ja ruutuihin käsiksi...
 	//std::wcout << siirto->GetAlkuRuutu().GetRivi() << siirto->GetAlkuRuutu().GetSarake() << std::endl;
 
+	//siirrä nappulaa ilman ihmellisempää jos loppupaikka on tyhjä
+	if (lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] == nullptr) {
+		lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] = lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()];		
+		lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()] = nullptr;
+	}
+	else if (lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()]->GetVari() != siirtovuoro){
+		//jos vihu nii syöpoes...
+		lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] = nullptr;
+		lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] = lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()];
+		lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()] == nullptr;
+	}
+	else if (lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()]->GetVari() == siirtovuoro) {
+		//ei voi liikkua oman päälle
+	}
+
+	if (siirto->OnkoLyhytLinna())
+	{
+		//siirto on lyhytlinna
+		if (siirtovuoro == 0 && !GetOnkoValkeaKuningasLiikkunut() && !GetOnkoValkeaKTliikkunut()) {
+			std::wcout << "Valkoinen" << std::endl;
+
+
+		}
+		else if(siirtovuoro == 1 && !GetOnkoMustaKuningasLiikkunut() && !GetOnkoMustaKTliikkunut()) 
+		{
+			std::wcout << "Musta" << std::endl;
+		
+		}
+	}
+
+	else if (siirto->OnkoPitkaLinna())
+	{
+		//siirto on pitkälinna
+		if (siirtovuoro == 0 && !GetOnkoValkeaKuningasLiikkunut()) {
+			std::wcout << "Valkoinen" << std::endl;
+			
+		}
+		else if(siirtovuoro == 1 && !GetOnkoMustaKuningasLiikkunut()){
+			std::wcout << "Musta" << std::endl;
+			
+		}
+	}
+
 	//Testaa minkä napin siirto on kyseessä
 	switch (siirto->GetNappi())
 	{
 	case 'K':
 		std::wcout << "Valitsit Kuninkaan" << std::endl;
+
+		if (siirtovuoro == 0) {
+			std::wcout << "Valkoinen" << std::endl;
+
+			OnkoValkeaKuningasLiikkunut = true;
+		}
+		else {
+			std::wcout << "Musta" << std::endl;
+
+			OnkoMustaKuningasLiikkunut = true;
+		}
 		break;
 	case 'D':
 		std::wcout << "Valitsit Daamin" << std::endl;
+
+		if (siirtovuoro == 0) {
+			std::wcout << "Valkoinen" << std::endl;
+		}
+		else {
+			std::wcout << "Musta" << std::endl;
+		}
 		break;
 	case 'L':
 		std::wcout << "Valitsit Lähetin" << std::endl;
+
+		if (siirtovuoro == 0) {
+			std::wcout << "Valkoinen" << std::endl;
+		}
+		else {
+			std::wcout << "Musta" << std::endl;
+		}
 		break;
 	case 'R':
 		std::wcout << "Valitsit Ratsun" << std::endl;
+
+		if (siirtovuoro == 0) {
+			std::wcout << "Valkoinen" << std::endl;
+		}
+		else {
+			std::wcout << "Musta" << std::endl;
+		}
 		break;
 	case 'T':
 		std::wcout << "Valitsit Tornin" << std::endl;
+
+		if (siirtovuoro == 0) {
+			std::wcout << "Valkoinen" << std::endl;
+		}
+		else {
+			std::wcout << "Musta" << std::endl;
+		}
 		break;
 	case 'S':
 		std::wcout << "Valitsit Sotilaan" << std::endl;
+
+		if (siirtovuoro == 0) {
+			std::wcout << "Valkoinen" << std::endl;
+		}
+		else {
+			std::wcout << "Musta" << std::endl;
+		}
 		break;
 	default:
 		std::wcout << "Valitsit jonkun random, en tiiä..." << std::endl;
 		break;
 	}
 
+	if (siirtovuoro == 0) {
+		siirtovuoro++;
+	}
+	else {
+		siirtovuoro--;
+	}
 
+	
 }
 
 int Asema::GetSiirtovuoro()

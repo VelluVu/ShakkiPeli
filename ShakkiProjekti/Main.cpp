@@ -7,8 +7,16 @@ int main() {
 	Asema* asema = new Asema();
 	KayttoLiittyma kayttis(asema);
 	kayttis.PiirraLauta();
-	Siirto move = kayttis.AnnaVastustajanSiirto();
-	kayttis.asema->PaivitaAsema(&move);
+	kayttis.asema->SetSiirtovuoro(0);
+	
+	for (size_t i = 0; i < 50; i++)
+	{
+		
+		kayttis.asema->PaivitaAsema(&kayttis.AnnaVastustajanSiirto());
+		system("cls");
+		kayttis.PiirraLauta();
+	}
+
 
 	
 
