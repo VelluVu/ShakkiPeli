@@ -12,7 +12,7 @@ Asema::Asema()
 	}
 
 	//Alusta valkoiset nappulat
-	/*for (size_t i = 0; i < 8; i++)
+	for (size_t i = 0; i < 8; i++)
 	{
 		lauta[6][i] = new Nappula(L"\u2659", 0, VS);
 	}
@@ -40,12 +40,12 @@ Asema::Asema()
 	lauta[0][5] = new Nappula(L"\u265D", 1, ML);
 	lauta[0][6] = new Nappula(L"\u265E", 1, MR);
 	lauta[0][7] = new Nappula(L"\u265C", 1, MT);
-	*/
+	
 
 	//vanha malli...
 
 	//alusta valkoiset nappulat
-	
+	/*
 	vs = new Nappula(L"\u2659", 0, VS);
 	vt = new Nappula(L"\u2656", 0, VT);
 	vr = new Nappula(L"\u2658", 0, VR);
@@ -90,7 +90,7 @@ Asema::Asema()
 	lauta[0][5] = ml;
 	lauta[0][6] = mr;
 	lauta[0][7] = mt;
-	
+	*/
 }
 
 
@@ -100,15 +100,7 @@ Asema::~Asema()
 	//Vanha malli
 
 	//Tyhjää kaikki muistipaikat
-	delete mk, md, vk, vd;
-	mk, md, vk, vd = nullptr;
-	
-	delete vt, vr, vl, mt, mr, ml;
-	vt, vr, vl, mt, mr, ml = nullptr;
-	
-	delete vs, ms;
-	vs, ms = nullptr;
-	
+	//delete mk, md, vk, vd, vt, vr, vl, mt, mr, ml, vs, ms;
 
 	// Tyhjää paikat ja nullaa...
 	for (size_t x = 0; x < 8; x++)
@@ -116,7 +108,6 @@ Asema::~Asema()
 		for (size_t y = 0; y < 8; y++)
 		{
 			delete [] lauta[x][y];
-			lauta[x][y] = nullptr;
 		}
 	}
 	
@@ -249,7 +240,6 @@ void Asema::PaivitaAsema(Siirto* siirto)
 		siirtovuoro--;
 	}
 
-	
 }
 
 int Asema::GetSiirtovuoro()
