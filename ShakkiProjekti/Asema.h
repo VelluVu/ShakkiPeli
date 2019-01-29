@@ -2,6 +2,12 @@
 #include "Nappula.h"
 #include "Siirto.h"
 #include <string>
+#include "Sotilas.h"
+#include "Torni.h"
+#include "Ratsu.h"
+#include "Lahetti.h"
+#include "Kuningas.h"
+#include "Kunigatar.h"
 
 class Asema
 {
@@ -25,23 +31,27 @@ public:
 	Nappula* lauta[8][8];
 
 	//vai jäsenmuuttujat muuttujat erikseen listasta osoittimina?
-	Nappula* vs;
-	Nappula* vt;
-	Nappula* vr;
-	Nappula* vl;
-	Nappula* vk;
-	Nappula* vd;
+	
+	Sotilas* vs;
+	Torni* vt;
+	Ratsu* vr;
+	Lahetti* vl;
+	Kuningas* vk;
+	Kuningatar* vd;
 
-	Nappula* ms;
-	Nappula* mt;
-	Nappula* mr;
-	Nappula* ml;
-	Nappula* mk;
-	Nappula* md;
+	Sotilas* ms;
+	Torni* mt;
+	Ratsu* mr;
+	Lahetti* ml;
+	Kuningas* mk;
+	Kuningatar* md;
+	
+	
 
 	void PaivitaAsema(Siirto* siirto);
 	int GetSiirtovuoro();
 	void SetSiirtovuoro(int vari);
+	void AnnaLaillisetSiirrot(std::list<Siirto>& lista);
 	bool GetOnkoValkeaKuningasLiikkunut();
 	bool GetOnkoMustaKuningasLiikkunut();
 	bool GetOnkoValkeaDTliikkunut();

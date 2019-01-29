@@ -1,12 +1,18 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <list>
+#include "Siirto.h"
+#include "Ruutu.h"
+
 // Vakioarvot nappulatyypeille.
 enum
 {
 	VT, VR, VL, VD, VK, VS,
 	MT, MR, ML, MD, MK, MS
 };
+
+class Asema;
 
 class Nappula {
 
@@ -24,6 +30,7 @@ public:
 	std::wstring GetUnicode();
 	void SetVari(int col);
 	int GetVari();
+	virtual void AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int vari) = 0;
 };
 
 

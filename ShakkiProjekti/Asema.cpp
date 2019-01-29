@@ -12,35 +12,36 @@ Asema::Asema()
 	}
 
 	//Alusta valkoiset nappulat
+	/*
 	for (size_t i = 0; i < 8; i++)
 	{
-		lauta[6][i] = new Nappula(L"\u2659", 0, VS);
+		lauta[6][i] = new Sotilas(L"\u2659", 0, VS);
 	}
 
-	lauta[7][0] = new Nappula(L"\u2656", 0, VT);
-	lauta[7][1] = new Nappula(L"\u2658", 0, VR);
-	lauta[7][2] = new Nappula(L"\u2657", 0, VL);
-	lauta[7][3] = new Nappula(L"\u2655", 0, VD);
-	lauta[7][4] = new Nappula(L"\u2654", 0, VK);
-	lauta[7][5] = new Nappula(L"\u2656", 0, VT);
-	lauta[7][6] = new Nappula(L"\u2658", 0, VR);
-	lauta[7][7] = new Nappula(L"\u2656", 0, VT);
+	lauta[7][0] = new Torni(L"\u2656", 0, VT);
+	lauta[7][1] = new Ratsu(L"\u2658", 0, VR);
+	lauta[7][2] = new Lahetti(L"\u2657", 0, VL);
+	lauta[7][3] = new Kuningatar(L"\u2655", 0, VD);
+	lauta[7][4] = new Kuningas(L"\u2654", 0, VK);
+	lauta[7][5] = new Lahetti(L"\u2656", 0, VL);
+	lauta[7][6] = new Ratsu(L"\u2658", 0, VR);
+	lauta[7][7] = new Torni(L"\u2656", 0, VT);
 
 	//Alusta mustat nappulat
 	for (size_t i = 0; i < 8; i++)
 	{
-		lauta[1][i] = new Nappula(L"\u265F", 1, MS);
+		lauta[1][i] = new Sotilas(L"\u265F", 1, MS);
 	}
 
-	lauta[0][0] = new Nappula(L"\u265C", 1, MT);
-	lauta[0][1] = new Nappula(L"\u265E", 1, MR);
-	lauta[0][2] = new Nappula(L"\u265D", 1, ML);
-	lauta[0][3] = new Nappula(L"\u265B", 1, MD);
-	lauta[0][4] = new Nappula(L"\u265A", 1, MK);
-	lauta[0][5] = new Nappula(L"\u265D", 1, ML);
-	lauta[0][6] = new Nappula(L"\u265E", 1, MR);
-	lauta[0][7] = new Nappula(L"\u265C", 1, MT);
-	
+	lauta[0][0] = new Torni(L"\u265C", 1, MT);
+	lauta[0][1] = new Ratsu(L"\u265E", 1, MR);
+	lauta[0][2] = new Lahetti(L"\u265D", 1, ML);
+	lauta[0][3] = new Kuningatar(L"\u265B", 1, MD);
+	lauta[0][4] = new Kuningas(L"\u265A", 1, MK);
+	lauta[0][5] = new Lahetti(L"\u265D", 1, ML);
+	lauta[0][6] = new Ratsu(L"\u265E", 1, MR);
+	lauta[0][7] = new Torni(L"\u265C", 1, MT);
+	*/
 	onkoMustaDTLiikkunut = false;
 	onkoMustaKTLiikkunut = false;
 	onkoValkeaDTLiikkunut = false;
@@ -50,13 +51,13 @@ Asema::Asema()
 	//vanha malli...
 
 	//alusta valkoiset nappulat
-	/*
-	vs = new Nappula(L"\u2659", 0, VS);
-	vt = new Nappula(L"\u2656", 0, VT);
-	vr = new Nappula(L"\u2658", 0, VR);
-	vl = new Nappula(L"\u2657", 0, VL);
-	vk = new Nappula(L"\u2654", 0 ,VK);
-	vd = new Nappula(L"\u2655", 0 ,VD);
+	
+	vs = new Sotilas(L"\u2659", 0, VS);
+	vt = new Torni(L"\u2656", 0, VT);
+	vr = new Ratsu(L"\u2658", 0, VR);
+	vl = new Lahetti(L"\u2657", 0, VL);
+	vk = new Kuningas(L"\u2654", 0 ,VK);
+	vd = new Kuningatar(L"\u2655", 0 ,VD);
 
 	//Aseta ne Asemaan
 	for (size_t i = 0; i < 8; i++)
@@ -75,12 +76,12 @@ Asema::Asema()
 
 	//alusta mustat nappulat
 	
-	ms = new Nappula(L"\u265F", 1, MS);
-	mt = new Nappula(L"\u265C", 1, MT);
-	mr = new Nappula(L"\u265E", 1, MR);
-	ml = new Nappula(L"\u265D", 1, ML);
-	mk = new Nappula(L"\u265A", 1, MK);
-	md = new Nappula(L"\u265B", 1, MD);
+	ms = new Sotilas(L"\u265F", 1, MS);
+	mt = new Torni(L"\u265C", 1, MT);
+	mr = new Ratsu(L"\u265E", 1, MR);
+	ml = new Lahetti(L"\u265D", 1, ML);
+	mk = new Kuningas(L"\u265A", 1, MK);
+	md = new Kuningatar(L"\u265B", 1, MD);
 
 	//Aseta ne Asemaan
 	for (size_t i = 0; i < 8; i++)
@@ -95,7 +96,7 @@ Asema::Asema()
 	lauta[0][5] = ml;
 	lauta[0][6] = mr;
 	lauta[0][7] = mt;
-	*/
+	
 }
 
 
@@ -105,7 +106,7 @@ Asema::~Asema()
 	//Vanha malli
 
 	//Tyhjää kaikki muistipaikat
-	//delete mk, md, vk, vd, vt, vr, vl, mt, mr, ml, vs, ms;
+	delete mk, md, vk, vd, vt, vr, vl, mt, mr, ml, vs, ms;
 
 	// Tyhjää paikat ja nullaa...
 	for (size_t x = 0; x < 8; x++)
@@ -134,7 +135,7 @@ void Asema::PaivitaAsema(Siirto* siirto)
 			//jos vihu nii syöpoes...
 			lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] = nullptr;
 			lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] = lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()];
-			lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()] == nullptr;
+			lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()] = nullptr;
 		}
 		else if (lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()]->GetVari() == siirtovuoro) {
 			//ei voi liikkua oman päälle
@@ -270,6 +271,10 @@ int Asema::GetSiirtovuoro()
 void Asema::SetSiirtovuoro(int vari)
 {
 	siirtovuoro = vari;
+}
+
+void Asema::AnnaLaillisetSiirrot(std::list<Siirto>& lista)
+{
 }
 
 bool Asema::GetOnkoValkeaKuningasLiikkunut()

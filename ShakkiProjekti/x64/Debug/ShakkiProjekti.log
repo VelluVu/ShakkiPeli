@@ -1,6 +1,12 @@
 ﻿  Asema.cpp
-c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\asema.cpp(137): warning C4553: '==': result of expression not used; did you intend '='?
   KayttoLiittyma.cpp
+  Kunigatar.cpp
+  Kuningas.cpp
+  Lahetti.cpp
   Main.cpp
+  Nappula.cpp
+  Ratsu.cpp
+  Sotilas.cpp
+  Torni.cpp
   Generating Code...
   ShakkiProjekti.vcxproj -> C:\Users\Veli-Matti\Desktop\Opetus\Shakki\ShakkiProjekti\x64\Debug\ShakkiProjekti.exe
