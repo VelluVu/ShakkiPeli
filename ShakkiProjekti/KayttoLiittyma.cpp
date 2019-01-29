@@ -57,13 +57,13 @@ void KayttoLiittyma::PiirraLauta()
 
 Siirto KayttoLiittyma::AnnaVastustajanSiirto()
 {
-	//equal vertausta varten 2 array
+	//== vertausta varten 2 array
 	char arr[] = { 'a','b','c','d','e','f','g','h' };
-	char arrn[] = { '1','2','3','4','5','6','7','8' };
-	//Tähän tallennetaan koko siirtopätkä
+	int arrn[] = { '1','2','3','4','5','6','7','8' };
+	//Tähän tallennetaan koko siirto
 	std::wstring siirto;
 	//puretaan wstring siirto[] näihin kirjaimiin
-	wchar_t startCoord1Input, startCoord2Input, endCoord1Input, endCoord2Input;
+	wchar_t startCoord1Input = 0, startCoord2Input = 0, endCoord1Input = 0, endCoord2Input = 0;
 	//mapataan kirjaimien paikkakoordinaattiarvot näihin muuttujiin
 	int startCoord1 = 0, startCoord2 = 0, endCoord1 = 0, endCoord2 = 0;
 	//nappulan etumerkki
@@ -71,50 +71,58 @@ Siirto KayttoLiittyma::AnnaVastustajanSiirto()
 
 	std::wcout << "Anna siirto muodossa: (Napin etumerkki<T/R/L/D/K/S> / Alkukoordinaatti<'char',int> / Loppukoordinaatti<'char',int>)" << std::endl;
 	std::wcin >> siirto;
-
+	
 	nappi = siirto[0];
 	startCoord1Input = siirto[1];
 	startCoord2Input = siirto[2];
-	endCoord1Input = siirto[3];
-	endCoord2Input = siirto[4];
 
+	if (siirto.length() > 3) {
+		endCoord1Input = siirto[3];
+		endCoord2Input = siirto[4];
+	}
+	
 	std::wcout << nappi << startCoord1Input << startCoord2Input << "-" << endCoord1Input << endCoord2Input << std::endl;
-
+	
 	//Vertaa inputdataa arrayn indexissä olevaan arvoon ja aseta indexi koordinaatin arvoksi
 	for (int i = 0; i < 8; i++)
 	{
 		if (arr[i] == startCoord1Input) {
 			startCoord1 = i;
 		}
-		if (arr[i] == endCoord1Input) {
-			endCoord1 = i;
-		}
+
 		if (arrn[i] == startCoord2Input) {
 			startCoord2 = 7 - i;
 		}
+
+		if (arr[i] == endCoord1Input) {
+			endCoord1 = i;
+		}
+
 		if (arrn[i] == endCoord2Input) {
 			endCoord2 = 7 - i;
 		}
 	}
-
-	std::wcout << startCoord1 << startCoord2 << "-" << endCoord1 << endCoord2 << std::endl;
 	
 	//Testaa onko lyhytlinna vai pitkälinna
-	if (startCoord1Input == 'O' && startCoord2Input == 'O') {
-		Siirto lyhytLinna(true, false);
+	if (startCoord1Input == 'O' && startCoord2Input == 'O' && endCoord1Input == 0 && endCoord2Input == 0) {
+		Siirto lyhytLinna(true, false, nappi);
+		std::wcout << "LyhytLinna" << std::endl;
 		return lyhytLinna;
-	} 
-	else if (startCoord1Input == 'O' && startCoord2Input == 'O' && endCoord1Input == 'O') {
-		Siirto pitkaLinna(false, true);
+	}
+	if (startCoord1Input == 'O' && startCoord2Input == 'O' && endCoord1Input == 'O' && endCoord2Input == 0) {
+		Siirto pitkaLinna(false, true, nappi);
+		std::wcout << "PitkäLinna" << std::endl;
 		return pitkaLinna;
 	}
 	//Testaa onko sotilas viimesellä rivillä
 	if (startCoord2 == 6 && endCoord2 == 7 || startCoord2 == 1 && endCoord2 == 0) {
-		//Muuta sotilas miksi haluat...
+		//Korota sotilas...
+		std::wcout << "Korota sotilas" << std::endl;
 		 
 	}
 	if (startCoord2 == 1 && endCoord2 == 3 || startCoord2 == 6 && endCoord2 == 4) {
-		//Sotilas liikkuu ensimmäistä kertaa 2 ruutua
+		//Sotilas liikkuu 2 ruutua
+		std::wcout << "Sotilas liikkuu 2 ruutua" << std::endl;
 
 	}
 

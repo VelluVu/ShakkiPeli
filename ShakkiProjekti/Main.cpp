@@ -9,11 +9,12 @@ int main() {
 	kayttis.PiirraLauta();
 	kayttis.asema->SetSiirtovuoro(0);
 	
-	for (size_t i = 0; i < 50; i++)
+	std::wcout << "Valkoinen aloittaa. " << std::endl;
+	for (size_t i = 0; i < 100; i++)
 	{
 		
 		kayttis.asema->PaivitaAsema(&kayttis.AnnaVastustajanSiirto());
-		system("cls");
+		//system("cls");
 		kayttis.PiirraLauta();
 	}
 

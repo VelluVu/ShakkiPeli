@@ -41,7 +41,12 @@ Asema::Asema()
 	lauta[0][6] = new Nappula(L"\u265E", 1, MR);
 	lauta[0][7] = new Nappula(L"\u265C", 1, MT);
 	
-
+	onkoMustaDTLiikkunut = false;
+	onkoMustaKTLiikkunut = false;
+	onkoValkeaDTLiikkunut = false;
+	onkoValkeaKTLiikkunut = false;
+	onkoValkeaKuningasLiikkunut = false;
+	onkoMustaKuningasLiikkunut = false;
 	//vanha malli...
 
 	//alusta valkoiset nappulat
@@ -118,46 +123,21 @@ void Asema::PaivitaAsema(Siirto* siirto)
 	//Näin pääset siirtoon ja ruutuihin käsiksi...
 	//std::wcout << siirto->GetAlkuRuutu().GetRivi() << siirto->GetAlkuRuutu().GetSarake() << std::endl;
 
+	//Testataan siirtoa
 	//siirrä nappulaa ilman ihmellisempää jos loppupaikka on tyhjä
-	if (lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] == nullptr) {
-		lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] = lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()];		
-		lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()] = nullptr;
-	}
-	else if (lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()]->GetVari() != siirtovuoro){
-		//jos vihu nii syöpoes...
-		lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] = nullptr;
-		lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] = lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()];
-		lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()] == nullptr;
-	}
-	else if (lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()]->GetVari() == siirtovuoro) {
-		//ei voi liikkua oman päälle
-	}
-
-	if (siirto->OnkoLyhytLinna())
-	{
-		//siirto on lyhytlinna
-		if (siirtovuoro == 0 && !GetOnkoValkeaKuningasLiikkunut() && !GetOnkoValkeaKTliikkunut()) {
-			std::wcout << "Valkoinen" << std::endl;
-
-
+	if (siirto->OnkoLyhytLinna() == false && siirto->OnkoPitkaLinna() == false) {
+		if (lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] == nullptr) {
+			lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] = lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()];
+			lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()] = nullptr;
 		}
-		else if(siirtovuoro == 1 && !GetOnkoMustaKuningasLiikkunut() && !GetOnkoMustaKTliikkunut()) 
-		{
-			std::wcout << "Musta" << std::endl;
-		
+		else if (lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()]->GetVari() != siirtovuoro) {
+			//jos vihu nii syöpoes...
+			lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] = nullptr;
+			lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] = lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()];
+			lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()] == nullptr;
 		}
-	}
-
-	else if (siirto->OnkoPitkaLinna())
-	{
-		//siirto on pitkälinna
-		if (siirtovuoro == 0 && !GetOnkoValkeaKuningasLiikkunut()) {
-			std::wcout << "Valkoinen" << std::endl;
-			
-		}
-		else if(siirtovuoro == 1 && !GetOnkoMustaKuningasLiikkunut()){
-			std::wcout << "Musta" << std::endl;
-			
+		else if (lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()]->GetVari() == siirtovuoro) {
+			//ei voi liikkua oman päälle
 		}
 	}
 
@@ -167,78 +147,118 @@ void Asema::PaivitaAsema(Siirto* siirto)
 	case 'K':
 		std::wcout << "Valitsit Kuninkaan" << std::endl;
 
-		if (siirtovuoro == 0) {
-			std::wcout << "Valkoinen" << std::endl;
+		if (siirto->OnkoLyhytLinna() == true)
+		{
+			//siirto on lyhytlinna
+			if (siirtovuoro == 0 && !GetOnkoValkeaKuningasLiikkunut() && !GetOnkoValkeaKTliikkunut()) {
+				std::wcout << "Valkoinen lyhytlinna onnistui!" << std::endl;
+			
 
-			OnkoValkeaKuningasLiikkunut = true;
+			}
+			else if (siirtovuoro == 1 && !GetOnkoMustaKuningasLiikkunut() && !GetOnkoMustaKTliikkunut())
+			{
+				std::wcout << "Musta lyhytlinna onnistui!" << std::endl;
+
+			}
+			else {
+				std::wcout << "Lyhytlinna ei onnistunut!" << std::endl;
+				
+			}
+		}
+
+		if (siirto->OnkoPitkaLinna() == true)
+		{
+			//siirto on pitkälinna
+			if (siirtovuoro == 0 && !GetOnkoValkeaKuningasLiikkunut() && GetOnkoValkeaDTliikkunut() && !GetOnkoValkeaKTliikkunut()) {
+				std::wcout << "Valkoinen pitkälinna onnistui!" << std::endl;
+
+			}
+			else if (siirtovuoro == 1 && !GetOnkoMustaKuningasLiikkunut() && !GetOnkoMustaKTliikkunut() && GetOnkoMustaDTliikkunut()) {
+				std::wcout << "Musta pitkälinna onnistui!" << std::endl;
+
+			}
+			else {
+				std::wcout << "Pitkälinna ei onnistunut!" << std::endl;
+				
+			}
+		}
+
+		if (siirtovuoro == 0) {
+
+			onkoValkeaKuningasLiikkunut = true;
 		}
 		else {
-			std::wcout << "Musta" << std::endl;
 
-			OnkoMustaKuningasLiikkunut = true;
+			onkoMustaKuningasLiikkunut = true;
 		}
+
 		break;
+
 	case 'D':
 		std::wcout << "Valitsit Daamin" << std::endl;
 
 		if (siirtovuoro == 0) {
-			std::wcout << "Valkoinen" << std::endl;
+			onkoValkeaDTLiikkunut = true;
 		}
 		else {
-			std::wcout << "Musta" << std::endl;
+			onkoMustaDTLiikkunut = true;
 		}
 		break;
 	case 'L':
 		std::wcout << "Valitsit Lähetin" << std::endl;
 
 		if (siirtovuoro == 0) {
-			std::wcout << "Valkoinen" << std::endl;
+			
 		}
 		else {
-			std::wcout << "Musta" << std::endl;
+		
 		}
 		break;
 	case 'R':
 		std::wcout << "Valitsit Ratsun" << std::endl;
 
 		if (siirtovuoro == 0) {
-			std::wcout << "Valkoinen" << std::endl;
+		
 		}
 		else {
-			std::wcout << "Musta" << std::endl;
+			
 		}
 		break;
 	case 'T':
 		std::wcout << "Valitsit Tornin" << std::endl;
 
 		if (siirtovuoro == 0) {
-			std::wcout << "Valkoinen" << std::endl;
+			onkoValkeaKTLiikkunut = true;
 		}
 		else {
-			std::wcout << "Musta" << std::endl;
+			onkoMustaKTLiikkunut = true;
 		}
 		break;
 	case 'S':
 		std::wcout << "Valitsit Sotilaan" << std::endl;
 
 		if (siirtovuoro == 0) {
-			std::wcout << "Valkoinen" << std::endl;
+			
 		}
 		else {
-			std::wcout << "Musta" << std::endl;
+		
 		}
 		break;
 	default:
-		std::wcout << "Valitsit jonkun random, en tiiä..." << std::endl;
+		std::wcout << "Valitsit jonkun random, en tiiä... Laita se etumerkki eteen" << std::endl;
+		
 		break;
 	}
 
 	if (siirtovuoro == 0) {
+		std::wcout << "Seuraava siirtovuoro on mustan." << std::endl;
 		siirtovuoro++;
 	}
 	else {
+		std::wcout << "Seuraava siirtovuoro on valkoisen." << std::endl;
 		siirtovuoro--;
 	}
+	
 
 }
 
@@ -254,7 +274,7 @@ void Asema::SetSiirtovuoro(int vari)
 
 bool Asema::GetOnkoValkeaKuningasLiikkunut()
 {
-	if (OnkoValkeaKuningasLiikkunut) {
+	if (onkoValkeaKuningasLiikkunut) {
 		return true;
 	}
 	return false;
@@ -262,7 +282,7 @@ bool Asema::GetOnkoValkeaKuningasLiikkunut()
 
 bool Asema::GetOnkoMustaKuningasLiikkunut()
 {
-	if (OnkoMustaKuningasLiikkunut) {
+	if (onkoMustaKuningasLiikkunut) {
 		return true;
 	}
 	return false;
@@ -270,7 +290,7 @@ bool Asema::GetOnkoMustaKuningasLiikkunut()
 
 bool Asema::GetOnkoValkeaDTliikkunut()
 {
-	if (OnkoValkeaDTLiikkunut) {
+	if (onkoValkeaDTLiikkunut) {
 		return true;
 	}
 	return false;
@@ -278,7 +298,7 @@ bool Asema::GetOnkoValkeaDTliikkunut()
 
 bool Asema::GetOnkoValkeaKTliikkunut()
 {
-	if (OnkoValkeaKTLiikkunut) {
+	if (onkoValkeaKTLiikkunut) {
 		return true;
 	}
 	return false;
@@ -286,7 +306,7 @@ bool Asema::GetOnkoValkeaKTliikkunut()
 
 bool Asema::GetOnkoMustaDTliikkunut()
 {
-	if (OnkoMustaDTLiikkunut) {
+	if (onkoMustaDTLiikkunut) {
 		return true;
 	}
 	return false;
@@ -294,7 +314,7 @@ bool Asema::GetOnkoMustaDTliikkunut()
 
 bool Asema::GetOnkoMustaKTliikkunut()
 {
-	if (OnkoMustaKTLiikkunut) {
+	if (onkoMustaKTLiikkunut) {
 		return true;
 	}
 	return false;

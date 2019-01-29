@@ -8,12 +8,14 @@ Siirto::Siirto(Ruutu pos, Ruutu target, wchar_t nappi)
 	napinEtumerkki = nappi;
 	alkuRuutu = pos;
 	loppuRuutu = target;
+	lyhytLinna = false;
+	pitkaLinna = false;
 
 }
 
-Siirto::Siirto(bool lyhytLinna, bool pitkaLinna)
+Siirto::Siirto(bool lyhytLinna, bool pitkaLinna, wchar_t nappi)
 {
-
+	napinEtumerkki = nappi;
 	this->lyhytLinna = lyhytLinna;
 	this->pitkaLinna = pitkaLinna;
 
@@ -43,12 +45,21 @@ wchar_t Siirto::GetNappi()
 	return napinEtumerkki;
 }
 
+bool Siirto::HasNappi() {
+	if (napinEtumerkki == '\0') {
+		return false;
+	}
+	return true;
+}
+
 bool Siirto::OnkoLyhytLinna()
 {
 	if (lyhytLinna) {
 		return true;
 	}
-	return false;
+	else {
+		return false;
+	}
 }
 
 bool Siirto::OnkoPitkaLinna()
@@ -56,5 +67,7 @@ bool Siirto::OnkoPitkaLinna()
 	if (pitkaLinna) {
 		return true;
 	}
-	return false;
+	else {
+		return false;
+	}
 }

@@ -8,12 +8,12 @@ class Asema
 private:
 
 	int siirtovuoro;
-	bool OnkoValkeaKuningasLiikkunut;
-	bool OnkoMustaKuningasLiikkunut;
-	bool OnkoValkeaDTLiikkunut;
-	bool OnkoValkeaKTLiikkunut;
-	bool OnkoMustaDTLiikkunut;
-	bool OnkoMustaKTLiikkunut;
+	bool onkoValkeaKuningasLiikkunut;
+	bool onkoMustaKuningasLiikkunut;
+	bool onkoValkeaDTLiikkunut;
+	bool onkoValkeaKTLiikkunut;
+	bool onkoMustaDTLiikkunut;
+	bool onkoMustaKTLiikkunut;
 
 public:
 	

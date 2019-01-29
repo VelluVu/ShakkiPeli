@@ -13,11 +13,12 @@ private:
 
 public:
 	Siirto(Ruutu pos, Ruutu target, wchar_t nappi);
-	Siirto(bool lyhytLinna, bool pitkaLinna);
+	Siirto(bool lyhytLinna, bool pitkaLinna, wchar_t nappi);
 	Siirto();
 	~Siirto();
 	Ruutu GetAlkuRuutu();
 	Ruutu GetLoppuRuutu();
+	bool HasNappi();
 	wchar_t GetNappi();
 	bool OnkoLyhytLinna();
 	bool OnkoPitkaLinna();
