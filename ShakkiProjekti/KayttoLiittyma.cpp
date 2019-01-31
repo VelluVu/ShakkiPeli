@@ -22,19 +22,16 @@ void KayttoLiittyma::PiirraLauta()
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
 		std::wcout << 8 - x;
 
-		for (int y = 0; y < 8; y++)
+		for (int y = 0; y < 8 ; y++)
 		{
 
-			if ((x + y) % 2 == 0) {
-
+			if ((x+y) % 2 == 0) {
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
 			}
 			else {
-
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),  BACKGROUND_GREEN | BACKGROUND_RED);
-
-
 			}
+			
 			if (asema->lauta[x][y] != nullptr) {
 				std::wcout << " " << asema->lauta[x][y]->GetUnicode() << " ";
 			}
@@ -89,7 +86,7 @@ Siirto KayttoLiittyma::AnnaVastustajanSiirto()
 		if (arr[i] == startCoord1Input) {
 			startCoord1 = i;
 		}
-
+		//koska 00 on vasenyläkulma, mutta halutaan vasen alakulma
 		if (arrn[i] == startCoord2Input) {
 			startCoord2 = 7 - i;
 		}
@@ -98,6 +95,7 @@ Siirto KayttoLiittyma::AnnaVastustajanSiirto()
 			endCoord1 = i;
 		}
 
+		//koska 00 on vasenyläkulma, mutta halutaan vasen alakulma
 		if (arrn[i] == endCoord2Input) {
 			endCoord2 = 7 - i;
 		}

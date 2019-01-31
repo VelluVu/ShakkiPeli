@@ -27,11 +27,9 @@ public:
 	Asema();
 	~Asema();
 
-	//jäsenmuuttujaosoitinlistaa hyödyntäen?
+	//Lauta [rivi] [sarake]
 	Nappula* lauta[8][8];
 
-	//vai jäsenmuuttujat muuttujat erikseen listasta osoittimina?
-	
 	Sotilas* vs;
 	Torni* vt;
 	Ratsu* vr;

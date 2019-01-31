@@ -122,7 +122,7 @@ Asema::~Asema()
 void Asema::PaivitaAsema(Siirto* siirto)
 {
 	//Näin pääset siirtoon ja ruutuihin käsiksi...
-	//std::wcout << siirto->GetAlkuRuutu().GetRivi() << siirto->GetAlkuRuutu().GetSarake() << std::endl;
+	siirto->TulostaRuudut();
 
 	//Testataan siirtoa
 	//siirrä nappulaa ilman ihmellisempää jos loppupaikka on tyhjä
@@ -275,6 +275,19 @@ void Asema::SetSiirtovuoro(int vari)
 
 void Asema::AnnaLaillisetSiirrot(std::list<Siirto>& lista)
 {
+	
+	for (int x = 0; x < 8; x++)
+	{
+		for (int y = 0; y < 8; y++)
+		{
+			if (lauta[x][y]->GetVari() == siirtovuoro && lauta[x][y] != nullptr)
+			{
+				Ruutu pos( 7-x , y );
+				lauta[x][y]->AnnaSiirrot(lista, &pos, this , siirtovuoro);
+				
+			}
+		}
+	}
 }
 
 bool Asema::GetOnkoValkeaKuningasLiikkunut()

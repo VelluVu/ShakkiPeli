@@ -1,5 +1,6 @@
 #pragma once
 #include "Ruutu.h"
+#include <iostream>
 
 class Siirto
 {
@@ -16,6 +17,7 @@ public:
 	Siirto(bool lyhytLinna, bool pitkaLinna, wchar_t nappi);
 	Siirto();
 	~Siirto();
+	void TulostaRuudut();
 	Ruutu GetAlkuRuutu();
 	Ruutu GetLoppuRuutu();
 	bool HasNappi();

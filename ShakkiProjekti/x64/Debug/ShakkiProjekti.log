@@ -1,12 +1,43 @@
 ﻿  Asema.cpp
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\kunigatar.h(8): warning C4584: 'Kuningatar': base-class 'Nappula' is already a base-class of 'Torni'
+  c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\nappula.h(17): note: see declaration of 'Nappula'
+  c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\torni.h(3): note: see declaration of 'Torni'
   KayttoLiittyma.cpp
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\kunigatar.h(8): warning C4584: 'Kuningatar': base-class 'Nappula' is already a base-class of 'Torni'
+  c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\nappula.h(17): note: see declaration of 'Nappula'
+  c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\torni.h(3): note: see declaration of 'Torni'
   Kunigatar.cpp
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\kunigatar.h(8): warning C4584: 'Kuningatar': base-class 'Nappula' is already a base-class of 'Torni'
+  c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\nappula.h(17): note: see declaration of 'Nappula'
+  c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\torni.h(3): note: see declaration of 'Torni'
   Kuningas.cpp
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\kunigatar.h(8): warning C4584: 'Kuningatar': base-class 'Nappula' is already a base-class of 'Torni'
+  c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\nappula.h(17): note: see declaration of 'Nappula'
+  c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\torni.h(3): note: see declaration of 'Torni'
   Lahetti.cpp
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\kunigatar.h(8): warning C4584: 'Kuningatar': base-class 'Nappula' is already a base-class of 'Torni'
+  c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\nappula.h(17): note: see declaration of 'Nappula'
+  c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\torni.h(3): note: see declaration of 'Torni'
   Main.cpp
-  Nappula.cpp
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\kunigatar.h(8): warning C4584: 'Kuningatar': base-class 'Nappula' is already a base-class of 'Torni'
+  c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\nappula.h(17): note: see declaration of 'Nappula'
+  c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\torni.h(3): note: see declaration of 'Torni'
   Ratsu.cpp
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\kunigatar.h(8): warning C4584: 'Kuningatar': base-class 'Nappula' is already a base-class of 'Torni'
+  c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\nappula.h(17): note: see declaration of 'Nappula'
+  c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\torni.h(3): note: see declaration of 'Torni'
   Sotilas.cpp
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\kunigatar.h(8): warning C4584: 'Kuningatar': base-class 'Nappula' is already a base-class of 'Torni'
+  c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\nappula.h(17): note: see declaration of 'Nappula'
+  c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\torni.h(3): note: see declaration of 'Torni'
   Torni.cpp
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\kunigatar.h(8): warning C4584: 'Kuningatar': base-class 'Nappula' is already a base-class of 'Torni'
+  c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\nappula.h(17): note: see declaration of 'Nappula'
+  c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\torni.h(3): note: see declaration of 'Torni'
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\torni.cpp(18): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\torni.cpp(39): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\torni.cpp(61): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\torni.cpp(83): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
   Generating Code...
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\sotilas.cpp(77): warning C4715: 'Sotilas::OnkoSotilasLiikkunut': not all control paths return a value
   ShakkiProjekti.vcxproj -> C:\Users\Veli-Matti\Desktop\Opetus\Shakki\ShakkiProjekti\x64\Debug\ShakkiProjekti.exe

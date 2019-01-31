@@ -30,6 +30,22 @@ Siirto::~Siirto()
 {
 }
 
+void Siirto::TulostaRuudut()
+{
+	int x1 = 0;
+	int x2 = 0;
+	for (int i = 0; i < 8; i++)
+	{
+		if (alkuRuutu.GetRivi() == i) {
+			x1 = 7 - i;
+		}
+		if (loppuRuutu.GetRivi() == i) {
+			x2 = 7 - i;
+		}
+	}
+	std::wcout << x1 << alkuRuutu.GetSarake() << x2 << loppuRuutu.GetSarake() << std::endl;
+}
+
 Ruutu Siirto::GetAlkuRuutu()
 {
 	return alkuRuutu;

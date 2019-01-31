@@ -4,8 +4,8 @@
 
 Ruutu::Ruutu(int sarake, int rivi)
 {
-	this->rivi = rivi;
 	this->sarake = sarake;
+	this->rivi = rivi;
 }
 
 Ruutu::Ruutu()
@@ -13,7 +13,7 @@ Ruutu::Ruutu()
 }
 
 int Ruutu::GetRivi()
-{
+{	
 	return rivi;
 }
 
