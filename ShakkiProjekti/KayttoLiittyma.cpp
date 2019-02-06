@@ -121,7 +121,6 @@ Siirto KayttoLiittyma::AnnaVastustajanSiirto()
 	if (startCoord2 == 1 && endCoord2 == 3 || startCoord2 == 6 && endCoord2 == 4) {
 		//Sotilas liikkuu 2 ruutua
 		std::wcout << "Sotilas liikkuu 2 ruutua" << std::endl;
-
 	}
 
 	Ruutu alku(startCoord1, startCoord2);

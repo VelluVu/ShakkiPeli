@@ -10,7 +10,7 @@ int main() {
 	kayttis.asema->SetSiirtovuoro(0);
 	
 	std::wcout << "Valkoinen aloittaa. " << std::endl;
-	for (size_t i = 0; i < 100; i++)
+	for (size_t i = 0; i < 50; i++)
 	{
 		
 		kayttis.asema->PaivitaAsema(&kayttis.AnnaVastustajanSiirto());

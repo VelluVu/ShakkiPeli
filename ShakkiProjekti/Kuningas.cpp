@@ -7,7 +7,7 @@ void Kuningas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, i
 	Ruutu _pos(pos->GetRivi(), pos->GetSarake());
 	Ruutu _target(pos->GetRivi(), pos->GetSarake());
 
-	//Kuninkaan siirrot yläpuolelta
+	//Kuninkaan siirrot ylï¿½puolelta
 	for (int i = -1; i < 2; i++)
 	{
 		if (asema->lauta[pos->GetRivi() + 1][pos->GetSarake() + i] == nullptr ||
@@ -15,9 +15,11 @@ void Kuningas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, i
 		{
 			Ruutu _target(pos->GetRivi() + 1, pos->GetSarake() + i);
 
-			if (asema->lauta[pos->GetRivi() + 1][pos->GetSarake() + i]->GetVari() != vari) {
-				Siirto syoYlos(_pos, _target, nappi);
-				lista.push_front(syoYlos);
+			if (asema->lauta[pos->GetRivi() + 1][pos->GetSarake() + i] != nullptr) {
+				if (asema->lauta[pos->GetRivi() + 1][pos->GetSarake() + i]->GetVari() != vari) {
+					Siirto syoYlos(_pos, _target, nappi);
+					lista.push_front(syoYlos);
+				}
 			}
 			else 
 			{
@@ -34,9 +36,11 @@ void Kuningas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, i
 		{
 			Ruutu _target(pos->GetRivi() - 1, pos->GetSarake() + i);
 
-			if (asema->lauta[pos->GetRivi() - 1][pos->GetSarake() + i]->GetVari() != vari) {
-				Siirto syoAlas(_pos, _target, nappi);
-				lista.push_front(syoAlas);
+			if (asema->lauta[pos->GetRivi() - 1][pos->GetSarake() + i] != nullptr) {
+				if (asema->lauta[pos->GetRivi() - 1][pos->GetSarake() + i]->GetVari() != vari) {
+					Siirto syoAlas(_pos, _target, nappi);
+					lista.push_front(syoAlas);
+				}
 			}
 			else
 			{
@@ -52,9 +56,11 @@ void Kuningas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, i
 	{
 		Ruutu _target(pos->GetRivi() , pos->GetSarake() + 1);
 
-		if (asema->lauta[pos->GetRivi()][pos->GetSarake() + 1]->GetVari() != vari) {
-			Siirto syoOikea(_pos, _target, nappi);
-			lista.push_front(syoOikea);
+		if (asema->lauta[pos->GetRivi()][pos->GetSarake() + 1] != nullptr) {
+			if (asema->lauta[pos->GetRivi()][pos->GetSarake() + 1]->GetVari() != vari) {
+				Siirto syoOikea(_pos, _target, nappi);
+				lista.push_front(syoOikea);
+			}
 		}
 		else
 		{
@@ -69,9 +75,12 @@ void Kuningas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, i
 	{
 		Ruutu _target(pos->GetRivi(), pos->GetSarake() - 1);
 
-		if (asema->lauta[pos->GetRivi()][pos->GetSarake() - 1]->GetVari() != vari) {
-			Siirto syoVasen(_pos, _target, nappi);
-			lista.push_front(syoVasen);
+		if (asema->lauta[pos->GetRivi()][pos->GetSarake() - 1] != nullptr)
+		{
+			if (asema->lauta[pos->GetRivi()][pos->GetSarake() - 1]->GetVari() != vari) {
+				Siirto syoVasen(_pos, _target, nappi);
+				lista.push_front(syoVasen);
+			}
 		}
 		else
 		{

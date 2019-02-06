@@ -4,65 +4,81 @@
 
 void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int vari)
 {
-	//nappi on ite lisätty voi olla käyttöä en tiiä...
+	//nappi on ite lisï¿½tty voi olla kï¿½yttï¿½ï¿½ en tiiï¿½...
 	wchar_t nappi = 'S';
 	Ruutu _pos(pos->GetRivi(), pos->GetSarake());
 	Ruutu _target(pos->GetRivi(), pos->GetSarake());
 
-	//testataan onko perusliikkeellä estettä, jos ei niin laitetaan mahdollinen siirto listaan.
-	if (vari == 0 && asema->lauta[pos->GetRivi() + 1][pos->GetSarake()] == nullptr) 
+	//testataan onko perusliikkeellï¿½ estettï¿½, jos ei niin laitetaan mahdollinen siirto listaan.
+	if (vari == 0 && asema->lauta[pos->GetRivi() + 1][pos->GetSarake()] == nullptr)
 	{
 		Ruutu _target(pos->GetRivi() + 1, pos->GetSarake());
 		Siirto perusSiirto(_pos, _target, nappi);
 		lista.push_back(perusSiirto);
 	}
-	else if (vari == 1 && asema->lauta[pos->GetRivi() - 1][pos->GetSarake()] == nullptr) 
+	else if (vari == 1 && asema->lauta[pos->GetRivi() - 1][pos->GetSarake()] == nullptr)
 	{
-		Ruutu _target(pos->GetRivi() - 1, pos->GetSarake()); 
+		Ruutu _target(pos->GetRivi() - 1, pos->GetSarake());
 		Siirto perusSiirto(_pos, _target, nappi);
 		lista.push_back(perusSiirto);
 	}
 
-	
+
 
 	//Tuplasiirto mahdollinen jos ei ole jo liikkunut kertaalleen
-	if (onkoLiikkunut == false && vari == 0 && asema->lauta[pos->GetRivi() + 1][pos->GetSarake()] == nullptr && 
-		asema->lauta[pos->GetRivi() + 2][pos->GetSarake()] == nullptr) 
+	if (onkoLiikkunut == false && vari == 0 && asema->lauta[pos->GetRivi() + 1][pos->GetSarake()] == nullptr &&
+		asema->lauta[pos->GetRivi() + 2][pos->GetSarake()] == nullptr)
 	{
 		Ruutu _target(pos->GetRivi() + 2, pos->GetSarake());
 		Siirto tuplaSiirto(_pos, _target, nappi);
 		lista.push_back(tuplaSiirto);
 	}
 	else if (vari == 1 && onkoLiikkunut == false && asema->lauta[pos->GetRivi() - 1][pos->GetSarake()] == nullptr &&
-		asema->lauta[pos->GetRivi() - 2][pos->GetSarake()] == nullptr) 
+		asema->lauta[pos->GetRivi() - 2][pos->GetSarake()] == nullptr)
 	{
 		Ruutu _target(pos->GetRivi() - 2, pos->GetSarake());
 		Siirto tuplaSiirto(_pos, _target, nappi);
 		lista.push_back(tuplaSiirto);
 	}
 
-	//Syö vihollinen viistoon vasemmalle
-	if (vari == 0 && asema->lauta[pos->GetRivi() + 1][pos->GetSarake() - 1]->GetVari() == 1) {
-		Ruutu _target(pos->GetRivi() + 1, pos->GetSarake() - 1);
-		Siirto syoVas(_pos, _target, nappi);
-		lista.push_back(syoVas);
+	//Syï¿½ vihollinen viistoon vasemmalle
+	if (vari == 0 && asema->lauta[pos->GetRivi() + 1][pos->GetSarake() - 1] != nullptr) 
+	{
+		if (vari == 0 && asema->lauta[pos->GetRivi() + 1][pos->GetSarake() - 1]->GetVari() == 1) {
+			Ruutu _target(pos->GetRivi() + 1, pos->GetSarake() - 1);
+			Siirto syoVas(_pos, _target, nappi);
+			lista.push_back(syoVas);
+		}
 	}
-	else if (vari == 1 && asema->lauta[pos->GetRivi() - 1][pos->GetSarake() - 1]->GetVari() == 0) {
-		Ruutu _target(pos->GetRivi() - 1, pos->GetSarake() - 1);
-		Siirto syoVas(_pos, _target, nappi);
-		lista.push_back(syoVas);
+	else if (vari == 1 && asema->lauta[pos->GetRivi() - 1][pos->GetSarake() - 1] != nullptr)
+	{
+		if (vari == 1 && asema->lauta[pos->GetRivi() - 1][pos->GetSarake() - 1]->GetVari() == 0)
+		{
+			Ruutu _target(pos->GetRivi() - 1, pos->GetSarake() - 1);
+			Siirto syoVas(_pos, _target, nappi);
+			lista.push_back(syoVas);
+		}
 	}
 
-	//Syö vihollinen viistoon oikealle
-	if (vari == 0 && asema->lauta[pos->GetRivi() + 1][pos->GetSarake() + 1]->GetVari() == 1) {
-		Ruutu _target(pos->GetRivi() + 1, pos->GetSarake() + 1);
-		Siirto syoOik(_pos, _target, nappi);
-		lista.push_back(syoOik);
+
+	//Syï¿½ vihollinen viistoon oikealle
+	if (vari == 0 && asema->lauta[pos->GetRivi() + 1][pos->GetSarake() + 1] != nullptr) 
+	{
+		if (vari == 0 && asema->lauta[pos->GetRivi() + 1][pos->GetSarake() + 1]->GetVari() == 1) {
+			Ruutu _target(pos->GetRivi() + 1, pos->GetSarake() + 1);
+			Siirto syoOik(_pos, _target, nappi);
+			lista.push_back(syoOik);
+		}
 	}
-	else if (vari == 1 && asema->lauta[pos->GetRivi() - 1][pos->GetSarake() + 1]->GetVari() == 0) {
-		Ruutu _target(pos->GetRivi() - 1, pos->GetSarake() + 1);
-		Siirto syoOik(_pos, _target, nappi);
-		lista.push_back(syoOik);
+	else if (vari == 1 && asema->lauta[pos->GetRivi() - 1][pos->GetSarake() + 1] != nullptr) 
+	{
+		if (vari == 1 && asema->lauta[pos->GetRivi() - 1][pos->GetSarake() + 1]->GetVari() == 0)
+		{
+			Ruutu _target(pos->GetRivi() - 1, pos->GetSarake() + 1);
+			Siirto syoOik(_pos, _target, nappi);
+			lista.push_back(syoOik);
+
+		}
 	}
 }
 

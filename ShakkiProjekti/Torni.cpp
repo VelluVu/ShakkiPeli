@@ -8,19 +8,21 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 	Ruutu _target(pos->GetRivi(), pos->GetSarake());
 	
 
-	//Tornien liike ylös 
+	//Tornien liike ylï¿½s 
 	for (size_t i = 1; i <= 8; i++)
 	{
-		//Liiku niin pitkään suoraan kunnes seuraava ei ole enään nullptr tai erivärinen nappi on edessä
+		//Liiku niin pitkï¿½ï¿½n suoraan kunnes seuraava ei ole enï¿½ï¿½n nullptr tai erivï¿½rinen nappi on edessï¿½
 		if (asema->lauta[pos->GetRivi() + i][pos->GetSarake()] == nullptr ||
 			asema->lauta[pos->GetRivi() + i][pos->GetSarake()]->GetVari() != vari)
 		{
 			Ruutu _target(pos->GetRivi() + i, pos->GetSarake());
-			//jos törmää viholliseen syö
-			if (asema->lauta[pos->GetRivi() + i][pos->GetSarake()]->GetVari() != vari) 
-			{
-				Siirto syoYlos(_pos, _target, nappi);
-				lista.push_back(syoYlos);
+			//jos tï¿½rmï¿½ï¿½ viholliseen syï¿½
+			if (asema->lauta[pos->GetRivi() + i][pos->GetSarake()] != nullptr) {
+				if (asema->lauta[pos->GetRivi() + i][pos->GetSarake()]->GetVari() != vari)
+				{
+					Siirto syoYlos(_pos, _target, nappi);
+					lista.push_back(syoYlos);
+				}
 			}
 			else 
 			{
@@ -37,12 +39,14 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 			asema->lauta[pos->GetRivi() - i][pos->GetSarake()]->GetVari() != vari)
 		{
 			Ruutu _target(pos->GetRivi() - i, pos->GetSarake());
-			//jos törmää viholliseen syö
-			if (asema->lauta[pos->GetRivi() - i][pos->GetSarake()]->GetVari() != vari) 
-			{
-				Siirto syoAlas(_pos, _target, nappi);
-				lista.push_back(syoAlas);
-			}			
+			//jos tï¿½rmï¿½ï¿½ viholliseen syï¿½
+			if (asema->lauta[pos->GetRivi() - i][pos->GetSarake()] != nullptr) {
+				if (asema->lauta[pos->GetRivi() - i][pos->GetSarake()]->GetVari() != vari)
+				{
+					Siirto syoAlas(_pos, _target, nappi);
+					lista.push_back(syoAlas);
+				}
+			}
 			else 
 			{
 				Siirto liikuAlas(_pos, _target, nappi);
@@ -54,16 +58,18 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 	//Tornien liike oikealle
 	for (size_t i = 1; i <= 8; i++)
 	{
-		//Liiku niin pitkään suoraan kunnes seuraava ei ole enään nullptr tai erivärinen nappi on edessä
+		//Liiku niin pitkï¿½ï¿½n suoraan kunnes seuraava ei ole enï¿½ï¿½n nullptr tai erivï¿½rinen nappi on edessï¿½
 		if (asema->lauta[pos->GetRivi()][pos->GetSarake() + i] == nullptr ||
 			asema->lauta[pos->GetRivi()][pos->GetSarake() + i]->GetVari() != vari)
 		{
 			Ruutu _target(pos->GetRivi(), pos->GetSarake() + i);
-			//jos törmää viholliseen syö jos väri on eri ku tämän napin väri
-			if (asema->lauta[pos->GetRivi()][pos->GetSarake() + i]->GetVari() != vari)
-			{
-				Siirto syoOikealle(_pos, _target, nappi);
-				lista.push_back(syoOikealle);
+			//jos tï¿½rmï¿½ï¿½ viholliseen syï¿½ jos vï¿½ri on eri ku tï¿½mï¿½n napin vï¿½ri
+			if (asema->lauta[pos->GetRivi()][pos->GetSarake() + i] != nullptr) {
+				if (asema->lauta[pos->GetRivi()][pos->GetSarake() + i]->GetVari() != vari)
+				{
+					Siirto syoOikealle(_pos, _target, nappi);
+					lista.push_back(syoOikealle);
+				}
 			}
 			else
 			{
@@ -81,11 +87,13 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 			asema->lauta[pos->GetRivi()][pos->GetSarake() - i]->GetVari() != vari)
 		{
 			Ruutu _target(pos->GetRivi(), pos->GetSarake() - i);
-			//jos törmää viholliseen syö
-			if (asema->lauta[pos->GetRivi()][pos->GetSarake() - i]->GetVari() != vari)
-			{
-				Siirto syoVasemmalle(_pos, _target, nappi);
-				lista.push_back(syoVasemmalle);
+			//jos tï¿½rmï¿½ï¿½ viholliseen syï¿½
+			if (asema->lauta[pos->GetRivi()][pos->GetSarake() - i] != nullptr) {
+				if (asema->lauta[pos->GetRivi()][pos->GetSarake() - i]->GetVari() != vari)
+				{
+					Siirto syoVasemmalle(_pos, _target, nappi);
+					lista.push_back(syoVasemmalle);
+				}
 			}
 			else
 			{

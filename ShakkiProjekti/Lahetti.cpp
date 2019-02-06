@@ -7,18 +7,19 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 	Ruutu _pos(pos->GetRivi(), pos->GetSarake());
 	Ruutu _target(pos->GetRivi(), pos->GetSarake());
 
-	//Lähetin liike oikealle ylös viistoon
-	for (int i = 1; i <= 8 ; i++)
+	//Lï¿½hetin liike oikealle ylï¿½s viistoon
+	for (int i = 1; i <= 8; i++)
 	{
 		if (asema->lauta[pos->GetRivi() + i][pos->GetSarake() + i] == nullptr ||
 			asema->lauta[pos->GetRivi() + i][pos->GetSarake() + i]->GetVari() != vari)
 		{
 			Ruutu _target(pos->GetRivi() + i, pos->GetSarake() + i);
-
-			if (asema->lauta[pos->GetRivi() + i][pos->GetSarake() + i]->GetVari() != vari)
-			{
-				Siirto syoYlosOikea(_pos, _target, nappi);
-				lista.push_front(syoYlosOikea);
+			if (asema->lauta[pos->GetRivi() + i][pos->GetSarake() + i] != nullptr) {
+				if (asema->lauta[pos->GetRivi() + i][pos->GetSarake() + i]->GetVari() != vari)
+				{
+					Siirto syoYlosOikea(_pos, _target, nappi);
+					lista.push_front(syoYlosOikea);
+				}
 			}
 			else
 			{
@@ -28,7 +29,7 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		}
 	}
 
-	//Lähetin liike vasemmalle ylös viistoon
+	//Lï¿½hetin liike vasemmalle ylï¿½s viistoon
 
 	for (int i = 1; i <= 8; i++)
 	{
@@ -37,10 +38,12 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Ruutu _target(pos->GetRivi() + i, pos->GetSarake() - i);
 
-			if (asema->lauta[pos->GetRivi() + i][pos->GetSarake() - i]->GetVari() != vari)
-			{
-				Siirto syoYlosVasen(_pos, _target, nappi);
-				lista.push_front(syoYlosVasen);
+			if (asema->lauta[pos->GetRivi() + i][pos->GetSarake() - i] != nullptr) {
+				if (asema->lauta[pos->GetRivi() + i][pos->GetSarake() - i]->GetVari() != vari)
+				{
+					Siirto syoYlosVasen(_pos, _target, nappi);
+					lista.push_front(syoYlosVasen);
+				}
 			}
 			else
 			{
@@ -50,7 +53,7 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		}
 	}
 
-	//Lähetin liike vasemmalle alas viistoon
+	//Lï¿½hetin liike vasemmalle alas viistoon
 
 	for (int i = 1; i <= 8; i++)
 	{
@@ -59,10 +62,12 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Ruutu _target(pos->GetRivi() - i, pos->GetSarake() - i);
 
-			if (asema->lauta[pos->GetRivi() - i][pos->GetSarake() - i]->GetVari() != vari)
-			{
-				Siirto syoAlasVasen(_pos, _target, nappi);
-				lista.push_front(syoAlasVasen);
+			if (asema->lauta[pos->GetRivi() - i][pos->GetSarake() - i] != nullptr) {
+				if (asema->lauta[pos->GetRivi() - i][pos->GetSarake() - i]->GetVari() != vari)
+				{
+					Siirto syoAlasVasen(_pos, _target, nappi);
+					lista.push_front(syoAlasVasen);
+				}
 			}
 			else
 			{
@@ -72,17 +77,17 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		}
 	}
 
-	//Lähetin liike oikealle alas viistoon
+	//Lï¿½hetin liike oikealle alas viistoon
 	/*
-	 -  -  -  -  -  -  -  - 
-	 -  -  -  -  -  -  -  - 
-	 -  L -  -  -  -  -  - 
-	 -  -  *  -  -  -  -  - 
-	 -  -  -  *  -  -  -  - 
-	 -  -  -  -  *  -  -  - 
-	 -  -  -  -  -  *  -  - 
+	 -  -  -  -  -  -  -  -
+	 -  -  -  -  -  -  -  -
+	 -  L -  -  -  -  -  -
+	 -  -  *  -  -  -  -  -
+	 -  -  -  *  -  -  -  -
+	 -  -  -  -  *  -  -  -
+	 -  -  -  -  -  *  -  -
 						 ?
-	 */				  
+	 */
 
 	for (int i = 1; i <= 8; i++)
 	{
@@ -91,10 +96,13 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Ruutu _target(pos->GetRivi() - i, pos->GetSarake() + i);
 
-			if (asema->lauta[pos->GetRivi() - i][pos->GetSarake() + i]->GetVari() != vari)
+			if (asema->lauta[pos->GetRivi() - i][pos->GetSarake() + i] != nullptr)
 			{
-				Siirto syoAlasOikea(_pos, _target, nappi);
-				lista.push_front(syoAlasOikea);
+				if (asema->lauta[pos->GetRivi() - i][pos->GetSarake() + i]->GetVari() != vari)
+				{
+					Siirto syoAlasOikea(_pos, _target, nappi);
+					lista.push_front(syoAlasOikea);
+				}
 			}
 			else
 			{
@@ -103,7 +111,4 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 			}
 		}
 	}
-	
-
-	
 }

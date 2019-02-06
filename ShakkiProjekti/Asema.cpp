@@ -123,9 +123,12 @@ void Asema::PaivitaAsema(Siirto* siirto)
 {
 	//Näin pääset siirtoon ja ruutuihin käsiksi...
 	siirto->TulostaRuudut();
-
+	std::list<Siirto> laillisetSiirrot;
+	
+	
 	//Testataan siirtoa
 	//siirrä nappulaa ilman ihmellisempää jos loppupaikka on tyhjä
+	/*
 	if (siirto->OnkoLyhytLinna() == false && siirto->OnkoPitkaLinna() == false) {
 		if (lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] == nullptr) {
 			lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] = lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()];
@@ -141,6 +144,7 @@ void Asema::PaivitaAsema(Siirto* siirto)
 			//ei voi liikkua oman päälle
 		}
 	}
+	*/
 
 	//Testaa minkä napin siirto on kyseessä
 	switch (siirto->GetNappi())
@@ -184,11 +188,26 @@ void Asema::PaivitaAsema(Siirto* siirto)
 			}
 		}
 
-		if (siirtovuoro == 0) {
+		if (siirtovuoro == 0) 
+		{
+
+			AnnaLaillisetSiirrot(laillisetSiirrot);
+			for (Siirto n : laillisetSiirrot)
+			{
+				n.TulostaRuudut();
+			}
+			std::wcout << std::endl;
 
 			onkoValkeaKuningasLiikkunut = true;
 		}
 		else {
+
+			AnnaLaillisetSiirrot(laillisetSiirrot);
+			for (Siirto n : laillisetSiirrot)
+			{
+				n.TulostaRuudut();
+			}
+			std::wcout << std::endl;
 
 			onkoMustaKuningasLiikkunut = true;
 		}
@@ -199,9 +218,25 @@ void Asema::PaivitaAsema(Siirto* siirto)
 		std::wcout << "Valitsit Daamin" << std::endl;
 
 		if (siirtovuoro == 0) {
+
+			AnnaLaillisetSiirrot(laillisetSiirrot);
+			for (Siirto n : laillisetSiirrot)
+			{
+				n.TulostaRuudut();
+			}
+			std::wcout << std::endl;
+
 			onkoValkeaDTLiikkunut = true;
 		}
 		else {
+
+			AnnaLaillisetSiirrot(laillisetSiirrot);
+			for (Siirto n : laillisetSiirrot)
+			{
+				n.TulostaRuudut();
+			}
+			std::wcout << std::endl;
+
 			onkoMustaDTLiikkunut = true;
 		}
 		break;
@@ -209,9 +244,23 @@ void Asema::PaivitaAsema(Siirto* siirto)
 		std::wcout << "Valitsit Lähetin" << std::endl;
 
 		if (siirtovuoro == 0) {
+
+			AnnaLaillisetSiirrot(laillisetSiirrot);
+			for (Siirto n : laillisetSiirrot)
+			{
+				n.TulostaRuudut();
+			}
+			std::wcout << std::endl;
 			
 		}
 		else {
+
+			AnnaLaillisetSiirrot(laillisetSiirrot);
+			for (Siirto n : laillisetSiirrot)
+			{
+				n.TulostaRuudut();
+			}
+			std::wcout << std::endl;
 		
 		}
 		break;
@@ -220,29 +269,78 @@ void Asema::PaivitaAsema(Siirto* siirto)
 
 		if (siirtovuoro == 0) {
 		
+			AnnaLaillisetSiirrot(laillisetSiirrot);
+			for (Siirto n : laillisetSiirrot)
+			{
+				n.TulostaRuudut();
+			}
+			std::wcout << std::endl;
+
 		}
 		else {
+
+			AnnaLaillisetSiirrot(laillisetSiirrot);
+			for (Siirto n : laillisetSiirrot)
+			{
+				n.TulostaRuudut();
+			}
+			std::wcout << std::endl;
 			
 		}
 		break;
 	case 'T':
 		std::wcout << "Valitsit Tornin" << std::endl;
 
+		
+
 		if (siirtovuoro == 0) {
+
+			AnnaLaillisetSiirrot(laillisetSiirrot);
+			for (Siirto n : laillisetSiirrot)
+			{
+				n.TulostaRuudut();
+			}
+			std::wcout << std::endl;
+
 			onkoValkeaKTLiikkunut = true;
+
 		}
 		else {
+
+			AnnaLaillisetSiirrot(laillisetSiirrot);
+			for (Siirto n : laillisetSiirrot)
+			{
+				n.TulostaRuudut();
+			}
+			std::wcout << std::endl;
+
 			onkoMustaKTLiikkunut = true;
 		}
 		break;
 	case 'S':
 		std::wcout << "Valitsit Sotilaan" << std::endl;
 
+		
+
 		if (siirtovuoro == 0) {
-			
+
+			AnnaLaillisetSiirrot(laillisetSiirrot);
+			for (Siirto n : laillisetSiirrot)
+			{
+				n.TulostaRuudut();
+			}
+			std::wcout << std::endl;
+
 		}
 		else {
 		
+			AnnaLaillisetSiirrot(laillisetSiirrot);
+			for (Siirto n : laillisetSiirrot)
+			{
+				n.TulostaRuudut();
+			}
+			std::wcout << std::endl;
+
 		}
 		break;
 	default:
@@ -280,11 +378,16 @@ void Asema::AnnaLaillisetSiirrot(std::list<Siirto>& lista)
 	{
 		for (int y = 0; y < 8; y++)
 		{
-			if (lauta[x][y]->GetVari() == siirtovuoro && lauta[x][y] != nullptr)
-			{
-				Ruutu pos( 7-x , y );
-				lauta[x][y]->AnnaSiirrot(lista, &pos, this , siirtovuoro);
+			if (lauta[x][y] != nullptr)
+			{			
 				
+					Ruutu pos(x, y);
+					Asema* asema = this;
+					int temp = lauta[x][y]->GetVari();
+					//std::wcout << lauta[pos.GetRivi()][pos.GetSarake()] << st::dendl;
+					lauta[x][y]->AnnaSiirrot(lista, &pos, asema, temp);
+					//std::wcout << lauta[x][y]->GetVari() << " " << lauta[x][y]->GetKoodi() << " " << lauta[x][y]->GetUnicode() << std::endl;
+							
 			}
 		}
 	}

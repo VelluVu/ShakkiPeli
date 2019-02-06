@@ -1,7 +1,7 @@
 #include "Siirto.h"
 
 
-//Lisäsin napin etumerkin että voi hyödyntää
+//Lisï¿½sin napin etumerkin ettï¿½ voi hyï¿½dyntï¿½ï¿½
 Siirto::Siirto(Ruutu pos, Ruutu target, wchar_t nappi)
 {
 
@@ -37,10 +37,10 @@ void Siirto::TulostaRuudut()
 	for (int i = 0; i < 8; i++)
 	{
 		if (alkuRuutu.GetRivi() == i) {
-			x1 = 7 - i;
+			x1 = i;
 		}
 		if (loppuRuutu.GetRivi() == i) {
-			x2 = 7 - i;
+			x2 = i;
 		}
 	}
 	std::wcout << x1 << alkuRuutu.GetSarake() << x2 << loppuRuutu.GetSarake() << std::endl;
