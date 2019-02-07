@@ -4,7 +4,7 @@
 #include "Torni.h"
 
 class Kuningatar : 
-	 public Torni, public Lahetti, public Nappula
+	 public Torni, public Lahetti, virtual public Nappula
 {
 public:
 

@@ -1,5 +1,16 @@
 ﻿  Asema.cpp
-c:\users\vellu\desktop\koulujutut\c++projekti\shakki\shakkiprojekti\kunigatar.h(8): warning C4584: 'Kuningatar': base-class 'Nappula' is already a base-class of 'Torni'
-  c:\users\vellu\desktop\koulujutut\c++projekti\shakki\shakkiprojekti\nappula.h(17): note: see declaration of 'Nappula'
-  c:\users\vellu\desktop\koulujutut\c++projekti\shakki\shakkiprojekti\torni.h(3): note: see declaration of 'Torni'
-  ShakkiProjekti.vcxproj -> C:\Users\vellu\Desktop\Koulujutut\C++Projekti\Shakki\x64\Debug\ShakkiProjekti.exe
+  KayttoLiittyma.cpp
+  Kunigatar.cpp
+  Kuningas.cpp
+  Lahetti.cpp
+  Main.cpp
+  Ratsu.cpp
+  Sotilas.cpp
+  Torni.cpp
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\torni.cpp(18): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\torni.cpp(41): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\torni.cpp(65): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\torni.cpp(89): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\sotilas.cpp(93): warning C4715: 'Sotilas::OnkoSotilasLiikkunut': not all control paths return a value
+  ShakkiProjekti.vcxproj -> C:\Users\Veli-Matti\Desktop\Opetus\Shakki\ShakkiProjekti\x64\Debug\ShakkiProjekti.exe

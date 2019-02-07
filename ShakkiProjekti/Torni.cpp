@@ -7,7 +7,6 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 	Ruutu _pos(pos->GetRivi(), pos->GetSarake());
 	Ruutu _target(pos->GetRivi(), pos->GetSarake());
 	
-
 	//Tornien liike yl�s 
 	for (size_t i = 1; i <= 8; i++)
 	{
