@@ -5,7 +5,7 @@
 Siirto::Siirto(Ruutu pos, Ruutu target, wchar_t nappi)
 {
 
-	napinEtumerkki = nappi;
+	_nappi = nappi;
 	alkuRuutu = pos;
 	loppuRuutu = target;
 	lyhytLinna = false;
@@ -15,7 +15,7 @@ Siirto::Siirto(Ruutu pos, Ruutu target, wchar_t nappi)
 
 Siirto::Siirto(bool lyhytLinna, bool pitkaLinna, wchar_t nappi)
 {
-	napinEtumerkki = nappi;
+	_nappi = nappi;
 	this->lyhytLinna = lyhytLinna;
 	this->pitkaLinna = pitkaLinna;
 
@@ -32,18 +32,7 @@ Siirto::~Siirto()
 
 void Siirto::TulostaRuudut()
 {
-	int x1 = 0;
-	int x2 = 0;
-	for (int i = 0; i < 8; i++)
-	{
-		if (alkuRuutu.GetRivi() == i) {
-			x1 = i;
-		}
-		if (loppuRuutu.GetRivi() == i) {
-			x2 = i;
-		}
-	}
-	std::wcout << x1 << alkuRuutu.GetSarake() << x2 << loppuRuutu.GetSarake() << std::endl;
+	std::wcout << "< Napin etumerkki=" << _nappi << " > < x=" << alkuRuutu.GetSarake() << " > < y=" << alkuRuutu.GetRivi() << " > < tx=" <<loppuRuutu.GetSarake() << " > < ty=" << loppuRuutu.GetRivi() << " >" << std::endl;
 }
 
 Ruutu Siirto::GetAlkuRuutu()
@@ -58,11 +47,11 @@ Ruutu Siirto::GetLoppuRuutu()
 
 wchar_t Siirto::GetNappi()
 {
-	return napinEtumerkki;
+	return _nappi;
 }
 
 bool Siirto::HasNappi() {
-	if (napinEtumerkki == '\0') {
+	if (_nappi == '\0') {
 		return false;
 	}
 	return true;

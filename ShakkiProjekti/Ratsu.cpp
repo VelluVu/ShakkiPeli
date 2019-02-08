@@ -3,132 +3,49 @@
 
 void Ratsu::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int vari)
 {
+	std::wcout << "<<<<<<RATSUN SIIRROT>>>>>> " << std::endl << std::endl;
+
 	wchar_t nappi = 'R';
-	Ruutu _pos(pos->GetRivi(), pos->GetSarake());
-	Ruutu _target(pos->GetRivi(), pos->GetSarake());
+	int x = pos->GetSarake();
+	int y = pos->GetRivi();
+	Ruutu _pos(x, y);
+	std::wcout << "<AnnaSiirrot>AlkuPositio x : " << x << " <AnnaSiirrot>AlkuPositio y : " << y << std::endl;
 
-	//Ratsu Yl�sOikealle
-	if (asema->lauta[pos->GetRivi() + 1][pos->GetSarake() + 2] == nullptr) {
-		Ruutu _target(pos->GetRivi() + 1, pos->GetSarake() + 2);
-		Siirto ylosOikea(_pos, _target, nappi);
-		lista.push_front(ylosOikea);
-	}
-	else if (asema->lauta[pos->GetRivi() + 1][pos->GetSarake() + 2] != nullptr)
+	int _tx[8] = { 2, 1, -1, -2, -2, -1, 1, 2 };
+	int _ty[8] = { 1, 2, 2, 1, -1, -2, -2, -1 };
+
+	for (int i = 0; i < 8; i++)
 	{
-		if (asema->lauta[pos->GetRivi() + 1][pos->GetSarake() + 2]->GetVari() != vari)
+		//Asetetaan kohde koordinaatit
+		int tx = x + _tx[i];
+		int ty = y + _ty[i];
+		Ruutu _target(tx,ty);
+		
+		//Jos liike pysyy rajojen sisällä ja kohteessa ei ole tyhjäpaikka syö
+		if (tx <= 7 && ty <= 7 && tx >= 0 && ty >= 0 && asema->lauta[tx][ty] != nullptr && asema->lauta[tx][ty]->GetVari() != vari) 
 		{
-			Ruutu _target(pos->GetRivi() + 1, pos->GetSarake() + 2);
-			Siirto syoYlosOikea(_pos, _target, nappi);
-			lista.push_front(syoYlosOikea);
+			Siirto syo(_pos, _target, nappi);
+			lista.push_back(syo);
+			std::wcout << "Syötävä kohde : "; syo.TulostaRuudut(); std::wcout << "\n";
 		}
-	}
-
-	//Ratsu Yl�sVasen
-	if (asema->lauta[pos->GetRivi() - 1][pos->GetSarake() + 2] == nullptr) {
-		Ruutu _target(pos->GetRivi() - 1, pos->GetSarake() + 2);
-		Siirto ylosVasen(_pos, _target, nappi);
-		lista.push_front(ylosVasen);
-	}
-	else if (asema->lauta[pos->GetRivi() - 1][pos->GetSarake() + 2] != nullptr) 
-	{
-		if (asema->lauta[pos->GetRivi() - 1][pos->GetSarake() + 2]->GetVari() != vari)
+		//Jos liike pysyy rajojen sisällä ja kohteessa on tyhjäpaikka liiku paikkaan ja aseta siirto 
+		else if (tx <= 7 && ty <= 7 && tx >= 0 && ty >= 0 && asema->lauta[tx][ty] == nullptr) 
 		{
-			Ruutu _target(pos->GetRivi() - 1, pos->GetSarake() + 2);
-			Siirto syoYlosVasen(_pos, _target, nappi);
-			lista.push_front(syoYlosVasen);
-		}
-	}
+			Siirto liiku(_pos, _target, nappi);
+			lista.push_back(liiku);
+			std::wcout << "Mahdollinen liike : "; liiku.TulostaRuudut(); std::wcout << "\n";
 
-	//Ratsu AlasVasen
-	if (asema->lauta[pos->GetRivi() - 1][pos->GetSarake() - 2] == nullptr) {
-		Ruutu _target(pos->GetRivi() - 1, pos->GetSarake() - 2);
-		Siirto alasVasen(_pos, _target, nappi);
-		lista.push_front(alasVasen);
-	}
-	else if (asema->lauta[pos->GetRivi() - 1][pos->GetSarake() - 2] != nullptr) 
-	{
-		if (asema->lauta[pos->GetRivi() - 1][pos->GetSarake() - 2]->GetVari() != vari) 
+		}
+		else if (tx <= 7 && ty <= 7 && tx >= 0 && ty >= 0 && asema->lauta[tx][ty] != nullptr && asema->lauta[tx][ty]->GetVari() == vari)
 		{
-			Ruutu _target(pos->GetRivi() - 1, pos->GetSarake() - 2);
-				Siirto syoAlasVasen(_pos, _target, nappi);
-				lista.push_front(syoAlasVasen);
+			std::wcout << "Kohteessa on omaUkkeli kohde x : " << tx << " kohde y : " << ty << std::endl;
 		}
-	}
-	//Ratsu AlasOikea
-	if (asema->lauta[pos->GetRivi() + 1][pos->GetSarake() - 2] == nullptr) {
-		Ruutu _target(pos->GetRivi() + 1, pos->GetSarake() - 2);
-		Siirto alasOikea(_pos, _target, nappi);
-		lista.push_front(alasOikea);
-	}
-	else if (asema->lauta[pos->GetRivi() + 1][pos->GetSarake() - 2] != nullptr) 
-	{
-		if (asema->lauta[pos->GetRivi() + 1][pos->GetSarake() - 2]->GetVari() != vari) {
-			Ruutu _target(pos->GetRivi() + 1, pos->GetSarake() - 2);
-			Siirto syoAlasOikea(_pos, _target, nappi);
-			lista.push_front(syoAlasOikea);
-		}
-	}
-
-	//Ratsu OikealleYl�s
-	if (asema->lauta[pos->GetRivi() + 2][pos->GetSarake() + 1] == nullptr) {
-		Ruutu _target(pos->GetRivi() + 2, pos->GetSarake() + 1);
-		Siirto oikeaYlos(_pos, _target, nappi);
-		lista.push_front(oikeaYlos);
-	}
-	else if (asema->lauta[pos->GetRivi() + 2][pos->GetSarake() + 1] != nullptr) 
-	{
-		if (asema->lauta[pos->GetRivi() + 2][pos->GetSarake() + 1]->GetVari() != vari) 
+		else 
 		{
-			Ruutu _target(pos->GetRivi() + 2, pos->GetSarake() + 1);
-			Siirto syoOikeaYlos(_pos, _target, nappi);
-			lista.push_front(syoOikeaYlos);
+			std::wcout << "Meni ylilaidan kohde x : " << tx << " kohde y : " << ty  << std::endl;
 		}
 	}
 
-	//Ratsu VasenYl�s
-	if (asema->lauta[pos->GetRivi() - 2][pos->GetSarake() + 1] == nullptr) {
-		Ruutu _target(pos->GetRivi() - 2, pos->GetSarake() + 1);
-		Siirto vasenYlos(_pos, _target, nappi);
-		lista.push_front(vasenYlos);
-	}
-	else if(asema->lauta[pos->GetRivi() - 2][pos->GetSarake() + 1] != nullptr) 
-	{
-		if (asema->lauta[pos->GetRivi() - 2][pos->GetSarake() + 1]->GetVari() != vari) {
-			Ruutu _target(pos->GetRivi() - 2, pos->GetSarake() + 1);
-			Siirto syoVasenYlos(_pos, _target, nappi);
-			lista.push_front(syoVasenYlos);
-		}
-	}
+	std::wcout << "<<<<<<RATSUN SIIRROT LOPPUU>>>>>> " << std::endl << std::endl;
 
-	//Ratsu VasenAlas
-	if (asema->lauta[pos->GetRivi() - 2][pos->GetSarake() -1] == nullptr) {
-		Ruutu _target(pos->GetRivi() - 2, pos->GetSarake() -1);
-		Siirto vasenAlas(_pos, _target, nappi);
-		lista.push_front(vasenAlas);
-	}
-	else if (asema->lauta[pos->GetRivi() - 2][pos->GetSarake() - 1] != nullptr)
-	{
-		if (asema->lauta[pos->GetRivi() - 2][pos->GetSarake() - 1]->GetVari() != vari)
-		{
-			Ruutu _target(pos->GetRivi() - 2, pos->GetSarake() - 1);
-				Siirto syoVasenAlas(_pos, _target, nappi);
-				lista.push_front(syoVasenAlas);
-		}
-	}
-
-	//Ratsu OikeaAlas
-	if (asema->lauta[pos->GetRivi() + 2][pos->GetSarake() - 1] == nullptr) {
-		Ruutu _target(pos->GetRivi() + 2, pos->GetSarake() - 1);
-		Siirto oikeaAlas(_pos, _target, nappi);
-		lista.push_front(oikeaAlas);
-	}
-	else if (asema->lauta[pos->GetRivi() + 2][pos->GetSarake() - 1] != nullptr) 
-	{
-		if (asema->lauta[pos->GetRivi() + 2][pos->GetSarake() - 1]->GetVari() != vari) 
-		{
-			Ruutu _target(pos->GetRivi() + 2, pos->GetSarake() - 1);
-				Siirto syoOikeaAlas(_pos, _target, nappi);
-				lista.push_front(syoOikeaAlas);
-		}
-	}
 }

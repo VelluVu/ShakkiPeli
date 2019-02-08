@@ -42,16 +42,15 @@ Asema::Asema()
 	lauta[0][6] = new Ratsu(L"\u265E", 1, MR);
 	lauta[0][7] = new Torni(L"\u265C", 1, MT);
 	*/
+
 	onkoMustaDTLiikkunut = false;
 	onkoMustaKTLiikkunut = false;
 	onkoValkeaDTLiikkunut = false;
 	onkoValkeaKTLiikkunut = false;
 	onkoValkeaKuningasLiikkunut = false;
 	onkoMustaKuningasLiikkunut = false;
-	//vanha malli...
-
-	//alusta valkoiset nappulat
 	
+	//alusta valkoiset nappulat
 	vs = new Sotilas(L"\u2659", 0, VS);
 	vt = new Torni(L"\u2656", 0, VT);
 	vr = new Ratsu(L"\u2658", 0, VR);
@@ -62,20 +61,19 @@ Asema::Asema()
 	//Aseta ne Asemaan
 	for (size_t i = 0; i < 8; i++)
 	{
-		lauta[6][i] = vs;
+		lauta[i][1] = vs;
 	}
 	
+	lauta[0][0] = vt;
+	lauta[1][0] = vr;
+	lauta[2][0] = vl;
+	lauta[3][0] = vk;
+	lauta[4][0] = vd;
+	lauta[5][0] = vl;
+	lauta[6][0] = vr;
 	lauta[7][0] = vt;
-	lauta[7][1] = vr;
-	lauta[7][2] = vl;
-	lauta[7][3] = vk;
-	lauta[7][4] = vd;
-	lauta[7][5] = vl;
-	lauta[7][6] = vr;
-	lauta[7][7] = vt;
 
 	//alusta mustat nappulat
-	
 	ms = new Sotilas(L"\u265F", 1, MS);
 	mt = new Torni(L"\u265C", 1, MT);
 	mr = new Ratsu(L"\u265E", 1, MR);
@@ -86,16 +84,16 @@ Asema::Asema()
 	//Aseta ne Asemaan
 	for (size_t i = 0; i < 8; i++)
 	{
-		lauta[1][i] = ms;
+		lauta[i][6] = ms;
 	}
-	lauta[0][0] = mt;
-	lauta[0][1] = mr;
-	lauta[0][2] = ml;
-	lauta[0][3] = mk;
-	lauta[0][4] = md;
-	lauta[0][5] = ml;
-	lauta[0][6] = mr;
 	lauta[0][7] = mt;
+	lauta[1][7] = mr;
+	lauta[2][7] = ml;
+	lauta[3][7] = mk;
+	lauta[4][7] = md;
+	lauta[5][7] = ml;
+	lauta[6][7] = mr;
+	lauta[7][7] = mt;
 	
 }
 
@@ -122,7 +120,7 @@ Asema::~Asema()
 void Asema::PaivitaAsema(Siirto* siirto)
 {
 	//Näin pääset siirtoon ja ruutuihin käsiksi...
-	siirto->TulostaRuudut();
+
 	std::list<Siirto> laillisetSiirrot;
 	
 	
@@ -374,19 +372,22 @@ void Asema::SetSiirtovuoro(int vari)
 void Asema::AnnaLaillisetSiirrot(std::list<Siirto>& lista)
 {
 	
-	for (int x = 0; x < 8; x++)
+	for (int y = 0; y < 8; y++)
 	{
-		for (int y = 0; y < 8; y++)
+		for (int x = 0; x < 8; x++)
 		{
 			if (lauta[x][y] != nullptr)
 			{			
-				
+					
 					Ruutu pos(x, y);
+					std::wcout << "alkuPosX : " << x << " alkuPosY : " << y << std::endl;
+					//hmmmm
+					std::wcout << lauta[x][y]->GetVari() << " " << lauta[x][y]->GetKoodi() << " " << lauta[x][y]->GetUnicode() << std::endl;
 					Asema* asema = this;
-					int temp = lauta[x][y]->GetVari();
-					//std::wcout << lauta[pos.GetRivi()][pos.GetSarake()] << st::dendl;
-					lauta[x][y]->AnnaSiirrot(lista, &pos, asema, temp);
-					//std::wcout << lauta[x][y]->GetVari() << " " << lauta[x][y]->GetKoodi() << " " << lauta[x][y]->GetUnicode() << std::endl;
+					int tempColor = lauta[x][y]->GetVari();
+					
+					lauta[x][y]->AnnaSiirrot(lista, &pos, asema, tempColor);
+					
 							
 			}
 		}

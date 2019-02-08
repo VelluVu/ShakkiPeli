@@ -7,7 +7,7 @@ class Siirto
 private:
 	Ruutu alkuRuutu;
 	Ruutu loppuRuutu;
-	wchar_t napinEtumerkki;
+	wchar_t _nappi;
 	int miksiKorotetaan = 0;
 	bool lyhytLinna;
 	bool pitkaLinna;

@@ -6,8 +6,13 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 {
 	//nappi on ite lis�tty voi olla k�ytt�� en tii�...
 	wchar_t nappi = 'S';
-	Ruutu _pos(pos->GetRivi(), pos->GetSarake());
-	Ruutu _target(pos->GetRivi(), pos->GetSarake());
+	int x = pos->GetSarake();
+	int y = pos->GetRivi();
+	Ruutu _pos(x, y);
+
+	//valkoisen sotilaan siirrot
+	int _tx[4] = { 0, 0, 1, -1};
+	int _ty[4] = { 1, 0, 1, 1 };
 
 	//testataan onko perusliikkeell� estett�, jos ei niin laitetaan mahdollinen siirto listaan.
 	if (vari == 0 && asema->lauta[pos->GetRivi() + 1][pos->GetSarake()] == nullptr)

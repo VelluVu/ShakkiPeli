@@ -6,7 +6,7 @@ private:
 	int rivi;
 
 public:
-	Ruutu(int rivi, int sarake);
+	Ruutu(int sarake, int rivi);
 	Ruutu();
 	int GetRivi();
 	int GetSarake();
