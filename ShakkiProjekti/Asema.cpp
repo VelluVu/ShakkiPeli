@@ -371,27 +371,34 @@ void Asema::SetSiirtovuoro(int vari)
 
 void Asema::AnnaLaillisetSiirrot(std::list<Siirto>& lista)
 {
-	
-	for (int y = 0; y < 8; y++)
+	for (int y = 7; y >= 0; y--)
 	{
 		for (int x = 0; x < 8; x++)
 		{
-			if (lauta[x][y] != nullptr)
-			{			
-					
-					Ruutu pos(x, y);
-					std::wcout << "alkuPosX : " << x << " alkuPosY : " << y << std::endl;
-					//hmmmm
-					std::wcout << lauta[x][y]->GetVari() << " " << lauta[x][y]->GetKoodi() << " " << lauta[x][y]->GetUnicode() << std::endl;
-					Asema* asema = this;
-					int tempColor = lauta[x][y]->GetVari();
-					
-					lauta[x][y]->AnnaSiirrot(lista, &pos, asema, tempColor);
-					
-							
+			//käydään lauta läpi ja katsotaan onko nappula siirtovuorossa olevan nappula
+			if (lauta[x][y] != nullptr && lauta[x][y]->GetVari() == siirtovuoro)
+			{
+				
+				Ruutu pos(x, y);
+				std::wcout << "alkuPosX : " << x << " alkuPosY : " << y << std::endl;		
+				std::wcout << "Väri:" << lauta[x][y]->GetVari() << " enum:" << lauta[x][y]->GetKoodi() << " " << lauta[x][y]->GetUnicode() << std::endl;
+				Asema* asema = this;
+				int tempColor = lauta[x][y]->GetVari();
+
+				lauta[x][y]->AnnaSiirrot(lista, &pos, asema, tempColor);
 			}
 		}
 	}
+	
+	//luodaan SIIRTO iteraattori listalle printtausta varten
+	std::list<Siirto>::iterator it;
+	//printataan lista
+	std::wcout << "KAIKKI MAHDOLLISET SIIRROT: " << std::endl;
+	for (it = lista.begin(); it != lista.end(); it++)
+	{
+		it->TulostaRuudut();
+	}
+
 }
 
 bool Asema::GetOnkoValkeaKuningasLiikkunut()

@@ -3,7 +3,7 @@
 
 void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int vari)
 {
-	std::wcout << "<<<<<<TORNIN SIIRROT>>>>>> " << std::endl << std::endl;
+	std::wcout << "<<<<<<TORNIN SIIRROT>>>>>> " << std::endl;
 
 	wchar_t nappi = 'T';
 	int x = pos->GetSarake();
@@ -32,7 +32,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 		{		
 			Siirto syoOikealle(_pos, _target, nappi);
 			lista.push_back(syoOikealle);
-			std::wcout << "Syö nappi oikealle : "; syoOikealle.TulostaRuudut(); std::wcout << "\n";
+			std::wcout << "Syö nappi oikealle : "; syoOikealle.TulostaRuudut();
 			break;
 		}
 
@@ -48,7 +48,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 		{		
 			Siirto liikuOikealle(_pos, _target, nappi);
 			lista.push_back(liikuOikealle);
-			std::wcout << "Liiku Oikealle : "; liikuOikealle.TulostaRuudut(); std::wcout << "\n";
+			std::wcout << "Liiku Oikealle : "; liikuOikealle.TulostaRuudut();
 			continue;
 		}
 	}
@@ -75,7 +75,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 			{
 				Siirto syoVasemmalle(_pos, _target, nappi);
 				lista.push_back(syoVasemmalle);
-				std::wcout << "Syö nappi Vasemmalle : "; syoVasemmalle.TulostaRuudut(); std::wcout << "\n";
+				std::wcout << "Syö nappi Vasemmalle : "; syoVasemmalle.TulostaRuudut();
 				break;
 			}
 
@@ -91,7 +91,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 			{
 				Siirto liikuVasemmalle(_pos, _target, nappi);
 				lista.push_back(liikuVasemmalle);
-				std::wcout << "Liiku Vasemmalle : "; liikuVasemmalle.TulostaRuudut(); std::wcout << "\n";
+				std::wcout << "Liiku Vasemmalle : "; liikuVasemmalle.TulostaRuudut();
 				continue;
 			}
 	}
@@ -117,7 +117,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 			{
 				Siirto syoYlos(_pos, _target, nappi);
 				lista.push_back(syoYlos);
-				std::wcout << "Syö nappi Ylös : "; syoYlos.TulostaRuudut(); std::wcout << "\n";
+				std::wcout << "Syö nappi Ylös : "; syoYlos.TulostaRuudut();
 				break;
 			}
 			//ei voida liikkua ylös koska oma nappi on edessä!
@@ -131,7 +131,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 			{
 				Siirto liikuYlos(_pos, _target, nappi);
 				lista.push_back(liikuYlos);
-				std::wcout << "Liiku Ylös : "; liikuYlos.TulostaRuudut(); std::wcout << "\n";
+				std::wcout << "Liiku Ylös : "; liikuYlos.TulostaRuudut();
 				continue;
 			}
 	}
@@ -157,7 +157,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 		{
 			Siirto syoAlas(_pos, _target, nappi);
 			lista.push_back(syoAlas);
-			std::wcout << "Syö nappi Alas : "; syoAlas.TulostaRuudut(); std::wcout << "\n";
+			std::wcout << "Syö nappi Alas : "; syoAlas.TulostaRuudut();
 			break;
 		}
 
@@ -173,7 +173,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 		{		
 			Siirto liikuVasemmalle(_pos, _target, nappi);
 			lista.push_back(liikuVasemmalle);
-			std::wcout << "Liiku Alas : "; liikuVasemmalle.TulostaRuudut(); std::wcout << "\n";
+			std::wcout << "Liiku Alas : "; liikuVasemmalle.TulostaRuudut();
 			continue;
 		}
 	}

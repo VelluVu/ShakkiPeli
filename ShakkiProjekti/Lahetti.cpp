@@ -3,7 +3,8 @@
 
 void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int vari)
 {
-	std::wcout << "<<<<<<LÄHETIN SIIRROT>>>>>> " << std::endl << std::endl;
+
+	std::wcout << "<<<<<<LÄHETIN SIIRROT>>>>>> " << std::endl;
 
 	wchar_t nappi = 'L';
 	int x = pos->GetSarake();
@@ -34,7 +35,7 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Siirto syoOikealleYlos(_pos, _target, nappi);
 			lista.push_back(syoOikealleYlos);
-			std::wcout << "Syö nappi Oikea yläviisto : "; syoOikealleYlos.TulostaRuudut(); std::wcout << "\n";
+			std::wcout << "Syö nappi Oikea yläviisto : "; syoOikealleYlos.TulostaRuudut();
 			break;
 		}
 
@@ -50,7 +51,7 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Siirto liikuOikealleYlos(_pos, _target, nappi);
 			lista.push_back(liikuOikealleYlos);
-			std::wcout << "Liiku Oikeaan yläviistoon : "; liikuOikealleYlos.TulostaRuudut(); std::wcout << "\n";
+			std::wcout << "Liiku Oikeaan yläviistoon : "; liikuOikealleYlos.TulostaRuudut();
 			continue;
 		}
 	}
@@ -77,7 +78,7 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Siirto syoVasemmalleYlos(_pos, _target, nappi);
 			lista.push_back(syoVasemmalleYlos);
-			std::wcout << "Syö nappi Vasen yläviisto : "; syoVasemmalleYlos.TulostaRuudut(); std::wcout << "\n";
+			std::wcout << "Syö nappi Vasen yläviisto : "; syoVasemmalleYlos.TulostaRuudut();
 			break;
 		}
 
@@ -93,7 +94,7 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Siirto liikuVasemmalleYlos(_pos, _target, nappi);
 			lista.push_back(liikuVasemmalleYlos);
-			std::wcout << "Liiku Vasempaan yläviistoon : "; liikuVasemmalleYlos.TulostaRuudut(); std::wcout << "\n";
+			std::wcout << "Liiku Vasempaan yläviistoon : "; liikuVasemmalleYlos.TulostaRuudut();
 			continue;
 		}
 	}
@@ -120,7 +121,7 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Siirto syoVasemmalleAlas(_pos, _target, nappi);
 			lista.push_back(syoVasemmalleAlas);
-			std::wcout << "Syö nappi Vasen alaviisto : "; syoVasemmalleAlas.TulostaRuudut(); std::wcout << "\n";
+			std::wcout << "Syö nappi Vasen alaviisto : "; syoVasemmalleAlas.TulostaRuudut();
 			break;
 		}
 
@@ -136,7 +137,7 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Siirto liikuVasemmalleAlas(_pos, _target, nappi);
 			lista.push_back(liikuVasemmalleAlas);
-			std::wcout << "Liiku Vasempaan alaviistoon : "; liikuVasemmalleAlas.TulostaRuudut(); std::wcout << "\n";
+			std::wcout << "Liiku Vasempaan alaviistoon : "; liikuVasemmalleAlas.TulostaRuudut();
 			continue;
 		}
 	}
@@ -175,7 +176,7 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Siirto syoOikealleAlas(_pos, _target, nappi);
 			lista.push_back(syoOikealleAlas);
-			std::wcout << "Syö nappi Oikea-alaviisto : "; syoOikealleAlas.TulostaRuudut(); std::wcout << "\n";
+			std::wcout << "Syö nappi Oikea-alaviisto : "; syoOikealleAlas.TulostaRuudut();
 			break;
 		}
 
@@ -191,10 +192,10 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Siirto liikuOikealleAlas(_pos, _target, nappi);
 			lista.push_back(liikuOikealleAlas);
-			std::wcout << "Liiku Oikeaan alaviistoon : "; liikuOikealleAlas.TulostaRuudut(); std::wcout << "\n";
+			std::wcout << "Liiku Oikeaan alaviistoon : "; liikuOikealleAlas.TulostaRuudut();
 			continue;
 		}
-
-		std::wcout << "<<<<<<LÄHETIN SIIRROT LOPPUU>>>>>> " << std::endl << std::endl;
 	}
+
+	std::wcout << "<<<<<<LÄHETIN SIIRROT LOPPUU>>>>>> " << std::endl << std::endl;
 }
