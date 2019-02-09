@@ -32,7 +32,7 @@ Siirto::~Siirto()
 
 void Siirto::TulostaRuudut()
 {
-	std::wcout << "< Napin etumerkki=" << _nappi << " > < x=" << alkuRuutu.GetSarake() << " > < y=" << alkuRuutu.GetRivi() << " > < tx=" <<loppuRuutu.GetSarake() << " > < ty=" << loppuRuutu.GetRivi() << " >" << std::endl;
+	std::wcout << "< Napin etumerkki=" << _nappi << " > < x=" << alkuRuutu.GetSarake() << " ; y=" << alkuRuutu.GetRivi() << " > < tx=" <<loppuRuutu.GetSarake() << " ; ty=" << loppuRuutu.GetRivi() << " >" << std::endl;
 }
 
 Ruutu Siirto::GetAlkuRuutu()

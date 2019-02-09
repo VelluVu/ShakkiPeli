@@ -3,89 +3,47 @@
 
 void Kuningas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int vari)
 {
+
+	std::wcout << "<<<<<<KUNINKAAN SIIRROT>>>>>> " << std::endl;
+
 	wchar_t nappi = 'K';
-	Ruutu _pos(pos->GetRivi(), pos->GetSarake());
-	Ruutu _target(pos->GetRivi(), pos->GetSarake());
+	int x = pos->GetSarake();
+	int y = pos->GetRivi();
+	Ruutu _pos(x, y);
 
-	//Kuninkaan siirrot yl�puolelta
-	for (int i = -1; i < 2; i++)
+	int _tx[8] = {0, 1, 1, 1, 0, -1, -1, -1};
+	int _ty[8] = {1, 1, 0, -1, -1, -1, 0, 1};
+
+	for (int i = 0; i < 8; i++)
 	{
-		if (asema->lauta[pos->GetRivi() + 1][pos->GetSarake() + i] == nullptr ||
-			asema->lauta[pos->GetRivi() + 1][pos->GetSarake() + i]->GetVari() != vari) 
-		{
-			Ruutu _target(pos->GetRivi() + 1, pos->GetSarake() + i);
+		int tx = x + _tx[i];
+		int ty = y + _ty[i];
+		Ruutu _target(tx, ty);
 
-			if (asema->lauta[pos->GetRivi() + 1][pos->GetSarake() + i] != nullptr) {
-				if (asema->lauta[pos->GetRivi() + 1][pos->GetSarake() + i]->GetVari() != vari) {
-					Siirto syoYlos(_pos, _target, nappi);
-					lista.push_front(syoYlos);
-				}
-			}
-			else 
-			{
-				Siirto ylos(_pos, _target, nappi);
-				lista.push_front(ylos);
-			}
+		//Liikkuminen
+		if (asema->lauta[tx][ty] == nullptr && tx >= 0 && tx <= 7 && ty >= 0 && ty <= 7) 
+		{
+
+			Siirto kuningasLiiku(_pos, _target, nappi);
+			lista.push_back(kuningasLiiku);
+			std::wcout << "Kuningas liike  : "; kuningasLiiku.TulostaRuudut();
+
 		}
+		//Syönti
+		else if (asema->lauta[tx][ty] != nullptr && tx >= 0 && tx <= 7 && ty >= 0 && ty <= 7 && asema->lauta[tx][ty]->GetVari() != vari) 
+		{
+
+			Siirto kuningasSyo(_pos, _target, nappi);
+			lista.push_back(kuningasSyo);
+			std::wcout << "Kuningas syö  : "; kuningasSyo.TulostaRuudut();
+
+		}
+		else 
+		{
+			std::wcout << "Ei ole mahdollista liikettä kohteeseen xy: " << tx << ty << std::endl;
+		}
+
 	}
-	//Kuninkaan siirrot Alapuolelta
-	for (int i = -1; i < 2; i++)
-	{
-		if (asema->lauta[pos->GetRivi() - 1][pos->GetSarake() + i] == nullptr ||
-			asema->lauta[pos->GetRivi() - 1][pos->GetSarake() + i]->GetVari() != vari)
-		{
-			Ruutu _target(pos->GetRivi() - 1, pos->GetSarake() + i);
-
-			if (asema->lauta[pos->GetRivi() - 1][pos->GetSarake() + i] != nullptr) {
-				if (asema->lauta[pos->GetRivi() - 1][pos->GetSarake() + i]->GetVari() != vari) {
-					Siirto syoAlas(_pos, _target, nappi);
-					lista.push_front(syoAlas);
-				}
-			}
-			else
-			{
-				Siirto alas(_pos, _target, nappi);
-				lista.push_front(alas);
-			}
-		}
-	}
-
-	//Kuninkaan oikea
-	if (asema->lauta[pos->GetRivi()][pos->GetSarake() + 1] == nullptr ||
-		asema->lauta[pos->GetRivi()][pos->GetSarake() + 1]->GetVari() != vari) 
-	{
-		Ruutu _target(pos->GetRivi() , pos->GetSarake() + 1);
-
-		if (asema->lauta[pos->GetRivi()][pos->GetSarake() + 1] != nullptr) {
-			if (asema->lauta[pos->GetRivi()][pos->GetSarake() + 1]->GetVari() != vari) {
-				Siirto syoOikea(_pos, _target, nappi);
-				lista.push_front(syoOikea);
-			}
-		}
-		else
-		{
-			Siirto oikea(_pos, _target, nappi);
-			lista.push_front(oikea);
-		}
-	}
-
-	//Kuninkaan vasen
-	if (asema->lauta[pos->GetRivi()][pos->GetSarake() - 1] == nullptr ||
-		asema->lauta[pos->GetRivi()][pos->GetSarake() - 1]->GetVari() != vari)
-	{
-		Ruutu _target(pos->GetRivi(), pos->GetSarake() - 1);
-
-		if (asema->lauta[pos->GetRivi()][pos->GetSarake() - 1] != nullptr)
-		{
-			if (asema->lauta[pos->GetRivi()][pos->GetSarake() - 1]->GetVari() != vari) {
-				Siirto syoVasen(_pos, _target, nappi);
-				lista.push_front(syoVasen);
-			}
-		}
-		else
-		{
-			Siirto vasen(_pos, _target, nappi);
-			lista.push_front(vasen);
-		}
-	}
+	
+	std::wcout << "<<<<<<KUNINKAAN SIIRROT LOPPUU>>>>>> " << std::endl << std::endl;
 }
