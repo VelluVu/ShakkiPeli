@@ -113,8 +113,25 @@ Asema::~Asema()
 		{
 			delete [] lauta[x][y];
 		}
+	}	
+}
+
+Ruutu Asema::EtsiKuningas(int vari)
+{
+	for (int y = 7; y >= 0; y--)
+	{
+		for (int x = 0; x < 8; x++)
+		{
+			if (lauta[x][y]->GetKoodi() == VK || lauta[x][y]->GetKoodi() == MK) 
+			{
+				if (vari == lauta[x][y]->GetVari()) 
+				{
+					Ruutu pos(x,y);
+					return pos;
+				}
+			}
+		}
 	}
-	
 }
 
 void Asema::PaivitaAsema(Siirto* siirto)
@@ -446,5 +463,54 @@ bool Asema::GetOnkoMustaKTliikkunut()
 	if (onkoMustaKTLiikkunut) {
 		return true;
 	}
+	return false;
+}
+
+bool Asema::OnkoRuutuUhattu(Ruutu ruutu, std::list<Siirto>& siirrot)
+{
+	//siirto iteraattori listaan
+	std::list<Siirto>::iterator it;
+
+	//käydään siirtoja läpi ja testaillaan loppuruutuja, että osuuko parametrin ruutuun.
+	for (it = siirrot.begin(); it != siirrot.end(); it++)
+	{
+		//Selkeyttääkseni käytän target x ja target y
+		int tx = it->GetLoppuRuutu().GetSarake();
+		int ty = it->GetLoppuRuutu().GetRivi();
+
+		//Siirto on sotilaan! Tarkastetaan poikkeukset
+		if (it->GetNappi() == 'S') 
+		{
+			int x = it->GetAlkuRuutu().GetSarake();
+			int y = it->GetAlkuRuutu().GetRivi();
+
+			//sotilas on uhkaamassa ruutua viistoon.
+			if (tx > x && ruutu.GetSarake() == tx && ruutu.GetRivi() == ty || 
+				tx < x && ruutu.GetSarake() == tx && ruutu.GetRivi() == ty )
+			{
+				std::wcout << "Sotilas uhkaa ruutua! XY:" << ruutu.GetSarake() << ruutu.GetRivi() << std::endl;
+				return true;
+			}
+			//jos sotilas vain liikkuu niin ei uhkaa ruutua, koska sotilas ei osaa syödä eteen.
+			else 
+			{
+				//siirrytään seuraavaan iteraatioon
+				continue;
+			}
+		}
+		//Siirto ei ole sotilaan
+		else 
+		{
+			//Uhkaa ruutua
+			if (tx == ruutu.GetSarake() && ty == ruutu.GetRivi()) 
+			{
+				std::wcout << "Joku uhkaa ruutua! XY:" << ruutu.GetSarake() << ruutu.GetRivi() << std::endl;
+				return true;
+			}
+
+		}
+	}
+	//siirtoja ei ollu yhtään ei kai pitäs olla mahdollista
+	std::wcout << "EI OLE SIIRTOJA OLLENKAAN !!, JOKU MÄTTÄÄ!" << std::endl;
 	return false;
 }

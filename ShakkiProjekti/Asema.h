@@ -45,7 +45,7 @@ public:
 	Kuningatar* md;
 	
 	
-
+	Ruutu EtsiKuningas(int vari);
 	void PaivitaAsema(Siirto* siirto);
 	int GetSiirtovuoro();
 	void SetSiirtovuoro(int vari);
@@ -56,6 +56,7 @@ public:
 	bool GetOnkoValkeaKTliikkunut();
 	bool GetOnkoMustaDTliikkunut();
 	bool GetOnkoMustaKTliikkunut();
+	bool OnkoRuutuUhattu(Ruutu ruutu, std::list<Siirto>& siirrot);
 
 };
 
