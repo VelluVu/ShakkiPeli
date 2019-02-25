@@ -4,7 +4,7 @@
 void Kuningas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int vari)
 {
 
-	std::wcout << "<<<<<<KUNINKAAN SIIRROT>>>>>> " << std::endl;
+	//std::wcout << "<<<<<<KUNINKAAN SIIRROT>>>>>> " << std::endl;
 
 	wchar_t nappi = 'K';
 	int x = pos->GetSarake();
@@ -26,7 +26,7 @@ void Kuningas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, i
 
 			Siirto kuningasLiiku(_pos, _target, nappi);
 			lista.push_back(kuningasLiiku);
-			std::wcout << "Kuningas liike  : "; kuningasLiiku.TulostaRuudut();
+			//std::wcout << "Kuningas liike  : "; kuningasLiiku.TulostaRuudut();
 
 		}
 		//Syönti
@@ -35,15 +35,15 @@ void Kuningas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, i
 
 			Siirto kuningasSyo(_pos, _target, nappi);
 			lista.push_back(kuningasSyo);
-			std::wcout << "Kuningas syö  : "; kuningasSyo.TulostaRuudut();
+			//std::wcout << "Kuningas syö  : "; kuningasSyo.TulostaRuudut();
 
 		}
 		else 
 		{
-			std::wcout << "Ei ole mahdollista liikettä kohteeseen xy: " << tx << ty << std::endl;
+			//std::wcout << "Ei ole mahdollista liikettä kohteeseen xy: " << tx << ty << std::endl;
 		}
 
 	}
 	
-	std::wcout << "<<<<<<KUNINKAAN SIIRROT LOPPUU>>>>>> " << std::endl << std::endl;
+	//std::wcout << "<<<<<<KUNINKAAN SIIRROT LOPPUU>>>>>> " << std::endl << std::endl;
 }

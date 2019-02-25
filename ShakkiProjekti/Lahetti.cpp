@@ -4,15 +4,24 @@
 void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int vari)
 {
 
-	std::wcout << "<<<<<<LÄHETIN SIIRROT>>>>>> " << std::endl;
+	//std::wcout << "<<<<<<LÄHETIN SIIRROT>>>>>> " << std::endl;
 
-	wchar_t nappi = 'L';
 	int x = pos->GetSarake();
 	int y = pos->GetRivi();
-	Ruutu _pos(x, y);
-	std::wcout << "<AnnaSiirrot>AlkuPositio x : " << x << " <AnnaSiirrot>AlkuPositio y : " << y << std::endl;
+	wchar_t nappi;
 
-	std::wcout << "Liikkeet Oikealle Yläviistoon: " << std::endl;
+	if (asema->lauta[x][y]->GetKoodi() == VD || asema->lauta[x][y]->GetKoodi() == MD) {
+		nappi = 'D';
+	}
+	else
+	{
+		nappi = 'L';
+	}
+
+	Ruutu _pos(x, y);
+	//std::wcout << "<AnnaSiirrot>AlkuPositio x : " << x << " <AnnaSiirrot>AlkuPositio y : " << y << std::endl;
+
+	//std::wcout << "Liikkeet Oikealle Yläviistoon: " << std::endl;
 	
 	//L�hetin liike oikealle yl�sviistoon
 	for (int i = 1; i <= 7; i++)
@@ -22,11 +31,11 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		int ty = y + i;
 		Ruutu _target(tx, ty);
 
-		std::wcout << "target positio x : " << tx << " target positio y : " << ty << std::endl;
+		//std::wcout << "target positio x : " << tx << " target positio y : " << ty << std::endl;
 
 		// mennäänkö yli laudan oikeastareunasta tai yläreunasta?
 		if (tx > 7 || ty > 7) {
-			std::wcout << "Laita tuli vastaan" << std::endl;
+			//std::wcout << "Laita tuli vastaan" << std::endl;
 			break;
 		}
 
@@ -35,14 +44,14 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Siirto syoOikealleYlos(_pos, _target, nappi);
 			lista.push_back(syoOikealleYlos);
-			std::wcout << "Syö nappi Oikea yläviisto : "; syoOikealleYlos.TulostaRuudut();
+			//std::wcout << "Syö nappi Oikea yläviisto : "; syoOikealleYlos.TulostaRuudut();
 			break;
 		}
 
 		//ei voida liikkua oikeaan yläviistoon koska oma nappi on edessä!
 		else if (asema->lauta[tx][ty] != nullptr && asema->lauta[tx][ty]->GetVari() == vari)
 		{
-			std::wcout << "Oikeassa yläviistossa on oma nappi " << std::endl;
+			//std::wcout << "Oikeassa yläviistossa on oma nappi " << std::endl;
 			break;
 		}
 
@@ -51,12 +60,12 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Siirto liikuOikealleYlos(_pos, _target, nappi);
 			lista.push_back(liikuOikealleYlos);
-			std::wcout << "Liiku Oikeaan yläviistoon : "; liikuOikealleYlos.TulostaRuudut();
+			//std::wcout << "Liiku Oikeaan yläviistoon : "; liikuOikealleYlos.TulostaRuudut();
 			continue;
 		}
 	}
 
-	std::wcout << "Liikkeet Vasemmalle Yläviistoon: " << std::endl;
+	//std::wcout << "Liikkeet Vasemmalle Yläviistoon: " << std::endl;
 	//L�hetin liike vasemmalle yl�sviistoon
 	for (int i = 1; i <= 7; i++)
 	{
@@ -65,11 +74,11 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		int ty = y + i;
 		Ruutu _target(tx, ty);
 
-		std::wcout << "target positio x : " << tx << " target positio y : " << ty << std::endl;
+		//std::wcout << "target positio x : " << tx << " target positio y : " << ty << std::endl;
 
 		// mennäänkö yli laudan vasemmastareunasta tai yläreunasta?
 		if (tx < 0 || ty > 7) {
-			std::wcout << "Laita tuli vastaan" << std::endl;
+			//std::wcout << "Laita tuli vastaan" << std::endl;
 			break;
 		}
 
@@ -78,14 +87,14 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Siirto syoVasemmalleYlos(_pos, _target, nappi);
 			lista.push_back(syoVasemmalleYlos);
-			std::wcout << "Syö nappi Vasen yläviisto : "; syoVasemmalleYlos.TulostaRuudut();
+			//std::wcout << "Syö nappi Vasen yläviisto : "; syoVasemmalleYlos.TulostaRuudut();
 			break;
 		}
 
 		//ei voida liikkua Vasemmassa yläviistoon koska oma nappi on edessä!
 		else if (asema->lauta[tx][ty] != nullptr && asema->lauta[tx][ty]->GetVari() == vari)
 		{
-			std::wcout << "Vasemmassa yläviistossa on oma nappi " << std::endl;
+			//std::wcout << "Vasemmassa yläviistossa on oma nappi " << std::endl;
 			break;
 		}
 
@@ -94,12 +103,12 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Siirto liikuVasemmalleYlos(_pos, _target, nappi);
 			lista.push_back(liikuVasemmalleYlos);
-			std::wcout << "Liiku Vasempaan yläviistoon : "; liikuVasemmalleYlos.TulostaRuudut();
+			//std::wcout << "Liiku Vasempaan yläviistoon : "; liikuVasemmalleYlos.TulostaRuudut();
 			continue;
 		}
 	}
 
-	std::wcout << "Liikkeet Vasemmalle Alasviistoon: " << std::endl;
+	//std::wcout << "Liikkeet Vasemmalle Alasviistoon: " << std::endl;
 	//L�hetin liike vasemmalle alasviistoon
 	for (int i = 1; i <= 7; i++)
 	{
@@ -108,11 +117,11 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		int ty = y - i;
 		Ruutu _target(tx, ty);
 
-		std::wcout << "target positio x : " << tx << " target positio y : " << ty << std::endl;
+		//std::wcout << "target positio x : " << tx << " target positio y : " << ty << std::endl;
 
 		//mennäänkö yli laudan vasemmastareunasta tai alareunasta?
 		if (tx < 0 || ty < 0) {
-			std::wcout << "Laita tuli vastaan" << std::endl;
+			//std::wcout << "Laita tuli vastaan" << std::endl;
 			break;
 		}
 
@@ -121,14 +130,14 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Siirto syoVasemmalleAlas(_pos, _target, nappi);
 			lista.push_back(syoVasemmalleAlas);
-			std::wcout << "Syö nappi Vasen alaviisto : "; syoVasemmalleAlas.TulostaRuudut();
+			//std::wcout << "Syö nappi Vasen alaviisto : "; syoVasemmalleAlas.TulostaRuudut();
 			break;
 		}
 
 		//ei voida liikkua Vasemmassa-alaviistoon koska oma nappi on edessä!
 		else if (asema->lauta[tx][ty] != nullptr && asema->lauta[tx][ty]->GetVari() == vari)
 		{
-			std::wcout << "Vasemmassa alaviistossa on oma nappi " << std::endl;
+			//std::wcout << "Vasemmassa alaviistossa on oma nappi " << std::endl;
 			break;
 		}
 
@@ -137,7 +146,7 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Siirto liikuVasemmalleAlas(_pos, _target, nappi);
 			lista.push_back(liikuVasemmalleAlas);
-			std::wcout << "Liiku Vasempaan alaviistoon : "; liikuVasemmalleAlas.TulostaRuudut();
+			//std::wcout << "Liiku Vasempaan alaviistoon : "; liikuVasemmalleAlas.TulostaRuudut();
 			continue;
 		}
 	}
@@ -154,7 +163,7 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 						 ? ty < 0
 	 */
 
-	std::wcout << "Liikkeet Oikealle Alaviistoon: " << std::endl;
+	 //std::wcout << "Liikkeet Oikealle Alaviistoon: " << std::endl;
 	//L�hetin liike Oikealle alasviistoon
 	for (int i = 1; i <= 7; i++)
 	{
@@ -163,11 +172,11 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		int ty = y - i;
 		Ruutu _target(tx, ty);
 
-		std::wcout << "target positio x : " << tx << " target positio y : " << ty << std::endl;
+		//std::wcout << "target positio x : " << tx << " target positio y : " << ty << std::endl;
 
 		//mennäänkö yli laudan oikeastareunasta tai alareunasta?
 		if (tx > 7 || ty < 0) {
-			std::wcout << "Laita tuli vastaan" << std::endl;
+			//std::wcout << "Laita tuli vastaan" << std::endl;
 			break;
 		}
 
@@ -176,14 +185,14 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Siirto syoOikealleAlas(_pos, _target, nappi);
 			lista.push_back(syoOikealleAlas);
-			std::wcout << "Syö nappi Oikea-alaviisto : "; syoOikealleAlas.TulostaRuudut();
+			//std::wcout << "Syö nappi Oikea-alaviisto : "; syoOikealleAlas.TulostaRuudut();
 			break;
 		}
 
 		//ei voida liikkua Oikeaan alaviistoon koska oma nappi on edessä!
 		else if (asema->lauta[tx][ty] != nullptr && asema->lauta[tx][ty]->GetVari() == vari)
 		{
-			std::wcout << "Oikeassa-alaviistossa on oma nappi " << std::endl;
+			//std::wcout << "Oikeassa-alaviistossa on oma nappi " << std::endl;
 			break;
 		}
 
@@ -192,10 +201,10 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 		{
 			Siirto liikuOikealleAlas(_pos, _target, nappi);
 			lista.push_back(liikuOikealleAlas);
-			std::wcout << "Liiku Oikeaan alaviistoon : "; liikuOikealleAlas.TulostaRuudut();
+			//std::wcout << "Liiku Oikeaan alaviistoon : "; liikuOikealleAlas.TulostaRuudut();
 			continue;
 		}
 	}
 
-	std::wcout << "<<<<<<LÄHETIN SIIRROT LOPPUU>>>>>> " << std::endl << std::endl;
+	//std::wcout << "<<<<<<LÄHETIN SIIRROT LOPPUU>>>>>> " << std::endl << std::endl;
 }

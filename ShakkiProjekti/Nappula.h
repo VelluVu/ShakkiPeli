@@ -23,7 +23,6 @@ private:
 public:
 	Nappula(std::wstring uni, int col, int code);
 	Nappula();
-	~Nappula();
 	void SetKoodi(int code);
 	int GetKoodi();
 	void SetUnicode(std::wstring uni);
@@ -31,6 +30,7 @@ public:
 	void SetVari(int col);
 	int GetVari();
 	virtual void AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int vari) = 0;
+	bool onkoLiikkunut;
 };
 
 

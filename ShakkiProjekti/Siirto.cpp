@@ -11,6 +11,12 @@ Siirto::Siirto(Ruutu pos, Ruutu target, wchar_t nappi)
 	lyhytLinna = false;
 	pitkaLinna = false;
 
+	siirtoT[0] = this->GetNappi();
+	siirtoT[1] = this->GetAlkuRuutu().GetSarake();
+	siirtoT[2] = this->GetAlkuRuutu().GetRivi();
+	siirtoT[3] = this->GetLoppuRuutu().GetSarake();
+	siirtoT[4] = this->GetLoppuRuutu().GetRivi();
+
 }
 
 Siirto::Siirto(bool lyhytLinna, bool pitkaLinna, wchar_t nappi)
@@ -33,6 +39,13 @@ Siirto::~Siirto()
 void Siirto::TulostaRuudut()
 {
 	std::wcout << "< Napin etumerkki=" << _nappi << " > < x=" << alkuRuutu.GetSarake() << " ; y=" << alkuRuutu.GetRivi() << " > < tx=" <<loppuRuutu.GetSarake() << " ; ty=" << loppuRuutu.GetRivi() << " >" << std::endl;
+}
+
+wchar_t* Siirto::GetSiirto()
+{
+
+	return siirtoT;
+
 }
 
 Ruutu Siirto::GetAlkuRuutu()

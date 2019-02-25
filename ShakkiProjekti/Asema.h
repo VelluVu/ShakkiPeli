@@ -25,7 +25,6 @@ public:
 	
 	//Konstruktori luo alkuaseman laudalle
 	Asema();
-	~Asema();
 
 	//Lauta [rivi] [sarake]
 	Nappula* lauta[8][8];
@@ -44,12 +43,12 @@ public:
 	Kuningas* mk;
 	Kuningatar* md;
 	
-	
 	Ruutu EtsiKuningas(int vari);
 	void PaivitaAsema(Siirto* siirto);
 	int GetSiirtovuoro();
 	void SetSiirtovuoro(int vari);
 	void AnnaLaillisetSiirrot(std::list<Siirto>& lista);
+	void AnnaRaakaSiirrot(std::list<Siirto>& lista);
 	bool GetOnkoValkeaKuningasLiikkunut();
 	bool GetOnkoMustaKuningasLiikkunut();
 	bool GetOnkoValkeaDTliikkunut();

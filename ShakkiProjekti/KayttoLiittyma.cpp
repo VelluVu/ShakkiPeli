@@ -81,35 +81,33 @@ Siirto KayttoLiittyma::AnnaVastustajanSiirto()
 		tyInput = siirto[4];
 	}
 
-	std::wcout << nappi << xInput << yInput << "-" << txInput << tyInput << std::endl;
-
 	//Vertaa inputdataa arrayn indexissä olevaan arvoon ja aseta indexi koordinaatin arvoksi
 	for (int i = 0; i < 8; i++)
 	{
 		if (arr[i] == xInput) {
 			x = i;
-			std::wcout << "x : " << x << std::endl;
+			//std::wcout << "x : " << x << std::endl;
 		}
 	}
 	for (int i = 0; i < 8; i++)
 	{
 		if (arrn[i] == yInput) {
 			y = i;
-			std::wcout << "y : " << y << std::endl;
+			//std::wcout << "y : " << y << std::endl;
 		}
 	}
 	for (int i = 0; i < 8; i++)
 	{
 		if (arr[i] == txInput) {
 			tx = i;
-			std::wcout << "target x : " << tx << std::endl;
+			//std::wcout << "target x : " << tx << std::endl;
 		}
 	}
 	for (int i = 0; i < 8; i++)
 	{
 		if (arrn[i] == tyInput) {
 			ty = i;
-			std::wcout << "target y : " << ty << std::endl;
+			//std::wcout << "target y : " << ty << std::endl;
 		}
 	}
 

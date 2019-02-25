@@ -97,37 +97,21 @@ Asema::Asema()
 	
 }
 
-
-Asema::~Asema()
-{
-
-	//Vanha malli
-
-	//Tyhjää kaikki muistipaikat
-	delete mk, md, vk, vd, vt, vr, vl, mt, mr, ml, vs, ms;
-
-	// Tyhjää paikat ja nullaa...
-	for (size_t x = 0; x < 8; x++)
-	{
-		for (size_t y = 0; y < 8; y++)
-		{
-			delete [] lauta[x][y];
-		}
-	}	
-}
-
 Ruutu Asema::EtsiKuningas(int vari)
 {
 	for (int y = 7; y >= 0; y--)
 	{
 		for (int x = 0; x < 8; x++)
 		{
-			if (lauta[x][y]->GetKoodi() == VK || lauta[x][y]->GetKoodi() == MK) 
+			if(lauta[x][y] != nullptr) 
 			{
-				if (vari == lauta[x][y]->GetVari()) 
+				if (lauta[x][y]->GetKoodi() == VK || lauta[x][y]->GetKoodi() == MK)
 				{
-					Ruutu pos(x,y);
-					return pos;
+					if (vari == lauta[x][y]->GetVari())
+					{
+						Ruutu pos(x, y);
+						return pos;
+					}
 				}
 			}
 		}
@@ -136,30 +120,7 @@ Ruutu Asema::EtsiKuningas(int vari)
 
 void Asema::PaivitaAsema(Siirto* siirto)
 {
-	//Näin pääset siirtoon ja ruutuihin käsiksi...
-
-	std::list<Siirto> laillisetSiirrot;
-	
-	
-	//Testataan siirtoa
-	//siirrä nappulaa ilman ihmellisempää jos loppupaikka on tyhjä
-	/*
-	if (siirto->OnkoLyhytLinna() == false && siirto->OnkoPitkaLinna() == false) {
-		if (lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] == nullptr) {
-			lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] = lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()];
-			lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()] = nullptr;
-		}
-		else if (lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()]->GetVari() != siirtovuoro) {
-			//jos vihu nii syöpoes...
-			lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] = nullptr;
-			lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()] = lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()];
-			lauta[siirto->GetAlkuRuutu().GetRivi()][siirto->GetAlkuRuutu().GetSarake()] = nullptr;
-		}
-		else if (lauta[siirto->GetLoppuRuutu().GetRivi()][siirto->GetLoppuRuutu().GetSarake()]->GetVari() == siirtovuoro) {
-			//ei voi liikkua oman päälle
-		}
-	}
-	*/
+	std::list<Siirto> siirtoLista;
 
 	//Testaa minkä napin siirto on kyseessä
 	switch (siirto->GetNappi())
@@ -172,12 +133,21 @@ void Asema::PaivitaAsema(Siirto* siirto)
 			//siirto on lyhytlinna
 			if (siirtovuoro == 0 && !GetOnkoValkeaKuningasLiikkunut() && !GetOnkoValkeaKTliikkunut()) {
 				std::wcout << "Valkoinen lyhytlinna onnistui!" << std::endl;
-			
+
+				lauta[4][0] = nullptr; 
+				lauta[6][0] = vk; 
+				lauta[7][0] = nullptr; 
+				lauta[5][0] = vt;
 
 			}
 			else if (siirtovuoro == 1 && !GetOnkoMustaKuningasLiikkunut() && !GetOnkoMustaKTliikkunut())
 			{
 				std::wcout << "Musta lyhytlinna onnistui!" << std::endl;
+
+				lauta[4][7] = nullptr; 
+				lauta[6][7] = mk; 
+				lauta[7][7] = nullptr;
+				lauta[5][7] = mt; 
 
 			}
 			else {
@@ -192,9 +162,18 @@ void Asema::PaivitaAsema(Siirto* siirto)
 			if (siirtovuoro == 0 && !GetOnkoValkeaKuningasLiikkunut() && GetOnkoValkeaDTliikkunut() && !GetOnkoValkeaKTliikkunut()) {
 				std::wcout << "Valkoinen pitkälinna onnistui!" << std::endl;
 
+				lauta[4][0] = nullptr; 
+				lauta[2][0] = vk;
+				lauta[0][0] = nullptr;
+				lauta[3][0] = vt;
 			}
 			else if (siirtovuoro == 1 && !GetOnkoMustaKuningasLiikkunut() && !GetOnkoMustaKTliikkunut() && GetOnkoMustaDTliikkunut()) {
 				std::wcout << "Musta pitkälinna onnistui!" << std::endl;
+
+				lauta[4][7] = nullptr;
+				lauta[2][7] = mk;
+				lauta[0][7] = nullptr;
+				lauta[3][7] = mt;
 
 			}
 			else {
@@ -206,23 +185,13 @@ void Asema::PaivitaAsema(Siirto* siirto)
 		if (siirtovuoro == 0) 
 		{
 
-			AnnaLaillisetSiirrot(laillisetSiirrot);
-			for (Siirto n : laillisetSiirrot)
-			{
-				n.TulostaRuudut();
-			}
-			std::wcout << std::endl;
+			AnnaLaillisetSiirrot(siirtoLista);
 
 			onkoValkeaKuningasLiikkunut = true;
 		}
 		else {
 
-			AnnaLaillisetSiirrot(laillisetSiirrot);
-			for (Siirto n : laillisetSiirrot)
-			{
-				n.TulostaRuudut();
-			}
-			std::wcout << std::endl;
+			AnnaLaillisetSiirrot(siirtoLista);
 
 			onkoMustaKuningasLiikkunut = true;
 		}
@@ -234,23 +203,13 @@ void Asema::PaivitaAsema(Siirto* siirto)
 
 		if (siirtovuoro == 0) {
 
-			AnnaLaillisetSiirrot(laillisetSiirrot);
-			for (Siirto n : laillisetSiirrot)
-			{
-				n.TulostaRuudut();
-			}
-			std::wcout << std::endl;
+			AnnaLaillisetSiirrot(siirtoLista);
 
 			onkoValkeaDTLiikkunut = true;
 		}
 		else {
 
-			AnnaLaillisetSiirrot(laillisetSiirrot);
-			for (Siirto n : laillisetSiirrot)
-			{
-				n.TulostaRuudut();
-			}
-			std::wcout << std::endl;
+			AnnaLaillisetSiirrot(siirtoLista);
 
 			onkoMustaDTLiikkunut = true;
 		}
@@ -260,23 +219,13 @@ void Asema::PaivitaAsema(Siirto* siirto)
 
 		if (siirtovuoro == 0) {
 
-			AnnaLaillisetSiirrot(laillisetSiirrot);
-			for (Siirto n : laillisetSiirrot)
-			{
-				n.TulostaRuudut();
-			}
-			std::wcout << std::endl;
-			
+			AnnaLaillisetSiirrot(siirtoLista);
+
 		}
 		else {
 
-			AnnaLaillisetSiirrot(laillisetSiirrot);
-			for (Siirto n : laillisetSiirrot)
-			{
-				n.TulostaRuudut();
-			}
-			std::wcout << std::endl;
-		
+			AnnaLaillisetSiirrot(siirtoLista);
+
 		}
 		break;
 	case 'R':
@@ -284,23 +233,13 @@ void Asema::PaivitaAsema(Siirto* siirto)
 
 		if (siirtovuoro == 0) {
 		
-			AnnaLaillisetSiirrot(laillisetSiirrot);
-			for (Siirto n : laillisetSiirrot)
-			{
-				n.TulostaRuudut();
-			}
-			std::wcout << std::endl;
+			AnnaLaillisetSiirrot(siirtoLista);
 
 		}
 		else {
 
-			AnnaLaillisetSiirrot(laillisetSiirrot);
-			for (Siirto n : laillisetSiirrot)
-			{
-				n.TulostaRuudut();
-			}
-			std::wcout << std::endl;
-			
+			AnnaLaillisetSiirrot(siirtoLista);
+
 		}
 		break;
 	case 'T':
@@ -310,24 +249,14 @@ void Asema::PaivitaAsema(Siirto* siirto)
 
 		if (siirtovuoro == 0) {
 
-			AnnaLaillisetSiirrot(laillisetSiirrot);
-			for (Siirto n : laillisetSiirrot)
-			{
-				n.TulostaRuudut();
-			}
-			std::wcout << std::endl;
+			AnnaLaillisetSiirrot(siirtoLista);
 
 			onkoValkeaKTLiikkunut = true;
 
 		}
 		else {
 
-			AnnaLaillisetSiirrot(laillisetSiirrot);
-			for (Siirto n : laillisetSiirrot)
-			{
-				n.TulostaRuudut();
-			}
-			std::wcout << std::endl;
+			AnnaLaillisetSiirrot(siirtoLista);
 
 			onkoMustaKTLiikkunut = true;
 		}
@@ -338,23 +267,13 @@ void Asema::PaivitaAsema(Siirto* siirto)
 		
 
 		if (siirtovuoro == 0) {
-
-			AnnaLaillisetSiirrot(laillisetSiirrot);
-			for (Siirto n : laillisetSiirrot)
-			{
-				n.TulostaRuudut();
-			}
-			std::wcout << std::endl;
+		
+			AnnaLaillisetSiirrot(siirtoLista);
 
 		}
 		else {
 		
-			AnnaLaillisetSiirrot(laillisetSiirrot);
-			for (Siirto n : laillisetSiirrot)
-			{
-				n.TulostaRuudut();
-			}
-			std::wcout << std::endl;
+			AnnaLaillisetSiirrot(siirtoLista);
 
 		}
 		break;
@@ -362,6 +281,22 @@ void Asema::PaivitaAsema(Siirto* siirto)
 		std::wcout << "Valitsit jonkun random, en tiiä... Laita se etumerkki eteen" << std::endl;
 		
 		break;
+	}
+
+	for (Siirto s : siirtoLista)
+	{
+		int x = s.GetAlkuRuutu().GetSarake();
+		int y = s.GetAlkuRuutu().GetRivi();
+		int tx = s.GetLoppuRuutu().GetSarake();
+		int ty = s.GetLoppuRuutu().GetRivi();
+
+		if (siirto->GetAlkuRuutu() == s.GetAlkuRuutu() && siirto->GetLoppuRuutu() == s.GetLoppuRuutu())
+		{		
+			lauta[x][y]->onkoLiikkunut = true;
+			lauta[s.GetLoppuRuutu().GetSarake()][s.GetLoppuRuutu().GetRivi()] = lauta[s.GetAlkuRuutu().GetSarake()][s.GetAlkuRuutu().GetRivi()];
+			lauta[s.GetAlkuRuutu().GetSarake()][s.GetAlkuRuutu().GetRivi()] = nullptr;	
+				
+		}
 	}
 
 	if (siirtovuoro == 0) {
@@ -388,6 +323,49 @@ void Asema::SetSiirtovuoro(int vari)
 
 void Asema::AnnaLaillisetSiirrot(std::list<Siirto>& lista)
 {
+	
+	AnnaRaakaSiirrot(lista);
+
+	Ruutu kuninkaanSijainti = EtsiKuningas(siirtovuoro);
+
+	//Tee kopio nykyisestä asemasta
+	Asema a;
+	Asema uusi;
+	uusi = a;
+	uusi = *this;
+
+	std::list<Siirto> laillisetSiirrot;
+
+	//Käydään läpi siirtoja, tee siirto uudessa asemassa
+	std::wcout << "KÄYDÄÄN LÄPI SIIRTOJA: " << std::endl;
+	
+	for (Siirto s : lista)
+	{		
+		
+		uusi.lauta[s.GetLoppuRuutu().GetSarake()][s.GetLoppuRuutu().GetRivi()] = uusi.lauta[s.GetAlkuRuutu().GetSarake()][s.GetAlkuRuutu().GetRivi()];
+		uusi.lauta[s.GetAlkuRuutu().GetSarake()][s.GetAlkuRuutu().GetRivi()] = nullptr;
+
+		//Generoi uuden aseman raakasiirrot
+		uusi.AnnaRaakaSiirrot(laillisetSiirrot);
+
+		if (OnkoRuutuUhattu(kuninkaanSijainti, laillisetSiirrot))
+		{	
+			lista.remove(s);	
+		}
+		
+	}
+	//tulosta vielä kaikki laillisetsiirrot
+	for (Siirto s : lista)
+	{
+		
+		s.TulostaRuudut();
+		
+	}
+}
+
+void Asema::AnnaRaakaSiirrot(std::list<Siirto>& lista)
+{
+
 	for (int y = 7; y >= 0; y--)
 	{
 		for (int x = 0; x < 8; x++)
@@ -395,27 +373,15 @@ void Asema::AnnaLaillisetSiirrot(std::list<Siirto>& lista)
 			//käydään lauta läpi ja katsotaan onko nappula siirtovuorossa olevan nappula
 			if (lauta[x][y] != nullptr && lauta[x][y]->GetVari() == siirtovuoro)
 			{
-				
-				Ruutu pos(x, y);
-				std::wcout << "alkuPosX : " << x << " alkuPosY : " << y << std::endl;		
-				std::wcout << "Väri:" << lauta[x][y]->GetVari() << " enum:" << lauta[x][y]->GetKoodi() << " " << lauta[x][y]->GetUnicode() << std::endl;
-				Asema* asema = this;
-				int tempColor = lauta[x][y]->GetVari();
 
-				lauta[x][y]->AnnaSiirrot(lista, &pos, asema, tempColor);
+				Ruutu pos(x, y);
+				//std::wcout << "alkuPosX : " << x << " alkuPosY : " << y << std::endl;
+				//std::wcout << "Väri:" << lauta[x][y]->GetVari() << " enum:" << lauta[x][y]->GetKoodi() << " " << lauta[x][y]->GetUnicode() << std::endl;
+				lauta[x][y]->AnnaSiirrot(lista, &pos, this, lauta[x][y]->GetVari());
+
 			}
 		}
 	}
-	
-	//luodaan SIIRTO iteraattori listalle printtausta varten
-	std::list<Siirto>::iterator it;
-	//printataan lista
-	std::wcout << "KAIKKI MAHDOLLISET SIIRROT: " << std::endl;
-	for (it = lista.begin(); it != lista.end(); it++)
-	{
-		it->TulostaRuudut();
-	}
-
 }
 
 bool Asema::GetOnkoValkeaKuningasLiikkunut()
@@ -468,25 +434,24 @@ bool Asema::GetOnkoMustaKTliikkunut()
 
 bool Asema::OnkoRuutuUhattu(Ruutu ruutu, std::list<Siirto>& siirrot)
 {
-	//siirto iteraattori listaan
-	std::list<Siirto>::iterator it;
 
 	//käydään siirtoja läpi ja testaillaan loppuruutuja, että osuuko parametrin ruutuun.
-	for (it = siirrot.begin(); it != siirrot.end(); it++)
+	for (Siirto s : siirrot)
 	{
 		//Selkeyttääkseni käytän target x ja target y
-		int tx = it->GetLoppuRuutu().GetSarake();
-		int ty = it->GetLoppuRuutu().GetRivi();
+		int tx = s.GetLoppuRuutu().GetSarake();
+		int ty = s.GetLoppuRuutu().GetRivi();
 
 		//Siirto on sotilaan! Tarkastetaan poikkeukset
-		if (it->GetNappi() == 'S') 
+		if (s.GetNappi() == 'S') 
 		{
-			int x = it->GetAlkuRuutu().GetSarake();
-			int y = it->GetAlkuRuutu().GetRivi();
+			int x = s.GetAlkuRuutu().GetSarake();
+			int y = s.GetAlkuRuutu().GetRivi();
 
 			//sotilas on uhkaamassa ruutua viistoon.
-			if (tx > x && ruutu.GetSarake() == tx && ruutu.GetRivi() == ty || 
-				tx < x && ruutu.GetSarake() == tx && ruutu.GetRivi() == ty )
+			//virhe..
+			if (tx == x + 1 && ruutu.GetSarake() == tx && ruutu.GetRivi() == ty || 
+				tx == x - 1 && ruutu.GetSarake() == tx && ruutu.GetRivi() == ty )
 			{
 				std::wcout << "Sotilas uhkaa ruutua! XY:" << ruutu.GetSarake() << ruutu.GetRivi() << std::endl;
 				return true;
@@ -494,7 +459,6 @@ bool Asema::OnkoRuutuUhattu(Ruutu ruutu, std::list<Siirto>& siirrot)
 			//jos sotilas vain liikkuu niin ei uhkaa ruutua, koska sotilas ei osaa syödä eteen.
 			else 
 			{
-				//siirrytään seuraavaan iteraatioon
 				continue;
 			}
 		}
@@ -510,7 +474,9 @@ bool Asema::OnkoRuutuUhattu(Ruutu ruutu, std::list<Siirto>& siirrot)
 
 		}
 	}
-	//siirtoja ei ollu yhtään ei kai pitäs olla mahdollista
-	std::wcout << "EI OLE SIIRTOJA OLLENKAAN !!, JOKU MÄTTÄÄ!" << std::endl;
+
+	std::wcout << "EI UHKAA RUUTUA!" << std::endl;
+
 	return false;
+
 }

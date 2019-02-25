@@ -3,15 +3,24 @@
 
 void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int vari)
 {
-	std::wcout << "<<<<<<TORNIN SIIRROT>>>>>> " << std::endl;
+	//std::wcout << "<<<<<<TORNIN SIIRROT>>>>>> " << std::endl;
 
-	wchar_t nappi = 'T';
 	int x = pos->GetSarake();
 	int y = pos->GetRivi();
+	wchar_t nappi;
+
+	if (asema->lauta[x][y]->GetKoodi() == VD || asema->lauta[x][y]->GetKoodi() == MD) {
+		nappi = 'D';
+	}
+	else 
+	{
+		nappi = 'T';
+	}
+
 	Ruutu _pos(x, y);
-	std::wcout << "<AnnaSiirrot>AlkuPositio x : " << x << " <AnnaSiirrot>AlkuPositio y : " <<  y << std::endl;
+	//std::wcout << "<AnnaSiirrot>AlkuPositio x : " << x << " <AnnaSiirrot>AlkuPositio y : " <<  y << std::endl;
 	
-	std::wcout << "Liikkeet Oikealle: " << std::endl;
+	//std::wcout << "Liikkeet Oikealle: " << std::endl;
 	//Tornien liike oikealle
 	for (int i = 1; i <= 7; i++)
 	{
@@ -19,11 +28,11 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 		Ruutu _target(x + i, y);
 		int tx = x + i;
 
-		std::wcout << "target positio x : " << tx << " target positio y : " << y << std::endl;
+		//std::wcout << "target positio x : " << tx << " target positio y : " << y << std::endl;
 
 		// mennäänkö yli laudan oikeastareunasta?
 		if (tx > 7) {
-			std::wcout << "Laita tuli vastaan" << std::endl;
+			//std::wcout << "Laita tuli vastaan" << std::endl;
 			break;
 		}
 
@@ -32,28 +41,28 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 		{		
 			Siirto syoOikealle(_pos, _target, nappi);
 			lista.push_back(syoOikealle);
-			std::wcout << "Syö nappi oikealle : "; syoOikealle.TulostaRuudut();
+			//std::wcout << "Syö nappi oikealle : "; syoOikealle.TulostaRuudut();
 			break;
 		}
 
 		//ei voida liikkua oikealle koska oma nappi on edessä!
 		else if (asema->lauta[tx][y] != nullptr && asema->lauta[tx][y]->GetVari() == vari)
 		{
-			std::wcout << "oikealla on oma nappi " << std::endl;
+			//std::wcout << "oikealla on oma nappi " << std::endl;
 			break;
 		}
 
 		//muuten liikkuu oikealle tallennetaan mahdollisiin siirtoihin ja jatka katsomaan seuraavaa ruutua
-		else 
+		else if (asema->lauta[tx][y] == nullptr)
 		{		
 			Siirto liikuOikealle(_pos, _target, nappi);
 			lista.push_back(liikuOikealle);
-			std::wcout << "Liiku Oikealle : "; liikuOikealle.TulostaRuudut();
+			//std::wcout << "Liiku Oikealle : "; liikuOikealle.TulostaRuudut();
 			continue;
 		}
 	}
 
-	std::wcout << "Liikkeet Vasemmalle: " << std::endl;
+	//std::wcout << "Liikkeet Vasemmalle: " << std::endl;
 	//Tornien liike vasemmalle
 	for (int i = 1; i <= 7; i++)
 	{
@@ -61,12 +70,12 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 			Ruutu _target(x - i, y);
 			int tx = x - i;
 
-			std::wcout << "target positio x : " << tx << " target positio y : " << y << std::endl;
+			//std::wcout << "target positio x : " << tx << " target positio y : " << y << std::endl;
 
 			//mennäänkö yli laudan vasemmastareunasta?
 			if (tx < 0) 
 			{
-				std::wcout << "Laita tuli vastaan" << std::endl;
+				//std::wcout << "Laita tuli vastaan" << std::endl;
 				break;
 			}
 
@@ -75,28 +84,28 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 			{
 				Siirto syoVasemmalle(_pos, _target, nappi);
 				lista.push_back(syoVasemmalle);
-				std::wcout << "Syö nappi Vasemmalle : "; syoVasemmalle.TulostaRuudut();
+				//std::wcout << "Syö nappi Vasemmalle : "; syoVasemmalle.TulostaRuudut();
 				break;
 			}
 
 			//ei voida liikkua vasemmalle koska oma nappi on edessä!
 			else if (asema->lauta[tx][y] != nullptr && asema->lauta[tx][y]->GetVari() == vari)
 			{
-				std::wcout << "Vasemmalla on oma nappi " << std::endl;
+				//std::wcout << "Vasemmalla on oma nappi " << std::endl;
 				break;
 			}
 
 			//muuten liikkuu vasemmalle tallennetaan mahdollisiin siirtoihin ja jatka katsomaan seuraavaa ruutua
-			else
+			else if (asema->lauta[tx][y] == nullptr)
 			{
 				Siirto liikuVasemmalle(_pos, _target, nappi);
 				lista.push_back(liikuVasemmalle);
-				std::wcout << "Liiku Vasemmalle : "; liikuVasemmalle.TulostaRuudut();
+				//std::wcout << "Liiku Vasemmalle : "; liikuVasemmalle.TulostaRuudut();
 				continue;
 			}
 	}
 	
-	std::wcout << "Liikkeet Ylös: " << std::endl;
+	//std::wcout << "Liikkeet Ylös: " << std::endl;
 	//Tornien liike Ylös
 	for (size_t i = 1; i <= 7; i++)
 	{
@@ -108,7 +117,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 			// mennäänkö yli laudan yläreunasta?
 			if (ty > 7) 
 			{
-				std::wcout << "Laita tuli vastaan" << std::endl;
+				//std::wcout << "Laita tuli vastaan" << std::endl;
 				break;
 			}
 
@@ -117,26 +126,26 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 			{
 				Siirto syoYlos(_pos, _target, nappi);
 				lista.push_back(syoYlos);
-				std::wcout << "Syö nappi Ylös : "; syoYlos.TulostaRuudut();
+				//std::wcout << "Syö nappi Ylös : "; syoYlos.TulostaRuudut();
 				break;
 			}
 			//ei voida liikkua ylös koska oma nappi on edessä!
 			else if (asema->lauta[x][ty] != nullptr && asema->lauta[x][ty]->GetVari() == vari)
 			{
-				std::wcout << "Yläpuolella on oma nappi " << std::endl;
+				//std::wcout << "Yläpuolella on oma nappi " << std::endl;
 				break;
 			}
 			//muuten liikkuu ylös tallennetaan mahdollisiin siirtoihin ja jatketaan katsomaan seuraavaa ruutua
-			else
+			else if (asema->lauta[x][ty] == nullptr)
 			{
 				Siirto liikuYlos(_pos, _target, nappi);
 				lista.push_back(liikuYlos);
-				std::wcout << "Liiku Ylös : "; liikuYlos.TulostaRuudut();
+				//std::wcout << "Liiku Ylös : "; liikuYlos.TulostaRuudut();
 				continue;
 			}
 	}
 
-	std::wcout << "Liikkeet Alas: " << std::endl;
+	//std::wcout << "Liikkeet Alas: " << std::endl;
 	//Tornien liike alas
 	for (size_t i = 1; i <= 7; i++)
 	{
@@ -148,7 +157,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 		// mennäänkö yli laudan alareunasta?
 		if (ty < 0) 
 		{
-			std::wcout << "Laita tuli vastaan" << std::endl;
+			//std::wcout << "Laita tuli vastaan" << std::endl;
 			break;
 		}
 
@@ -157,27 +166,27 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 		{
 			Siirto syoAlas(_pos, _target, nappi);
 			lista.push_back(syoAlas);
-			std::wcout << "Syö nappi Alas : "; syoAlas.TulostaRuudut();
+			//std::wcout << "Syö nappi Alas : "; syoAlas.TulostaRuudut();
 			break;
 		}
 
 		//ei voida liikkua alas koska oma nappi on edessä!
 		else if (asema->lauta[x][ty] != nullptr && asema->lauta[x][ty]->GetVari() == vari)
 		{
-			std::wcout << "Alapuolella on oma nappi " << std::endl;
+			//std::wcout << "Alapuolella on oma nappi " << std::endl;
 			break;
 		}
 
 		//muuten liikkuu alas tallennetaan mahdollisiin siirtoihin ja jatketaan katsomaan seuraavaa ruutua
-		else
+		else if (asema->lauta[x][ty] == nullptr)
 		{		
 			Siirto liikuVasemmalle(_pos, _target, nappi);
 			lista.push_back(liikuVasemmalle);
-			std::wcout << "Liiku Alas : "; liikuVasemmalle.TulostaRuudut();
+			//std::wcout << "Liiku Alas : "; liikuVasemmalle.TulostaRuudut();
 			continue;
 		}
 	}
 
 
-	std::wcout << "<<<<<<TORNIN SIIRROT LOPPUU>>>>>> " << std::endl << std::endl;
+	//std::wcout << "<<<<<<TORNIN SIIRROT LOPPUU>>>>>> " << std::endl << std::endl;
 }

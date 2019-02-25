@@ -9,6 +9,5 @@ public:
 	Sotilas(std::wstring uni, int col, int code) : Nappula(uni, col, code) {
 		onkoLiikkunut = false;
 	};
-	bool onkoLiikkunut;
 	bool OnkoSotilasLiikkunut();
 };

@@ -6,6 +6,7 @@ Nappula::Nappula(std::wstring uni, int col, int code)
 	unicode = uni;
 	vari = col;
 	_koodi = code;
+	onkoLiikkunut = false;
 
 }
 
@@ -47,9 +48,4 @@ void Nappula::SetVari(int col)
 int Nappula::GetVari()
 {
 	return vari;
-}
-
-
-Nappula::~Nappula()
-{
 }
