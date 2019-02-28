@@ -2,13 +2,14 @@
 #include "Ruutu.h"
 #include <iostream>
 
+class Nappula;
+
 class Siirto
 {
 private:
 	Ruutu alkuRuutu;
 	Ruutu loppuRuutu;
 	wchar_t _nappi;
-	int miksiKorotetaan = 0;
 	bool lyhytLinna;
 	bool pitkaLinna;
 	wchar_t siirtoT[5];
@@ -18,6 +19,7 @@ public:
 	Siirto(bool lyhytLinna, bool pitkaLinna, wchar_t nappi);
 	Siirto();
 	~Siirto();
+	Nappula* miksiKorotetaan = 0;
 	void TulostaRuudut();
 	wchar_t* GetSiirto();
 	Ruutu GetAlkuRuutu();
@@ -26,13 +28,12 @@ public:
 	wchar_t GetNappi();
 	bool OnkoLyhytLinna();
 	bool OnkoPitkaLinna();
-	bool operator==(const Siirto& siirto) const
+	bool operator==(const Siirto& siirto)
 	{		
 
-		if (&siirto != nullptr && siirtoT == siirto.siirtoT) {
-			return true;
-		}
-		return false;
+		return alkuRuutu == siirto.alkuRuutu && loppuRuutu == siirto.loppuRuutu &&
+			lyhytLinna == siirto.lyhytLinna && pitkaLinna == siirto.pitkaLinna;
+		
 	}
 };
 

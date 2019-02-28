@@ -32,7 +32,7 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 					Siirto liikuKaksi(_pos, _target, nappi);
 					lista.push_back(liikuKaksi);				
 					//std::wcout << "Liiku kaks : "; liikuKaksi.TulostaRuudut();
-					//muista asettaa booli trueksi sotilaan liikkumisen jälkeen
+					//muista asettaa booli trueksi sotilaan liikkumisen jälkeen päivitäasemassa
 				}
 				//jos ei ole indexi 2 niin aseta perussiirto listaan
 				else if(i == 0)

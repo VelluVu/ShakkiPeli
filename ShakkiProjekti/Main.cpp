@@ -4,24 +4,39 @@
 
 int main() {
 	
-	Asema* asema = new Asema();
-	KayttoLiittyma kayttis(asema);
-	kayttis.PiirraLauta();
-	kayttis.asema->SetSiirtovuoro(0);
+	Asema asema;
+	KayttoLiittyma kayttis(&asema);
+	asema.SetSiirtovuoro(0);
 	
 	std::wcout << "Valkoinen aloittaa. " << std::endl;
-	for (size_t i = 0; i < 50; i++)
+
+	for (size_t i = 0; i < 2; i++)
 	{
-		
-		kayttis.asema->PaivitaAsema(&kayttis.AnnaVastustajanSiirto());
+
 		//system("cls");
 		kayttis.PiirraLauta();
+		std::list<Siirto> siirtoLista;
+		asema.AnnaLaillisetSiirrot(siirtoLista);
+		std::wcout << siirtoLista.size() << " siirtoa" << std::endl;
+
+		Siirto s = kayttis.AnnaVastustajanSiirto();
+
+		while (std::find(siirtoLista.begin(), siirtoLista.end(), s) == siirtoLista.end())
+		{
+			s = kayttis.AnnaVastustajanSiirto();
+		}
+
+		asema.PaivitaAsema(&s);
+
+		if (asema.GetSiirtovuoro() == 0) 
+		{
+			asema.SetSiirtovuoro(1);
+		}
+		else {
+			asema.SetSiirtovuoro(0);
+		}
 	}
 
-
-	
-
 	system("Pause");
-	delete asema;
 	return 0;
 }

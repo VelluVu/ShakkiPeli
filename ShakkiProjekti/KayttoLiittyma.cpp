@@ -122,12 +122,7 @@ Siirto KayttoLiittyma::AnnaVastustajanSiirto()
 		std::wcout << "PitkäLinna" << std::endl;
 		return pitkaLinna;
 	}
-	//Testaa onko sotilas viimesellä rivillä
-	if (y == 6 && ty == 7 || y == 1 && ty == 0) {
-		//Korota sotilas...
-		std::wcout << "Korota sotilas" << std::endl;
-		 
-	}
+	
 	if (y == 1 && ty == 3 || y == 6 && ty == 4) {
 		//Sotilas liikkuu 2 ruutua
 		std::wcout << "Sotilas liikkuu 2 ruutua" << std::endl;
@@ -136,6 +131,38 @@ Siirto KayttoLiittyma::AnnaVastustajanSiirto()
 	Ruutu alku(x, y);
 	Ruutu end(tx, ty);
 	Siirto move(alku, end, nappi);
+
+	//Testaa onko sotilas viimesellä rivillä
+	if (y == 6 && ty == 7 || y == 1 && ty == 0)
+	{
+		wchar_t korotettuNappula;
+
+		//Korota sotilas...
+		std::wcout << "Korota sotilas (D/T/L/R)" << std::endl;
+		std::wcin >> korotettuNappula;
+
+		switch (korotettuNappula)
+		{
+		case 'D':
+			move.miksiKorotetaan = asema->vd;
+			break;
+
+		case 'T':
+			move.miksiKorotetaan = asema->vt;
+			break;
+
+		case 'L':
+			move.miksiKorotetaan = asema->vl;
+			break;
+
+		case 'R':
+			move.miksiKorotetaan = asema->vr;
+			break;
+
+		default:
+			break;
+		}
+	}
 
 	return move;
 }

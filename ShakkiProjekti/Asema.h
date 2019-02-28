@@ -48,7 +48,7 @@ public:
 	int GetSiirtovuoro();
 	void SetSiirtovuoro(int vari);
 	void AnnaLaillisetSiirrot(std::list<Siirto>& lista);
-	void AnnaRaakaSiirrot(std::list<Siirto>& lista);
+	void AnnaRaakaSiirrot(std::list<Siirto>& lista, int vari);
 	bool GetOnkoValkeaKuningasLiikkunut();
 	bool GetOnkoMustaKuningasLiikkunut();
 	bool GetOnkoValkeaDTliikkunut();
