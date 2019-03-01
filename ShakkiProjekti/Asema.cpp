@@ -11,38 +11,6 @@ Asema::Asema()
 		}
 	}
 
-	//Alusta valkoiset nappulat
-	/*
-	for (size_t i = 0; i < 8; i++)
-	{
-		lauta[6][i] = new Sotilas(L"\u2659", 0, VS);
-	}
-
-	lauta[7][0] = new Torni(L"\u2656", 0, VT);
-	lauta[7][1] = new Ratsu(L"\u2658", 0, VR);
-	lauta[7][2] = new Lahetti(L"\u2657", 0, VL);
-	lauta[7][3] = new Kuningatar(L"\u2655", 0, VD);
-	lauta[7][4] = new Kuningas(L"\u2654", 0, VK);
-	lauta[7][5] = new Lahetti(L"\u2656", 0, VL);
-	lauta[7][6] = new Ratsu(L"\u2658", 0, VR);
-	lauta[7][7] = new Torni(L"\u2656", 0, VT);
-
-	//Alusta mustat nappulat
-	for (size_t i = 0; i < 8; i++)
-	{
-		lauta[1][i] = new Sotilas(L"\u265F", 1, MS);
-	}
-
-	lauta[0][0] = new Torni(L"\u265C", 1, MT);
-	lauta[0][1] = new Ratsu(L"\u265E", 1, MR);
-	lauta[0][2] = new Lahetti(L"\u265D", 1, ML);
-	lauta[0][3] = new Kuningatar(L"\u265B", 1, MD);
-	lauta[0][4] = new Kuningas(L"\u265A", 1, MK);
-	lauta[0][5] = new Lahetti(L"\u265D", 1, ML);
-	lauta[0][6] = new Ratsu(L"\u265E", 1, MR);
-	lauta[0][7] = new Torni(L"\u265C", 1, MT);
-	*/
-
 	onkoMustaDTLiikkunut = false;
 	onkoMustaKTLiikkunut = false;
 	onkoValkeaDTLiikkunut = false;
@@ -131,32 +99,32 @@ void Asema::PaivitaAsema(Siirto* siirto)
 	switch (siirto->GetNappi())
 	{
 	case 'K':
-		std::wcout << "Valitsit Kuninkaan" << std::endl;
+		//std::wcout << "Valitsit Kuninkaan" << std::endl;
 
 		if (siirto->OnkoLyhytLinna())
 		{
 			//siirto on lyhytlinna
 			if (siirtovuoro == 0 && !GetOnkoValkeaKuningasLiikkunut() && !GetOnkoValkeaKTliikkunut()) {
 				std::wcout << "Valkoinen lyhytlinna onnistui!" << std::endl;
-				lauta[x][y]->onkoLiikkunut = true;
 				lauta[4][0] = nullptr;
 				lauta[6][0] = vk;
 				lauta[7][0] = nullptr;
 				lauta[5][0] = vt;
 
+				lauta[6][0]->onkoLiikkunut = true;
+				lauta[5][0]->onkoLiikkunut = true;
+
 			}
 			else if (siirtovuoro == 1 && !GetOnkoMustaKuningasLiikkunut() && !GetOnkoMustaKTliikkunut())
 			{
 				std::wcout << "Musta lyhytlinna onnistui!" << std::endl;
-				lauta[x][y]->onkoLiikkunut = true;
 				lauta[4][7] = nullptr;
 				lauta[6][7] = mk;
 				lauta[7][7] = nullptr;
 				lauta[5][7] = mt;
-
-			}
-			else {
-				std::wcout << "Lyhytlinna ei onnistunut!" << std::endl;
+				
+				lauta[6][7]->onkoLiikkunut = true;
+				lauta[5][7]->onkoLiikkunut = true;
 
 			}
 		}
@@ -172,7 +140,9 @@ void Asema::PaivitaAsema(Siirto* siirto)
 				lauta[2][0] = vk;
 				lauta[0][0] = nullptr;
 				lauta[3][0] = vt;
-				lauta[x][y]->onkoLiikkunut = true;
+
+				lauta[2][0]->onkoLiikkunut = true;
+				lauta[3][0]->onkoLiikkunut = true;
 			}
 			else if (siirtovuoro == 1 && !GetOnkoMustaKuningasLiikkunut() && !GetOnkoMustaKTliikkunut() && GetOnkoMustaDTliikkunut())
 			{
@@ -182,28 +152,24 @@ void Asema::PaivitaAsema(Siirto* siirto)
 				lauta[2][7] = mk;
 				lauta[0][7] = nullptr;
 				lauta[3][7] = mt;
-				lauta[x][y]->onkoLiikkunut = true;
+
+				lauta[2][7]->onkoLiikkunut = true;
+				lauta[3][7]->onkoLiikkunut = true;
 			}
-			else
-			{
-
-				std::wcout << "Pitkälinna ei onnistunut!" << std::endl;
-
-			}
-
+			
 			if (!siirto->OnkoPitkaLinna() || !siirto->OnkoLyhytLinna())
 			{
 				lauta[tx][ty] = lauta[x][y];
 				lauta[x][y] = nullptr;
 
-				if (siirtovuoro == 0 && !lauta[x][y]->onkoLiikkunut)
+				if (siirtovuoro == 0 && !lauta[tx][ty]->onkoLiikkunut)
 				{
-					lauta[x][y]->onkoLiikkunut = true;
+					lauta[tx][ty]->onkoLiikkunut = true;
 					onkoValkeaKuningasLiikkunut = true;
 				}
 				else 
 				{
-					lauta[x][y]->onkoLiikkunut = true;
+					lauta[tx][ty]->onkoLiikkunut = true;
 					onkoMustaKuningasLiikkunut = true;
 				}
 			}
@@ -212,78 +178,81 @@ void Asema::PaivitaAsema(Siirto* siirto)
 		break;
 
 	case 'D':
-		std::wcout << "Valitsit Daamin" << std::endl;
+		//std::wcout << "Valitsit Daamin" << std::endl;
 		
 		lauta[tx][ty] = lauta[x][y];
 		lauta[x][y] = nullptr;
 		
-		if (siirtovuoro == 0 && !lauta[x][y]->onkoLiikkunut) 
+		if (siirtovuoro == 0 && !lauta[tx][ty]->onkoLiikkunut) 
 		{
-			lauta[x][y]->onkoLiikkunut = true;
+			lauta[tx][ty]->onkoLiikkunut = true;
 			onkoValkeaDTLiikkunut = true;
 		}
-		else 
+		else
 		{
-			lauta[x][y]->onkoLiikkunut = true;
+			lauta[tx][ty]->onkoLiikkunut = true;
 			onkoMustaDTLiikkunut = true;
 		}
 
 		break;
 
 	case 'L':
-		std::wcout << "Valitsit Lähetin" << std::endl;
+		//std::wcout << "Valitsit Lähetin" << std::endl;
 
 		lauta[x][y]->onkoLiikkunut = true;
 		lauta[tx][ty] = lauta[x][y];
 		lauta[x][y] = nullptr;
+		
 
 		break;
 
 	case 'R':
-		std::wcout << "Valitsit Ratsun" << std::endl;
+		//std::wcout << "Valitsit Ratsun" << std::endl;
 
 		lauta[x][y]->onkoLiikkunut = true;
 		lauta[tx][ty] = lauta[x][y];
 		lauta[x][y] = nullptr;
-
+	
+		
 		break;
 
 	case 'T':
-		std::wcout << "Valitsit Tornin" << std::endl;
+		//std::wcout << "Valitsit Tornin" << std::endl;
 
 		lauta[tx][ty] = lauta[x][y];
 		lauta[x][y] = nullptr;
 
-		if (siirtovuoro == 0 && !lauta[x][y]->onkoLiikkunut)
+		if (siirtovuoro == 0 && !lauta[tx][ty]->onkoLiikkunut)
 		{
-			lauta[x][y]->onkoLiikkunut = true;
+			lauta[tx][ty]->onkoLiikkunut = true;
 			onkoValkeaKTLiikkunut = true;
 		}
 		else 
 		{
-			lauta[x][y]->onkoLiikkunut = true;
+			lauta[tx][ty]->onkoLiikkunut = true;
 			onkoMustaKTLiikkunut = true;
 		}
 
 	case 'S':
-		std::wcout << "Valitsit Sotilaan" << std::endl;
+		//std::wcout << "Valitsit Sotilaan" << std::endl;
 		if (siirto->miksiKorotetaan != nullptr) 
 		{
 			lauta[tx][ty] = siirto->miksiKorotetaan;
+			break;
 		}
-		if (lauta[x][y]->GetKoodi() == VS ||
-			lauta[x][y]->GetKoodi() == MS &&
-			y != ty &&
-			lauta[tx][ty] == nullptr)
+		if (lauta[x][y] != nullptr && lauta[x][y]->GetKoodi() == VS &&
+			lauta[tx][ty] == nullptr && x != tx  ||
+			lauta[x][y] != nullptr && lauta[x][y]->GetKoodi() == MS &&
+			lauta[tx][ty] == nullptr && x != tx)
 		{
 			lauta[tx][y] = nullptr;
+			break;
 		}
-		else
-		{
-			lauta[x][y]->onkoLiikkunut = true;
-			lauta[tx][ty] = lauta[x][y];
-			lauta[x][y] = nullptr;
-		}
+	
+		lauta[x][y]->onkoLiikkunut = true;
+		lauta[tx][ty] = lauta[x][y];
+		lauta[x][y] = nullptr;	
+		
 
 		break;
 
@@ -480,8 +449,8 @@ bool Asema::OnkoRuutuUhattu(Ruutu ruutu, std::list<Siirto>& siirrot)
 
 			//sotilas on uhkaamassa ruutua viistoon.
 			//virhe..
-			if (tx == x + 1 && ruutu.GetSarake() == tx && ruutu.GetRivi() == ty || 
-				tx == x - 1 && ruutu.GetSarake() == tx && ruutu.GetRivi() == ty )
+			if (tx == x + 1 && ruutu.GetSarake() == tx && ruutu.GetRivi() == ty && siirtovuoro == 1 || 
+				tx == x - 1 && ruutu.GetSarake() == tx && ruutu.GetRivi() == ty && siirtovuoro == 0)
 			{
 				std::wcout << "Sotilas uhkaa ruutua! XY:" << ruutu.GetSarake() << ruutu.GetRivi() << std::endl;
 				return true;

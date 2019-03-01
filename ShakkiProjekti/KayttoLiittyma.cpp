@@ -133,7 +133,8 @@ Siirto KayttoLiittyma::AnnaVastustajanSiirto()
 	Siirto move(alku, end, nappi);
 
 	//Testaa onko sotilas viimesellä rivillä
-	if (y == 6 && ty == 7 || y == 1 && ty == 0)
+	if (nappi == 'S' && y == 6 && ty == 7 || 
+		nappi == 'S' && y == 1 && ty == 0)
 	{
 		wchar_t korotettuNappula;
 

@@ -24,6 +24,8 @@ Siirto::Siirto(bool lyhytLinna, bool pitkaLinna, wchar_t nappi)
 	_nappi = nappi;
 	this->lyhytLinna = lyhytLinna;
 	this->pitkaLinna = pitkaLinna;
+	this->alkuRuutu = Ruutu(0, 0);
+	this->loppuRuutu = Ruutu(0, 0);
 
 }
 
