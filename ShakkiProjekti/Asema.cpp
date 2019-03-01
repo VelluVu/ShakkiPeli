@@ -167,7 +167,7 @@ void Asema::PaivitaAsema(Siirto* siirto)
 					lauta[tx][ty]->onkoLiikkunut = true;
 					onkoValkeaKuningasLiikkunut = true;
 				}
-				else 
+				else if (siirtovuoro == 1 && !lauta[tx][ty]->onkoLiikkunut)
 				{
 					lauta[tx][ty]->onkoLiikkunut = true;
 					onkoMustaKuningasLiikkunut = true;
@@ -188,7 +188,7 @@ void Asema::PaivitaAsema(Siirto* siirto)
 			lauta[tx][ty]->onkoLiikkunut = true;
 			onkoValkeaDTLiikkunut = true;
 		}
-		else
+		else if(siirtovuoro == 1 && !lauta[tx][ty]->onkoLiikkunut)
 		{
 			lauta[tx][ty]->onkoLiikkunut = true;
 			onkoMustaDTLiikkunut = true;
@@ -199,21 +199,25 @@ void Asema::PaivitaAsema(Siirto* siirto)
 	case 'L':
 		//std::wcout << "Valitsit Lähetin" << std::endl;
 
-		lauta[x][y]->onkoLiikkunut = true;
+		if (lauta[x][y] != nullptr)
+		{
+			lauta[x][y]->onkoLiikkunut = true;
+		}
 		lauta[tx][ty] = lauta[x][y];
 		lauta[x][y] = nullptr;
 		
-
 		break;
 
 	case 'R':
 		//std::wcout << "Valitsit Ratsun" << std::endl;
 
-		lauta[x][y]->onkoLiikkunut = true;
+		if (lauta[x][y] != nullptr)
+		{
+			lauta[x][y]->onkoLiikkunut = true;
+		}
 		lauta[tx][ty] = lauta[x][y];
 		lauta[x][y] = nullptr;
 	
-		
 		break;
 
 	case 'T':
@@ -227,11 +231,13 @@ void Asema::PaivitaAsema(Siirto* siirto)
 			lauta[tx][ty]->onkoLiikkunut = true;
 			onkoValkeaKTLiikkunut = true;
 		}
-		else 
+		else if (siirtovuoro == 1 && !lauta[tx][ty]->onkoLiikkunut)
 		{
 			lauta[tx][ty]->onkoLiikkunut = true;
 			onkoMustaKTLiikkunut = true;
 		}
+
+		break;
 
 	case 'S':
 		//std::wcout << "Valitsit Sotilaan" << std::endl;
@@ -248,12 +254,13 @@ void Asema::PaivitaAsema(Siirto* siirto)
 			lauta[tx][y] = nullptr;
 			break;
 		}
-	
-		lauta[x][y]->onkoLiikkunut = true;
+		if (lauta[x][y] != nullptr) 
+		{
+			lauta[x][y]->onkoLiikkunut = true;
+		}
 		lauta[tx][ty] = lauta[x][y];
 		lauta[x][y] = nullptr;	
 		
-
 		break;
 
 	default:
@@ -304,9 +311,16 @@ void Asema::AnnaLaillisetSiirrot(std::list<Siirto>& lista)
 	std::wcout << "KÄYDÄÄN LÄPI SIIRTOJA: " << std::endl;
 	for (Siirto s : lista)
 	{		
+		
+		//kopioidaan tämä asema uuteen
 		uusi = *this;
+
+		//tehdään tämänhetkinen siirto uudessa asemassa
 		uusi.PaivitaAsema(&s);
+
+		//haetaan raakasiirrot uudessa asemassa
 		uusi.AnnaRaakaSiirrot(vastustajanSiirrot, vastustajanSiirtoVuoro);
+
 		//testataan onko kuningas uhattu siirron jälkeen
 		if (OnkoRuutuUhattu(kuninkaanSijainti, vastustajanSiirrot))
 		{	
