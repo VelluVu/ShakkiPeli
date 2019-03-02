@@ -30,7 +30,9 @@ public:
 	void SetVari(int col);
 	int GetVari();
 	virtual void AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int vari) = 0;
-	bool onkoLiikkunut;
+	//ei taida toimia tässä structuurissa?
+	virtual bool GetOnkoLiikkunut() = 0;
+	virtual void SetOnkoLiikkunut(bool liikkunut) = 0;
 };
 
 

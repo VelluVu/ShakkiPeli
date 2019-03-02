@@ -22,19 +22,32 @@ int main() {
 		//Generoidaan siirrot
 		asema.AnnaLaillisetSiirrot(siirtoLista);
 		std::wcout << siirtoLista.size() << " siirtoa" << std::endl;
+		Siirto s;
 
 		//Pelaajalta kysytty siirto
-		Siirto s = kayttis.AnnaVastustajanSiirto();
-
-		//Onko listassa?
-		for(Siirto m: siirtoLista) 
+		if (asema.GetSiirtovuoro() == 0) 
 		{
-			if (s == m) 
+			s = kayttis.AnnaVastustajanSiirto();
+
+			//Katsotaan onko siirto validi
+			for (Siirto m : siirtoLista)
 			{
-				asema.PaivitaAsema(&s);
+				if (s == m)
+				{
+					asema.PaivitaAsema(&s);
+				}
 			}
 		}
-
+		else 
+		{
+			//Musta pelaa random peliä
+			int rng = rand() % siirtoLista.size();
+			auto siirtoLista_front = siirtoLista.begin();
+			std::advance(siirtoLista_front, rng);
+			s = *siirtoLista_front;
+			asema.PaivitaAsema(&s);
+		}
+		
 		//Vaihdetaan vuoro
 		if (asema.GetSiirtovuoro() == 0) 
 		{

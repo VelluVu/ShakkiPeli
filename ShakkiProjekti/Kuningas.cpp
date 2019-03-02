@@ -20,30 +20,42 @@ void Kuningas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, i
 		int ty = y + _ty[i];
 		Ruutu _target(tx, ty);
 
-		//Liikkuminen
-		if (asema->lauta[tx][ty] == nullptr && tx >= 0 && tx <= 7 && ty >= 0 && ty <= 7) 
+		if (tx < 0 || ty < 0 || tx > 7 || ty > 7) 
 		{
+			//hyppää seuraavaan iteraatioon, koska ei voida mennä ylilaidan
+			continue;
+		}
 
-			Siirto kuningasLiiku(_pos, _target, nappi);
-			lista.push_back(kuningasLiiku);
-			//std::wcout << "Kuningas liike  : "; kuningasLiiku.TulostaRuudut();
-
+		//Liikkuminen
+		if (asema->lauta[tx][ty] != nullptr && asema->lauta[tx][ty]->GetVari() == vari)
+		{
+			//oma nappi edessä ei voi liikkua, siirry seuraavaan liikkeeseen
+			continue;
 		}
 		//Syönti
-		else if (asema->lauta[tx][ty] != nullptr && tx >= 0 && tx <= 7 && ty >= 0 && ty <= 7 && asema->lauta[tx][ty]->GetVari() != vari) 
+		else if (asema->lauta[tx][ty] != nullptr && asema->lauta[tx][ty]->GetVari() != vari) 
 		{
-
 			Siirto kuningasSyo(_pos, _target, nappi);
 			lista.push_back(kuningasSyo);
 			//std::wcout << "Kuningas syö  : "; kuningasSyo.TulostaRuudut();
-
 		}
 		else 
 		{
-			//std::wcout << "Ei ole mahdollista liikettä kohteeseen xy: " << tx << ty << std::endl;
+			Siirto kuningasLiiku(_pos, _target, nappi);
+			lista.push_back(kuningasLiiku);
+			//std::wcout << "Kuningas liike  : "; kuningasLiiku.TulostaRuudut();
 		}
 
 	}
 	
 	//std::wcout << "<<<<<<KUNINKAAN SIIRROT LOPPUU>>>>>> " << std::endl << std::endl;
+}
+
+bool Kuningas::GetOnkoLiikkunut()
+{
+	return false;
+}
+
+void Kuningas::SetOnkoLiikkunut(bool liikkunut)
+{
 }

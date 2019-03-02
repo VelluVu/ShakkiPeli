@@ -49,3 +49,12 @@ void Ratsu::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 	//std::wcout << "<<<<<<RATSUN SIIRROT LOPPUU>>>>>> " << std::endl << std::endl;
 
 }
+
+bool Ratsu::GetOnkoLiikkunut()
+{
+	return false;
+}
+
+void Ratsu::SetOnkoLiikkunut(bool liikkunut)
+{
+}

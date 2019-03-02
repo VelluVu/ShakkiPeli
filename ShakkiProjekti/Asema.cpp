@@ -1,5 +1,19 @@
 #include "Asema.h"
 
+Nappula* Asema::vk = new Kuningas(L"\u2654", 0, VK);
+Nappula* Asema::vd = new Kuningatar(L"\u2655", 0, VD);
+Nappula* Asema::vt = new Torni(L"\u2656", 0, VT);
+Nappula* Asema::vl = new Lahetti(L"\u2657", 0, VL);
+Nappula* Asema::vr = new Ratsu(L"\u2658", 0, VR);
+Nappula* Asema::vs = new Sotilas(L"\u2659", 0, VS);
+
+Nappula* Asema::mk = new Kuningas(L"\u265A", 1, MK);
+Nappula* Asema::md = new Kuningatar(L"\u265B", 1, MD);
+Nappula* Asema::mt = new Torni(L"\u265C", 1, MT);
+Nappula* Asema::ml = new Lahetti(L"\u265D", 1, ML);
+Nappula* Asema::mr = new Ratsu(L"\u265E", 1, MR);
+Nappula* Asema::ms = new Sotilas(L"\u265F", 1, MS);
+
 Asema::Asema()
 {
 	//nollaa ylimääräinen 'tauhka'
@@ -18,14 +32,6 @@ Asema::Asema()
 	onkoValkeaKuningasLiikkunut = false;
 	onkoMustaKuningasLiikkunut = false;
 	
-	//alusta valkoiset nappulat
-	vs = new Sotilas(L"\u2659", 0, VS);
-	vt = new Torni(L"\u2656", 0, VT);
-	vr = new Ratsu(L"\u2658", 0, VR);
-	vl = new Lahetti(L"\u2657", 0, VL);
-	vk = new Kuningas(L"\u2654", 0 ,VK);
-	vd = new Kuningatar(L"\u2655", 0 ,VD);
-
 	//Aseta ne Asemaan
 	for (size_t i = 0; i < 8; i++)
 	{
@@ -40,14 +46,6 @@ Asema::Asema()
 	lauta[5][0] = vl;
 	lauta[6][0] = vr;
 	lauta[7][0] = vt;
-
-	//alusta mustat nappulat
-	ms = new Sotilas(L"\u265F", 1, MS);
-	mt = new Torni(L"\u265C", 1, MT);
-	mr = new Ratsu(L"\u265E", 1, MR);
-	ml = new Lahetti(L"\u265D", 1, ML);
-	mk = new Kuningas(L"\u265A", 1, MK);
-	md = new Kuningatar(L"\u265B", 1, MD);
 
 	//Aseta ne Asemaan
 	for (size_t i = 0; i < 8; i++)
@@ -89,6 +87,10 @@ Ruutu Asema::EtsiKuningas(int vari)
 void Asema::PaivitaAsema(Siirto* siirto)
 {
 
+	// Kaksoisaskel-lippu on oletusarvoisesti pois päältä.
+	// Asetetaan myöhemmin, jos tarvii.
+	this->kaksoisaskelSarakkeella = -1;
+
 	//Ottaa siirron vastaan ja asettaa sen alkukoordinaatit ja kohdekoordinaatit apumuuttujiin.
 	int x = siirto->GetAlkuRuutu().GetSarake();
 	int y = siirto->GetAlkuRuutu().GetRivi();
@@ -110,9 +112,8 @@ void Asema::PaivitaAsema(Siirto* siirto)
 				lauta[6][0] = vk;
 				lauta[7][0] = nullptr;
 				lauta[5][0] = vt;
-
-				lauta[6][0]->onkoLiikkunut = true;
-				lauta[5][0]->onkoLiikkunut = true;
+		
+				onkoValkeaKuningasLiikkunut = true;
 
 			}
 			else if (siirtovuoro == 1 && !GetOnkoMustaKuningasLiikkunut() && !GetOnkoMustaKTliikkunut())
@@ -122,9 +123,8 @@ void Asema::PaivitaAsema(Siirto* siirto)
 				lauta[6][7] = mk;
 				lauta[7][7] = nullptr;
 				lauta[5][7] = mt;
-				
-				lauta[6][7]->onkoLiikkunut = true;
-				lauta[5][7]->onkoLiikkunut = true;
+						
+				onkoMustaKuningasLiikkunut = true;
 
 			}
 		}
@@ -141,8 +141,7 @@ void Asema::PaivitaAsema(Siirto* siirto)
 				lauta[0][0] = nullptr;
 				lauta[3][0] = vt;
 
-				lauta[2][0]->onkoLiikkunut = true;
-				lauta[3][0]->onkoLiikkunut = true;
+				onkoValkeaKuningasLiikkunut = true;
 			}
 			else if (siirtovuoro == 1 && !GetOnkoMustaKuningasLiikkunut() && !GetOnkoMustaKTliikkunut() && GetOnkoMustaDTliikkunut())
 			{
@@ -153,28 +152,26 @@ void Asema::PaivitaAsema(Siirto* siirto)
 				lauta[0][7] = nullptr;
 				lauta[3][7] = mt;
 
-				lauta[2][7]->onkoLiikkunut = true;
-				lauta[3][7]->onkoLiikkunut = true;
-			}
-			
-			if (!siirto->OnkoPitkaLinna() || !siirto->OnkoLyhytLinna())
-			{
-				lauta[tx][ty] = lauta[x][y];
-				lauta[x][y] = nullptr;
-
-				if (siirtovuoro == 0 && !lauta[tx][ty]->onkoLiikkunut)
-				{
-					lauta[tx][ty]->onkoLiikkunut = true;
-					onkoValkeaKuningasLiikkunut = true;
-				}
-				else if (siirtovuoro == 1 && !lauta[tx][ty]->onkoLiikkunut)
-				{
-					lauta[tx][ty]->onkoLiikkunut = true;
-					onkoMustaKuningasLiikkunut = true;
-				}
+				onkoMustaKuningasLiikkunut = true;
 			}
 		}
 
+		lauta[tx][ty] = lauta[x][y];
+		lauta[x][y] = nullptr;
+
+		if (siirtovuoro == 0 && !GetOnkoValkeaKTliikkunut())
+		{
+
+			onkoValkeaKuningasLiikkunut = true;
+
+		}
+		else if (siirtovuoro == 1 && !GetOnkoMustaKuningasLiikkunut())
+		{
+
+			onkoMustaKuningasLiikkunut = true;
+
+		}
+		
 		break;
 
 	case 'D':
@@ -183,14 +180,15 @@ void Asema::PaivitaAsema(Siirto* siirto)
 		lauta[tx][ty] = lauta[x][y];
 		lauta[x][y] = nullptr;
 		
-		if (siirtovuoro == 0 && !lauta[tx][ty]->onkoLiikkunut) 
+		if (siirtovuoro == 0 && !GetOnkoValkeaDTliikkunut()) 
 		{
-			lauta[tx][ty]->onkoLiikkunut = true;
+			
 			onkoValkeaDTLiikkunut = true;
+
 		}
-		else if(siirtovuoro == 1 && !lauta[tx][ty]->onkoLiikkunut)
+		else if(siirtovuoro == 1 && !GetOnkoMustaDTliikkunut())
 		{
-			lauta[tx][ty]->onkoLiikkunut = true;
+		
 			onkoMustaDTLiikkunut = true;
 		}
 
@@ -199,10 +197,6 @@ void Asema::PaivitaAsema(Siirto* siirto)
 	case 'L':
 		//std::wcout << "Valitsit Lähetin" << std::endl;
 
-		if (lauta[x][y] != nullptr)
-		{
-			lauta[x][y]->onkoLiikkunut = true;
-		}
 		lauta[tx][ty] = lauta[x][y];
 		lauta[x][y] = nullptr;
 		
@@ -211,10 +205,6 @@ void Asema::PaivitaAsema(Siirto* siirto)
 	case 'R':
 		//std::wcout << "Valitsit Ratsun" << std::endl;
 
-		if (lauta[x][y] != nullptr)
-		{
-			lauta[x][y]->onkoLiikkunut = true;
-		}
 		lauta[tx][ty] = lauta[x][y];
 		lauta[x][y] = nullptr;
 	
@@ -226,14 +216,12 @@ void Asema::PaivitaAsema(Siirto* siirto)
 		lauta[tx][ty] = lauta[x][y];
 		lauta[x][y] = nullptr;
 
-		if (siirtovuoro == 0 && !lauta[tx][ty]->onkoLiikkunut)
+		if (siirtovuoro == 0 && !GetOnkoValkeaKTliikkunut())
 		{
-			lauta[tx][ty]->onkoLiikkunut = true;
 			onkoValkeaKTLiikkunut = true;
 		}
-		else if (siirtovuoro == 1 && !lauta[tx][ty]->onkoLiikkunut)
+		else if (siirtovuoro == 1 && !GetOnkoMustaKTliikkunut())
 		{
-			lauta[tx][ty]->onkoLiikkunut = true;
 			onkoMustaKTLiikkunut = true;
 		}
 
@@ -246,6 +234,14 @@ void Asema::PaivitaAsema(Siirto* siirto)
 			lauta[tx][ty] = siirto->miksiKorotetaan;
 			break;
 		}
+		// Tarkistetaan oliko sotilaan kaksoisaskel
+		// (asetetaan kaksoisaskel-lippu)
+		if
+			((lauta[x][y]->GetKoodi() == VS || lauta[x][y]->GetKoodi() == MS) &&
+				(y - ty == 2 || y - ty == -2))
+		{
+			kaksoisaskelSarakkeella = x;
+		}
 		if (lauta[x][y] != nullptr && lauta[x][y]->GetKoodi() == VS &&
 			lauta[tx][ty] == nullptr && x != tx  ||
 			lauta[x][y] != nullptr && lauta[x][y]->GetKoodi() == MS &&
@@ -254,9 +250,10 @@ void Asema::PaivitaAsema(Siirto* siirto)
 			lauta[tx][y] = nullptr;
 			break;
 		}
-		if (lauta[x][y] != nullptr) 
+		if (lauta[x][y] != nullptr && lauta[x][y]->GetKoodi() == VS || 
+			lauta[x][y] != nullptr && lauta[x][y]->GetKoodi() == MS)
 		{
-			lauta[x][y]->onkoLiikkunut = true;
+			lauta[x][y]->SetOnkoLiikkunut(true);
 		}
 		lauta[tx][ty] = lauta[x][y];
 		lauta[x][y] = nullptr;	
@@ -324,7 +321,28 @@ void Asema::AnnaLaillisetSiirrot(std::list<Siirto>& lista)
 		//testataan onko kuningas uhattu siirron jälkeen
 		if (OnkoRuutuUhattu(kuninkaanSijainti, vastustajanSiirrot))
 		{	
-			lista.remove(s);	
+			if (s.GetNappi() != 'K') 
+			{
+				lista.remove(s);
+			}		
+			else 
+			{
+				//käydään vielä kuninkaan mahdollisuudet pelastautua syömällä.
+				std::list<Siirto> voikoKuningasSyoda;
+				Asema testaus;
+				testaus = uusi;
+				testaus.PaivitaAsema(&s);
+				testaus.AnnaRaakaSiirrot(voikoKuningasSyoda, vastustajanSiirtoVuoro);
+				
+				if (OnkoRuutuUhattu(s.GetLoppuRuutu(),voikoKuningasSyoda) )
+				{
+					lista.remove(s);
+				}
+				else 
+				{
+					continue;
+				}
+			}
 		}	
 	}
 
@@ -395,6 +413,19 @@ void Asema::AnnaRaakaSiirrot(std::list<Siirto>& lista, int vari)
 			}
 		}
 	}
+}
+
+void Asema::TestaaLiiike(Siirto * s)
+{
+
+	int x = s->GetAlkuRuutu().GetSarake();
+	int y = s->GetAlkuRuutu().GetRivi();
+	int tx = s->GetLoppuRuutu().GetSarake();
+	int ty = s->GetLoppuRuutu().GetRivi();
+
+	lauta[tx][ty] = lauta[x][y];
+	lauta[x][y] = nullptr;
+
 }
 
 bool Asema::GetOnkoValkeaKuningasLiikkunut()

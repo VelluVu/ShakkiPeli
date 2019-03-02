@@ -1,3 +1,3 @@
 ﻿  Asema.cpp
-c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\asema.cpp(87): warning C4715: 'Asema::EtsiKuningas': not all control paths return a value
+c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\asema.cpp(85): warning C4715: 'Asema::EtsiKuningas': not all control paths return a value
   ShakkiProjekti.vcxproj -> C:\Users\Veli-Matti\Desktop\Opetus\Shakki\ShakkiProjekti\x64\Debug\ShakkiProjekti.exe

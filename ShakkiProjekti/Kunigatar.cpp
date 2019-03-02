@@ -9,3 +9,12 @@ void Kuningatar::AnnaSiirrot(std::list<Siirto>& lista, Ruutu * pos, Asema * asem
 
 	//std::wcout << "<<<<<<KUNINGATTAREN SIIRROT LOPPUU>>>>>> " << std::endl << std::endl;
 }
+
+bool Kuningatar::GetOnkoLiikkunut()
+{
+	return false;
+}
+
+void Kuningatar::SetOnkoLiikkunut(bool liikkunut)
+{
+}

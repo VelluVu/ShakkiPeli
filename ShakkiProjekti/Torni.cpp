@@ -190,3 +190,12 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 
 	//std::wcout << "<<<<<<TORNIN SIIRROT LOPPUU>>>>>> " << std::endl << std::endl;
 }
+
+bool Torni::GetOnkoLiikkunut()
+{
+	return false;
+}
+
+void Torni::SetOnkoLiikkunut(bool liikkunut)
+{
+}

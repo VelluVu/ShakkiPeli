@@ -6,7 +6,6 @@ Nappula::Nappula(std::wstring uni, int col, int code)
 	unicode = uni;
 	vari = col;
 	_koodi = code;
-	onkoLiikkunut = false;
 
 }
 
