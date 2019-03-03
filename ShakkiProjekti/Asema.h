@@ -50,13 +50,15 @@ public:
 	void AnnaLaillisetSiirrot(std::list<Siirto>& lista);
 	void AnnaRaakaSiirrot(std::list<Siirto>& lista, int vari);
 	void TestaaLiiike(Siirto* s);
+	void AnnaLinnoitusSiirrot(std::list<Siirto>& lista);
+	void KuninkaanShakit(std::list<Siirto>& lista);
 	bool GetOnkoValkeaKuningasLiikkunut();
 	bool GetOnkoMustaKuningasLiikkunut();
 	bool GetOnkoValkeaDTliikkunut();
 	bool GetOnkoValkeaKTliikkunut();
 	bool GetOnkoMustaDTliikkunut();
 	bool GetOnkoMustaKTliikkunut();
-	bool OnkoRuutuUhattu(Ruutu ruutu, std::list<Siirto>& siirrot);
+	bool OnkoRuutuUhattu(Ruutu* ruutu, std::list<Siirto>& siirrot);
 
 	// Ohestalyöntiä varten (-1 = sotilaan kaksoisaskelta ei tapahtunut edellisellä siirrolla).
 	int kaksoisaskelSarakkeella = -1;
