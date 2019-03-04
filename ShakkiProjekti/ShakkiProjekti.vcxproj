@@ -120,6 +120,7 @@
     <ClInclude Include="Kunigatar.h" />
     <ClInclude Include="Kuningas.h" />
     <ClInclude Include="Lahetti.h" />
+    <ClInclude Include="MinMaxPaluu.h" />
     <ClInclude Include="Nappula.h" />
     <ClInclude Include="Ratsu.h" />
     <ClInclude Include="Ruutu.h" />
@@ -134,6 +135,7 @@
     <ClCompile Include="Kuningas.cpp" />
     <ClCompile Include="Lahetti.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MinMaxPaluu.cpp" />
     <ClCompile Include="Nappula.cpp" />
     <ClCompile Include="Ratsu.cpp" />
     <ClCompile Include="Ruutu.cpp" />

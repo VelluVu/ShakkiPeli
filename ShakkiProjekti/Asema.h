@@ -8,6 +8,7 @@
 #include "Lahetti.h"
 #include "Kuningas.h"
 #include "Kunigatar.h"
+#include "MinMaxPaluu.h"
 
 class Asema
 {
@@ -52,6 +53,9 @@ public:
 	void TestaaLiiike(Siirto* s);
 	void AnnaLinnoitusSiirrot(std::list<Siirto>& lista);
 	void KuninkaanShakit(std::list<Siirto>& lista);
+	double LoppuTulos();
+	MinMaxPaluu MiniMax(int syvyys);
+	double Evaluoi();
 	bool GetOnkoValkeaKuningasLiikkunut();
 	bool GetOnkoMustaKuningasLiikkunut();
 	bool GetOnkoValkeaDTliikkunut();
@@ -62,6 +66,11 @@ public:
 
 	// Ohestalyöntiä varten (-1 = sotilaan kaksoisaskelta ei tapahtunut edellisellä siirrolla).
 	int kaksoisaskelSarakkeella = -1;
+	double sotilaanArvo = 1.0; // valkoisen, mustalla neg katso siirtovuoron perusteella
+	double ratsunArvo = 3.0;
+	double lahetinArvo = 3.25;
+	double torninArvo = 5;
+	double kuningattarenArvo = 9;
 
 };
 

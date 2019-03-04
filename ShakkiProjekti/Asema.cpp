@@ -284,13 +284,6 @@ void Asema::AnnaLaillisetSiirrot(std::list<Siirto>& lista)
 	AnnaLinnoitusSiirrot(lista);
 	KuninkaanShakit(lista);
 
-	//tulosta vielä kaikki laillisetsiirrot
-	for (Siirto s : lista)
-	{
-		
-		s.TulostaRuudut();
-		
-	}
 }
 
 void Asema::AnnaRaakaSiirrot(std::list<Siirto>& lista, int vari)
@@ -455,6 +448,162 @@ void Asema::KuninkaanShakit(std::list<Siirto>& lista)
 
 }
 
+double Asema::LoppuTulos()
+{
+	double loppuTulos = 0;
+	
+	Ruutu kuninkaanSijainti = EtsiKuningas(siirtovuoro);
+	bool shakkiMatti = false;
+
+	std::list<Siirto>vastustajanSiirrot;
+
+	if (siirtovuoro == 0)
+	{
+		AnnaRaakaSiirrot(vastustajanSiirrot, 1);
+	}
+	else 
+	{
+		AnnaRaakaSiirrot(vastustajanSiirrot, 0);
+	}
+
+	shakkiMatti = OnkoRuutuUhattu(&kuninkaanSijainti, vastustajanSiirrot);
+
+	//jos kyseessä on shakkimatti
+	if (shakkiMatti) {
+		if (siirtovuoro == 0)
+		{
+			loppuTulos = 1000000;
+		}
+		else
+		{
+			loppuTulos = -1000000;
+		}
+	}
+	else 
+	{
+		return 0;
+	}
+	
+	return loppuTulos;
+}
+
+MinMaxPaluu Asema::MiniMax(int syvyys)
+{
+
+	MinMaxPaluu paluu;
+
+	std::list<Siirto> siirrot;
+	AnnaLaillisetSiirrot(siirrot);
+
+	if (siirrot.size() == 0) 
+	{
+		paluu.evaluointiArvo = LoppuTulos();
+		return paluu;
+	}
+	if (syvyys == 0) 
+	{
+		paluu.evaluointiArvo = Evaluoi();
+		return paluu;
+	}
+
+	if (siirtovuoro == 0) 
+	{
+		paluu.evaluointiArvo = -1000000;
+	}
+	else 
+	{
+		paluu.evaluointiArvo = +1000000;
+	}
+
+	for (Siirto s : siirrot) 
+	{
+
+		Asema uusi = *this;
+		uusi.PaivitaAsema(&s);
+
+		MinMaxPaluu arvo = uusi.MiniMax(syvyys - 1);
+
+		if ((siirtovuoro == 0 && arvo.evaluointiArvo > paluu.evaluointiArvo) ||
+			(siirtovuoro == 1 && arvo.evaluointiArvo < paluu.evaluointiArvo)) 
+		{
+			paluu.evaluointiArvo = arvo.evaluointiArvo;
+			paluu.parasSiirto = s;
+		}
+	}
+
+	return paluu;
+}
+
+double Asema::Evaluoi()
+{
+
+	double summa = 0;
+	double materiaaliKerroin = 0.8;
+	//jos haluaa tuunata
+	double muuKerroin = 0.2;
+
+	//MATERIAALI
+	for (int x = 0; x < 8; x++)
+	{
+		for (int y = 0; y < 8; y++)
+		{
+			if (lauta[x][y] == nullptr) 
+			{
+				continue;
+			}
+			else
+			{
+				switch (lauta[x][y]->GetKoodi())
+				{
+					//Valkoiset
+				case VS:
+					summa += sotilaanArvo;
+					break;
+				case VT:
+					summa += torninArvo;
+					break;
+				case VR:
+					summa += ratsunArvo;
+					break;
+				case VL:
+					summa += lahetinArvo;
+					break;
+				case VK:
+					//Kuninkaan kohdalla ei mittää
+					break;
+				case VD:
+					summa += kuningattarenArvo;
+					break;
+					//Mustat
+				case MS:
+					summa -= sotilaanArvo;
+					break;
+				case MT:
+					summa -= torninArvo;
+					break;
+				case MR:
+					summa -= ratsunArvo;
+					break;
+				case ML:
+					summa -= lahetinArvo;
+					break;
+				case MK:
+					//Kuninkaan kohdalla ei mittää
+					break;
+				case MD:
+					summa -= kuningattarenArvo;
+					break;			
+
+				default:
+					break;
+				}
+			}
+		}
+	}
+	
+	return summa * materiaaliKerroin;
+}
+
 bool Asema::GetOnkoValkeaKuningasLiikkunut()
 {
 	if (onkoValkeaKuningasLiikkunut) {
@@ -505,7 +654,7 @@ bool Asema::GetOnkoMustaKTliikkunut()
 
 bool Asema::OnkoRuutuUhattu(Ruutu* ruutu, std::list<Siirto>& siirrot)
 {
-
+	
 	//käydään siirtoja läpi ja testaillaan loppuruutuja, että osuuko parametrin ruutuun.
 	for (Siirto s : siirrot)
 	{
@@ -524,7 +673,7 @@ bool Asema::OnkoRuutuUhattu(Ruutu* ruutu, std::list<Siirto>& siirrot)
 			if (tx == x + 1 && ruutu->GetSarake() == tx && ruutu->GetRivi() == ty && siirtovuoro == 1 ||
 				tx == x - 1 && ruutu->GetSarake() == tx && ruutu->GetRivi() == ty && siirtovuoro == 0)
 			{
-				std::wcout << "Sotilas uhkaa ruutua! XY:" << ruutu->GetSarake() << ruutu->GetRivi() << std::endl;
+				//std::wcout << "Sotilas uhkaa ruutua! XY:" << ruutu->GetSarake() << ruutu->GetRivi() << std::endl;
 				return true;
 			}
 			//jos sotilas vain liikkuu niin ei uhkaa ruutua, koska sotilas ei osaa syödä eteen.
@@ -539,7 +688,7 @@ bool Asema::OnkoRuutuUhattu(Ruutu* ruutu, std::list<Siirto>& siirrot)
 			//Uhkaa ruutua
 			if (tx == ruutu->GetSarake() && ty == ruutu->GetRivi())
 			{
-				std::wcout << "Joku uhkaa ruutua! XY:" << ruutu->GetSarake() << ruutu->GetRivi() << std::endl;
+				//std::wcout << "Joku uhkaa ruutua! XY:" << ruutu->GetSarake() << ruutu->GetRivi() << std::endl;
 				return true;
 			}
 

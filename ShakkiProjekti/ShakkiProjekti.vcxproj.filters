@@ -48,6 +48,9 @@
     <ClInclude Include="Sotilas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MinMaxPaluu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Nappula.cpp">
@@ -84,6 +87,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sotilas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MinMaxPaluu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

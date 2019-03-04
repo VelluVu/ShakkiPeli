@@ -10,7 +10,7 @@ int main() {
 	
 	std::wcout << "Valkoinen aloittaa. " << std::endl;
 
-	for (size_t i = 0; i < 50; i++)
+	for (int i = 0; i < 50; i++)
 	{
 
 		//system("cls");
@@ -23,6 +23,18 @@ int main() {
 		asema.AnnaLaillisetSiirrot(siirtoLista);
 		std::wcout << siirtoLista.size() << " siirtoa" << std::endl;
 		Siirto s;
+
+		//tulosta vielä kaikki siirrot
+		for (Siirto s : siirtoLista)
+		{
+
+			s.TulostaRuudut();
+
+		}
+
+		MinMaxPaluu cheatMove = asema.MiniMax(2);
+		cheatMove.parasSiirto.TulostaRuudut();
+		std::wcout << "MINMAX : " << cheatMove.evaluointiArvo << std::endl;
 
 		//Pelaajalta kysytty siirto
 		if (asema.GetSiirtovuoro() == 0) 
@@ -41,10 +53,11 @@ int main() {
 		else 
 		{
 			//Musta pelaa random peliä
-			int rng = rand() % siirtoLista.size();
+			/*int rng = rand() % siirtoLista.size();
 			auto siirtoLista_front = siirtoLista.begin();
 			std::advance(siirtoLista_front, rng);
-			s = *siirtoLista_front;
+			s = *siirtoLista_front;*/
+			s = cheatMove.parasSiirto;
 			asema.PaivitaAsema(&s);
 		}
 		
