@@ -7,7 +7,8 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 
 	int x = pos->GetSarake();
 	int y = pos->GetRivi();
-	wchar_t nappi;
+	Ruutu _pos(x, y);
+	/*wchar_t nappi;
 
 	if (asema->lauta[x][y]->GetKoodi() == VD || asema->lauta[x][y]->GetKoodi() == MD) {
 		nappi = 'D';
@@ -15,9 +16,9 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 	else 
 	{
 		nappi = 'T';
-	}
+	}*/
 
-	Ruutu _pos(x, y);
+	
 	//std::wcout << "<AnnaSiirrot>AlkuPositio x : " << x << " <AnnaSiirrot>AlkuPositio y : " <<  y << std::endl;
 	
 	//std::wcout << "Liikkeet Oikealle: " << std::endl;
@@ -39,7 +40,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 		//jos seuraava ruutu oikealla ei ole tyhjä ja jos väri ei ole sama kuin liikkelle lähtevän nappulan väri niin syödään kyseinen
 		if (asema->lauta[tx][y] != nullptr && asema->lauta[tx][y]->GetVari() != vari) 
 		{		
-			Siirto syoOikealle(_pos, _target, nappi);
+			Siirto syoOikealle(_pos, _target);
 			lista.push_back(syoOikealle);
 			//std::wcout << "Syö nappi oikealle : "; syoOikealle.TulostaRuudut();
 			break;
@@ -55,7 +56,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 		//muuten liikkuu oikealle tallennetaan mahdollisiin siirtoihin ja jatka katsomaan seuraavaa ruutua
 		else if (asema->lauta[tx][y] == nullptr)
 		{		
-			Siirto liikuOikealle(_pos, _target, nappi);
+			Siirto liikuOikealle(_pos, _target);
 			lista.push_back(liikuOikealle);
 			//std::wcout << "Liiku Oikealle : "; liikuOikealle.TulostaRuudut();
 			continue;
@@ -82,7 +83,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 			//jos seuraava ruutu vasemmalla ei ole tyhjä ja jos väri ei ole sama kuin liikkelle lähtevän nappulan väri niin syödään kyseinen ja lopeta liike
 			if (asema->lauta[tx][y] != nullptr && asema->lauta[tx][y]->GetVari() != vari)
 			{
-				Siirto syoVasemmalle(_pos, _target, nappi);
+				Siirto syoVasemmalle(_pos, _target);
 				lista.push_back(syoVasemmalle);
 				//std::wcout << "Syö nappi Vasemmalle : "; syoVasemmalle.TulostaRuudut();
 				break;
@@ -98,7 +99,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 			//muuten liikkuu vasemmalle tallennetaan mahdollisiin siirtoihin ja jatka katsomaan seuraavaa ruutua
 			else if (asema->lauta[tx][y] == nullptr)
 			{
-				Siirto liikuVasemmalle(_pos, _target, nappi);
+				Siirto liikuVasemmalle(_pos, _target);
 				lista.push_back(liikuVasemmalle);
 				//std::wcout << "Liiku Vasemmalle : "; liikuVasemmalle.TulostaRuudut();
 				continue;
@@ -107,7 +108,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 	
 	//std::wcout << "Liikkeet Ylös: " << std::endl;
 	//Tornien liike Ylös
-	for (size_t i = 1; i <= 7; i++)
+	for (int i = 1; i <= 7; i++)
 	{
 	
 			//Kohteeksi asetetaan seuraava positio
@@ -124,7 +125,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 			//jos seuraava ruutu ylhäällä ei ole tyhjä ja jos väri ei ole sama kuin liikkelle lähtevän nappulan väri niin syödään kyseinen ja lopetetaan liike
 			if (asema->lauta[x][ty] != nullptr && asema->lauta[x][ty]->GetVari() != vari)
 			{
-				Siirto syoYlos(_pos, _target, nappi);
+				Siirto syoYlos(_pos, _target);
 				lista.push_back(syoYlos);
 				//std::wcout << "Syö nappi Ylös : "; syoYlos.TulostaRuudut();
 				break;
@@ -138,7 +139,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 			//muuten liikkuu ylös tallennetaan mahdollisiin siirtoihin ja jatketaan katsomaan seuraavaa ruutua
 			else if (asema->lauta[x][ty] == nullptr)
 			{
-				Siirto liikuYlos(_pos, _target, nappi);
+				Siirto liikuYlos(_pos, _target);
 				lista.push_back(liikuYlos);
 				//std::wcout << "Liiku Ylös : "; liikuYlos.TulostaRuudut();
 				continue;
@@ -147,7 +148,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 
 	//std::wcout << "Liikkeet Alas: " << std::endl;
 	//Tornien liike alas
-	for (size_t i = 1; i <= 7; i++)
+	for (int i = 1; i <= 7; i++)
 	{
 	
 		//Kohteeksi asetetaan seuraava positio
@@ -164,7 +165,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 		//jos seuraava ruutu alhaalla ei ole tyhjä ja jos väri ei ole sama kuin liikkelle lähtevän nappulan väri niin syödään kyseinen ja lopetetaan liike
 		if (asema->lauta[x][ty] != nullptr && asema->lauta[x][ty]->GetVari() != vari)
 		{
-			Siirto syoAlas(_pos, _target, nappi);
+			Siirto syoAlas(_pos, _target);
 			lista.push_back(syoAlas);
 			//std::wcout << "Syö nappi Alas : "; syoAlas.TulostaRuudut();
 			break;
@@ -180,7 +181,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 		//muuten liikkuu alas tallennetaan mahdollisiin siirtoihin ja jatketaan katsomaan seuraavaa ruutua
 		else if (asema->lauta[x][ty] == nullptr)
 		{		
-			Siirto liikuVasemmalle(_pos, _target, nappi);
+			Siirto liikuVasemmalle(_pos, _target);
 			lista.push_back(liikuVasemmalle);
 			//std::wcout << "Liiku Alas : "; liikuVasemmalle.TulostaRuudut();
 			continue;

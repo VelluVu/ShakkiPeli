@@ -17,12 +17,12 @@ class Asema;
 class Nappula {
 
 private:
-	std::wstring unicode;
-	int vari; // valkea = 0, musta = 1
+	std::wstring _unicode;
+	int _vari; // valkea = 0, musta = 1
 	int _koodi; // VT, VR, MT tms.
 public:
 	Nappula(std::wstring uni, int col, int code);
-	Nappula();
+	Nappula() {};
 	void SetKoodi(int code);
 	int GetKoodi();
 	void SetUnicode(std::wstring uni);

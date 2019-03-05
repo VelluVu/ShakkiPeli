@@ -1,7 +1,7 @@
 #pragma once
 #include "Nappula.h"
 class Torni :
-	virtual public Nappula
+	public virtual Nappula
 {
 public:
 

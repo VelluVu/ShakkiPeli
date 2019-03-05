@@ -7,7 +7,7 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 
 	//std::wcout << "<<<<<<SOTILAAN SIIRROT>>>>>> " << std::endl;
 	
-	wchar_t nappi = 'S';
+	//wchar_t nappi = 'S';
 	int x = pos->GetSarake();
 	int y = pos->GetRivi();
 	Ruutu _pos(x, y);
@@ -29,7 +29,7 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 				//mahdollista liikkua 2 kertaa jos ei ole liikkunut
 				if (y == 1 && i == 1) 
 				{
-					Siirto liikuKaksi(_pos, _target, nappi);
+					Siirto liikuKaksi(_pos, _target);
 					lista.push_back(liikuKaksi);				
 					//std::wcout << "Liiku kaks : "; liikuKaksi.TulostaRuudut();
 					//muista asettaa booli trueksi sotilaan liikkumisen jälkeen päivitäasemassa
@@ -37,13 +37,13 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 				//jos ei ole indexi 2 niin aseta perussiirto listaan
 				else if(i == 0 && ty != 7)
 				{
-					Siirto liikuYks(_pos, _target, nappi);
+					Siirto liikuYks(_pos, _target);
 					lista.push_back(liikuYks);
 					//std::wcout << "Liiku yks : "; liikuYks.TulostaRuudut();
 				}
 				else if (y == 6 && ty == 7)
 				{
-					Siirto korotus(_pos, _target, nappi);
+					Siirto korotus(_pos, _target);
 					LisaaSotilaanKorotukset(&korotus, lista, asema);
 				}
 			}
@@ -59,7 +59,7 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 					asema->lauta[tx][ty] != nullptr && 
 					tx >= 0 && tx <= 7 && ty >= 0 && ty <= 7 && ty != 7)
 				{
-					Siirto syo(_pos, _target, nappi);
+					Siirto syo(_pos, _target);
 					lista.push_back(syo);
 					//std::wcout << "Syötävä kohde viistossa : "; syo.TulostaRuudut();
 				}
@@ -67,7 +67,7 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 					asema->lauta[tx][ty]->GetVari() != vari &&
 					tx >= 0 && tx <= 7 && ty >= 0 && ty <= 7 && ty == 7)
 				{
-					Siirto korotus(_pos, _target, nappi);
+					Siirto korotus(_pos, _target);
 					LisaaSotilaanKorotukset(&korotus, lista, asema);
 				}
 			}
@@ -95,7 +95,7 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 				//mahdollista liikkua 2 kertaa jos ei ole liikkunut
 				if (i == 1 && y == 6)
 				{
-					Siirto liikuKaksi(_pos, _target, nappi);
+					Siirto liikuKaksi(_pos, _target);
 					lista.push_back(liikuKaksi);				
 					//std::wcout << "Liiku kaks : "; liikuKaksi.TulostaRuudut();
 					//muista asettaa booli trueksi sotilaan liikkumisen jälkeen
@@ -103,13 +103,13 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 				//jos indexi ei ole 1 mutta kuitenkin alle 2 niin lisää mahdollinen perus siirto listaan
 				else if(i == 0 && ty != 0)
 				{
-					Siirto liikuYks(_pos, _target, nappi);
+					Siirto liikuYks(_pos, _target);
 					lista.push_back(liikuYks);
 					//std::wcout << "Liiku yks : "; liikuYks.TulostaRuudut();
 				}
 				else if (y == 1 && ty == 0) 
 				{			
-					Siirto korotus(_pos, _target, nappi);
+					Siirto korotus(_pos, _target);
 					LisaaSotilaanKorotukset(&korotus, lista, asema);
 				}
 			}
@@ -125,7 +125,7 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 					asema->lauta[tx][ty]->GetVari() != vari && 
 					tx >= 0 && tx <= 7 && ty >= 0 && ty <= 7 && ty != 0)
 				{		
-					Siirto syo(_pos, _target, nappi);
+					Siirto syo(_pos, _target);
 					lista.push_back(syo);
 					//std::wcout << "Syötävä kohde viistossa : "; syo.TulostaRuudut();
 				}
@@ -133,7 +133,7 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 					asema->lauta[tx][ty]->GetVari() != vari && 
 					tx >= 0 && tx <= 7 && ty >= 0 && ty <= 7 && ty == 0) 
 				{
-					Siirto korotus(_pos, _target, nappi);
+					Siirto korotus(_pos, _target);
 					LisaaSotilaanKorotukset(&korotus, lista, asema);
 				}
 				
@@ -154,7 +154,7 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 			if (asema->lauta[asema->kaksoisaskelSarakkeella][4] && asema->lauta[asema->kaksoisaskelSarakkeella][4]->GetKoodi() == MS) 
 			{
 				Ruutu _target(asema->kaksoisaskelSarakkeella, 5);
-				Siirto ohestaLyonti(_pos, _target, nappi);
+				Siirto ohestaLyonti(_pos, _target);
 				lista.push_back(ohestaLyonti);
 			}
 		}
@@ -163,7 +163,7 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 			if (asema->lauta[asema->kaksoisaskelSarakkeella][3] && asema->lauta[asema->kaksoisaskelSarakkeella][3]->GetKoodi() == VS)
 			{
 				Ruutu _target(asema->kaksoisaskelSarakkeella, 2);
-				Siirto ohestaLyonti(_pos, _target, nappi);
+				Siirto ohestaLyonti(_pos, _target);
 				lista.push_back(ohestaLyonti);
 			}
 		}
@@ -209,20 +209,3 @@ void Sotilas::LisaaSotilaanKorotukset(Siirto* siirto, std::list<Siirto>& lista, 
 		lista.push_back(ratsuksi);
 	}
 }
-
-//void Sotilas::SetOnkoLiikkunut(bool liikkunut)
-//{
-//	onkoLiikkunut = liikkunut;
-//}
-//
-//bool Sotilas::GetOnkoLiikkunut()
-//{
-//	if (!onkoLiikkunut) 
-//	{
-//		return false;
-//	}
-//	else
-//	{
-//		return true;
-//	}
-//}

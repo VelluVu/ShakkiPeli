@@ -10,7 +10,7 @@
 #include "Ratsu.h"
 #include "Lahetti.h"
 #include "Kuningas.h"
-#include "Kunigatar.h"
+#include "Kuningatar.h"
 
 class Asema
 {
@@ -55,8 +55,11 @@ public:
 	void TestaaLiiike(Siirto* s);
 	void AnnaLinnoitusSiirrot(std::list<Siirto>& lista);
 	void KuninkaanShakit(std::list<Siirto>& lista);
+	int KummanVuoro();
+	int VastustajanVuoro();
 	double LoppuTulos();
-	MinMaxPaluu MiniMax(int syvyys, double alpha, double beta);
+	MinMaxPaluu MiniMax(int syvyys, double alpha, double beta, bool maximoija);
+	double LaskeArvo(int vari);
 	double Evaluoi();
 	bool GetOnkoValkeaKuningasLiikkunut();
 	bool GetOnkoMustaKuningasLiikkunut();
@@ -64,7 +67,7 @@ public:
 	bool GetOnkoValkeaKTliikkunut();
 	bool GetOnkoMustaDTliikkunut();
 	bool GetOnkoMustaKTliikkunut();
-	bool OnkoRuutuUhattu(Ruutu* ruutu, std::list<Siirto>& siirrot);
+	bool OnkoRuutuUhattu(Ruutu* ruutu, int vastustajanVari);
 
 	// Ohestalyöntiä varten (-1 = sotilaan kaksoisaskelta ei tapahtunut edellisellä siirrolla).
 	int kaksoisaskelSarakkeella = -1;

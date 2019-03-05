@@ -3,14 +3,10 @@
 Nappula::Nappula(std::wstring uni, int col, int code)
 {
 
-	unicode = uni;
-	vari = col;
+	_unicode = uni;
+	_vari = col;
 	_koodi = code;
 
-}
-
-Nappula::Nappula()
-{
 }
 
 void Nappula::SetKoodi(int code)
@@ -28,23 +24,23 @@ int Nappula::GetKoodi()
 void Nappula::SetUnicode(std::wstring uni)
 {
 
-	unicode = uni;
+	_unicode = uni;
 
 }
 
 std::wstring Nappula::GetUnicode()
 {
-	return std::wstring(unicode);
+	return std::wstring(_unicode);
 }
 
 void Nappula::SetVari(int col)
 {
 
-	vari = col;
+	_vari = col;
 
 }
 
 int Nappula::GetVari()
 {
-	return vari;
+	return _vari;
 }

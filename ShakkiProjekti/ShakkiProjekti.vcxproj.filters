@@ -42,13 +42,13 @@
     <ClInclude Include="Kuningas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Kunigatar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Sotilas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MinMaxPaluu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Kuningatar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -83,13 +83,13 @@
     <ClCompile Include="Kuningas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Kunigatar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sotilas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MinMaxPaluu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Kuningatar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

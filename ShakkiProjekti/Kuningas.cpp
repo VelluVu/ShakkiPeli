@@ -6,7 +6,7 @@ void Kuningas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, i
 
 	//std::wcout << "<<<<<<KUNINKAAN SIIRROT>>>>>> " << std::endl;
 
-	wchar_t nappi = 'K';
+	/*wchar_t nappi = 'K';*/
 	int x = pos->GetSarake();
 	int y = pos->GetRivi();
 	Ruutu _pos(x, y);
@@ -35,13 +35,13 @@ void Kuningas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, i
 		//Syönti
 		else if (asema->lauta[tx][ty] != nullptr && asema->lauta[tx][ty]->GetVari() != vari) 
 		{
-			Siirto kuningasSyo(_pos, _target, nappi);
+			Siirto kuningasSyo(_pos, _target);
 			lista.push_back(kuningasSyo);
 			//std::wcout << "Kuningas syö  : "; kuningasSyo.TulostaRuudut();
 		}
 		else 
 		{
-			Siirto kuningasLiiku(_pos, _target, nappi);
+			Siirto kuningasLiiku(_pos, _target);
 			lista.push_back(kuningasLiiku);
 			//std::wcout << "Kuningas liike  : "; kuningasLiiku.TulostaRuudut();
 		}

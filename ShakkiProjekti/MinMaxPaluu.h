@@ -6,7 +6,6 @@ class MinMaxPaluu
 public:
 	double evaluointiArvo;
 	Siirto parasSiirto;
-	MinMaxPaluu();
-	~MinMaxPaluu();
+	MinMaxPaluu() {};
 };
 

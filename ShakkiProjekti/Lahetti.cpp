@@ -11,18 +11,18 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 	int x = pos->GetSarake();
 	int y = pos->GetRivi();
 	Ruutu _pos(x, y);
-	wchar_t nappi;
+	/*wchar_t nappi;*/
 	
 	//std::wcout << "Lähetin alkuPositio: (" << x << ";" << y << ")" << std::endl;
 
-	if (asema->lauta[x][y]->GetKoodi() == VD || asema->lauta[x][y]->GetKoodi() == MD) 
+	/*if (asema->lauta[x][y]->GetKoodi() == VD || asema->lauta[x][y]->GetKoodi() == MD) 
 	{
 		nappi = 'D';
 	}
 	else
 	{
 		nappi = 'L';
-	}
+	}*/
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -76,14 +76,14 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 			else if (asema->lauta[tx][ty] != nullptr && asema->lauta[tx][ty]->GetVari() != vari)
 			{
 				//vihollisen nappi kohteessa, tehdään syönti siirto ja lopetetaan suunnan tarkistus
-				Siirto syo(_pos, _target, nappi);
+				Siirto syo(_pos, _target);
 				lista.push_back(syo);
 				break;
 			}
 			else if(asema->lauta[tx][ty] == nullptr)
 			{
 				//Muuten siirrytään seuraavaan ruutuun kyseisessä suunnassa ja lisätään mahdollinen siirto listaan
-				Siirto liiku(_pos, _target, nappi);
+				Siirto liiku(_pos, _target);
 				lista.push_back(liiku);		
 			}
 		}

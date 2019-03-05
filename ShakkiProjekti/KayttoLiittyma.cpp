@@ -51,113 +51,178 @@ void KayttoLiittyma::PiirraLauta()
 
 Siirto KayttoLiittyma::AnnaVastustajanSiirto()
 {
-	//== vertausta varten 2 array
-	char arr[] = { 'a','b','c','d','e','f','g','h' };
-	int arrn[] = { '1','2','3','4','5','6','7','8' };
-	//Tähän tallennetaan koko siirto
-	std::wstring siirto;
-	//puretaan wstring siirto[] eli inputti näihin input muuttujiin
-	wchar_t xInput = 0, yInput = 0, txInput = 0, tyInput = 0;
-	//mapataan input muuttujien paikkakoordinaattiarvot näihin kokonaisluku muuttujiin , alku x = sarake ja alku y = rivi, tx = target x ja ty = target y
-	int x = 0, y = 0, tx = 0, ty = 0;
-	//nappulan etumerkki
-	wchar_t nappi;
-
-	std::wcout << "Anna siirto muodossa: (Napin etumerkki<T/R/L/D/K/S> / Alkukoordinaatti<'char',int> / Loppukoordinaatti<'char',int>)" << std::endl;
-	std::wcin >> siirto;
-
-	nappi = siirto[0];
-	xInput = siirto[1];
-	yInput = siirto[2];
-
-	if (siirto.length() > 3) {
-		txInput = siirto[3];
-		tyInput = siirto[4];
-	}
-
-	//Vertaa inputdataa arrayn indexissä olevaan arvoon ja aseta indexi koordinaatin arvoksi
-	for (int i = 0; i < 8; i++)
-	{
-		if (arr[i] == xInput) {
-			x = i;
-			//std::wcout << "x : " << x << std::endl;
-		}
-	}
-	for (int i = 0; i < 8; i++)
-	{
-		if (arrn[i] == yInput) {
-			y = i;
-			//std::wcout << "y : " << y << std::endl;
-		}
-	}
-	for (int i = 0; i < 8; i++)
-	{
-		if (arr[i] == txInput) {
-			tx = i;
-			//std::wcout << "target x : " << tx << std::endl;
-		}
-	}
-	for (int i = 0; i < 8; i++)
-	{
-		if (arrn[i] == tyInput) {
-			ty = i;
-			//std::wcout << "target y : " << ty << std::endl;
-		}
-	}
-
-	//Testaa onko lyhytlinna vai pitkälinna
-	if (xInput == 'O' && yInput == 'O' && txInput == 0 && tyInput == 0) {
-		Siirto lyhytLinna(true, false, nappi);
-		std::wcout << "LyhytLinna" << std::endl;
-		return lyhytLinna;
-	}
-	if (xInput == 'O' && yInput == 'O' && txInput == 'O' && tyInput == 0) {
-		Siirto pitkaLinna(false, true, nappi);
-		std::wcout << "PitkäLinna" << std::endl;
-		return pitkaLinna;
-	}
 	
-	if (y == 1 && ty == 3 || y == 6 && ty == 4) {
-		//Sotilas liikkuu 2 ruutua
-		std::wcout << "Sotilas liikkuu 2 ruutua" << std::endl;
-	}
+	int lahtoX;
+	int lahtoY;
+	int tuloX;
+	int tuloY;
+	std::wstring siirtoString;
+	std::wstring siirtynytNappulaString;
 
-	Ruutu alku(x, y);
-	Ruutu end(tx, ty);
-	Siirto move(alku, end, nappi);
+	do
+	{
+		std::wcout << "Anna siirtosi esim. (esim. Rg1-f3, linnoitus 0-0 tai 0-0-0)\n";
+		std::wcin >> siirtoString;
+		if (siirtoString == L"0-0" || siirtoString == L"0-0-0") {
+			if (siirtoString == L"0-0") {
+				return Siirto(true, false);
+			}
+			if (siirtoString == L"0-0-0") {
+				return Siirto(false, true);
+			}
+		}
+		else if (siirtoString.length() == 6) {
+			siirtynytNappulaString = siirtoString[0];
+			siirtoString.erase(0, 1);
+		}
+		else {
+			siirtynytNappulaString = L"s";
+		}
+		lahtoX = siirtoString[0] - 'a';
+		lahtoY = siirtoString[1] - '1';
+		tuloX = siirtoString[3] - 'a';
+		tuloY = siirtoString[4] - '1';
+
+		if (((lahtoX < 0 || lahtoX >7) || (lahtoY < 0 || lahtoY > 7)) || ((tuloX < 0 || tuloX >7) || (tuloY < 0 || tuloY > 7)))
+			std::wcout << "Siirron täytyy olla muotoa esim. Rf1-f3,\n aakkoset väliltä a-h\n numerot väliltä 1-8,\n Nappula on (K,k),(D,d),(T,t),(R,r),(L,l)\n sotilas jätetään merkitsemättä\n";
+	} while (((lahtoX < 0 || lahtoX >7) || (lahtoY < 0 || lahtoY > 7)) || ((tuloX < 0 || tuloX >7) || (tuloY < 0 || tuloY > 7)));
+
+	Ruutu lahtoRuutu(lahtoX, lahtoY);
+	Ruutu tuloRuutu(tuloX, tuloY);
+	Siirto siirto(lahtoRuutu, tuloRuutu);
 
 	//Testaa onko sotilas viimesellä rivillä
-	if (nappi == 'S' && y == 6 && ty == 7 || 
-		nappi == 'S' && y == 1 && ty == 0)
+	if (siirtynytNappulaString == L"s" && tuloY == 7 || tuloY == 0)
 	{
 		wchar_t korotettuNappula;
 
 		//Korota sotilas...
 		std::wcout << "Korota sotilas (D/T/L/R)" << std::endl;
 		std::wcin >> korotettuNappula;
-
-		switch (korotettuNappula)
+		if (tuloY == 7) 
 		{
-		case 'D':
-			move.miksiKorotetaan = asema->vd;
-			break;
+			switch (korotettuNappula)
+			{
+			case 'D':
+				siirto.miksiKorotetaan = asema->vd;
+				break;
 
-		case 'T':
-			move.miksiKorotetaan = asema->vt;
-			break;
+			case 'T':
+				siirto.miksiKorotetaan = asema->vt;
+				break;
 
-		case 'L':
-			move.miksiKorotetaan = asema->vl;
-			break;
+			case 'L':
+				siirto.miksiKorotetaan = asema->vl;
+				break;
 
-		case 'R':
-			move.miksiKorotetaan = asema->vr;
-			break;
+			case 'R':
+				siirto.miksiKorotetaan = asema->vr;
+				break;
 
-		default:
-			break;
+			default:
+				break;
+			}
+		} 
+		if (tuloY == 0) 
+		{
+			switch (korotettuNappula)
+			{
+			case 'D':
+				siirto.miksiKorotetaan = asema->md;
+				break;
+
+			case 'T':
+				siirto.miksiKorotetaan = asema->mt;
+				break;
+
+			case 'L':
+				siirto.miksiKorotetaan = asema->ml;
+				break;
+
+			case 'R':
+				siirto.miksiKorotetaan = asema->mr;
+				break;
+
+			default:
+				break;
+			}
 		}
 	}
 
-	return move;
+	return siirto;
+
+	////== vertausta varten 2 array, toimii mutta ottaa input etumerkin sotilaalle eikä tarvi "-"
+	//char arr[] = { 'a','b','c','d','e','f','g','h' };
+	//int arrn[] = { '1','2','3','4','5','6','7','8' };
+	////Tähän tallennetaan koko siirto
+	//std::wstring siirto;
+	////puretaan wstring siirto[] eli inputti näihin input muuttujiin
+	//wchar_t xInput = 0, yInput = 0, txInput = 0, tyInput = 0;
+	////mapataan input muuttujien paikkakoordinaattiarvot näihin kokonaisluku muuttujiin , alku x = sarake ja alku y = rivi, tx = target x ja ty = target y
+	//int x = 0, y = 0, tx = 0, ty = 0;
+	////nappulan etumerkki
+	//wchar_t nappi;
+
+	//std::wcout << "Anna siirto muodossa: (Napin etumerkki<T/R/L/D/K/S> / Alkukoordinaatti<'char',int> / Loppukoordinaatti<'char',int>)" << std::endl;
+	//std::wcin >> siirto;
+
+	//nappi = siirto[0];
+	//xInput = siirto[1];
+	//yInput = siirto[2];
+
+	//if (siirto.length() > 3) {
+	//	txInput = siirto[3];
+	//	tyInput = siirto[4];
+	//}
+
+	////Vertaa inputdataa arrayn indexissä olevaan arvoon ja aseta indexi koordinaatin arvoksi
+	//for (int i = 0; i < 8; i++)
+	//{
+	//	if (arr[i] == xInput) {
+	//		x = i;
+	//		//std::wcout << "x : " << x << std::endl;
+	//	}
+	//}
+	//for (int i = 0; i < 8; i++)
+	//{
+	//	if (arrn[i] == yInput) {
+	//		y = i;
+	//		//std::wcout << "y : " << y << std::endl;
+	//	}
+	//}
+	//for (int i = 0; i < 8; i++)
+	//{
+	//	if (arr[i] == txInput) {
+	//		tx = i;
+	//		//std::wcout << "target x : " << tx << std::endl;
+	//	}
+	//}
+	//for (int i = 0; i < 8; i++)
+	//{
+	//	if (arrn[i] == tyInput) {
+	//		ty = i;
+	//		//std::wcout << "target y : " << ty << std::endl;
+	//	}
+	//}
+
+	////Testaa onko lyhytlinna vai pitkälinna
+	//if (xInput == 'O' && yInput == 'O' && txInput == 0 && tyInput == 0) {
+	//	Siirto lyhytLinna(true, false, nappi);
+	//	std::wcout << "LyhytLinna" << std::endl;
+	//	return lyhytLinna;
+	//}
+	//if (xInput == 'O' && yInput == 'O' && txInput == 'O' && tyInput == 0) {
+	//	Siirto pitkaLinna(false, true, nappi);
+	//	std::wcout << "PitkäLinna" << std::endl;
+	//	return pitkaLinna;
+	//}
+	//
+	//if (y == 1 && ty == 3 || y == 6 && ty == 4) {
+	//	//Sotilas liikkuu 2 ruutua
+	//	std::wcout << "Sotilas liikkuu 2 ruutua" << std::endl;
+	//}
+
+	//Ruutu alku(x, y);
+	//Ruutu end(tx, ty);
+	//Siirto move(alku, end, nappi);
 }

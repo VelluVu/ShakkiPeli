@@ -5,7 +5,7 @@ void Ratsu::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 {
 	//std::wcout << "<<<<<<RATSUN SIIRROT>>>>>> " << std::endl;
 
-	wchar_t nappi = 'R';
+	//wchar_t nappi = 'R';
 	int x = pos->GetSarake();
 	int y = pos->GetRivi();
 	Ruutu _pos(x, y);
@@ -24,14 +24,14 @@ void Ratsu::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 		//Jos liike pysyy rajojen sisällä ja kohteessa ei ole tyhjäpaikka syö
 		if (tx <= 7 && ty <= 7 && tx >= 0 && ty >= 0 && asema->lauta[tx][ty] != nullptr && asema->lauta[tx][ty]->GetVari() != vari) 
 		{
-			Siirto syo(_pos, _target, nappi);
+			Siirto syo(_pos, _target);
 			lista.push_back(syo);
 			//std::wcout << "Syötävä kohde : "; syo.TulostaRuudut();
 		}
 		//Jos liike pysyy rajojen sisällä ja kohteessa on tyhjäpaikka liiku paikkaan ja aseta siirto 
 		else if (tx <= 7 && ty <= 7 && tx >= 0 && ty >= 0 && asema->lauta[tx][ty] == nullptr) 
 		{
-			Siirto liiku(_pos, _target, nappi);
+			Siirto liiku(_pos, _target);
 			lista.push_back(liiku);
 			//std::wcout << "Mahdollinen liike : "; liiku.TulostaRuudut();
 
@@ -49,12 +49,3 @@ void Ratsu::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 	//std::wcout << "<<<<<<RATSUN SIIRROT LOPPUU>>>>>> " << std::endl << std::endl;
 
 }
-
-//bool Ratsu::GetOnkoLiikkunut()
-//{
-//	return false;
-//}
-//
-//void Ratsu::SetOnkoLiikkunut(bool liikkunut)
-//{
-//}

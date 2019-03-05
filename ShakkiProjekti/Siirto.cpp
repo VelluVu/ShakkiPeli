@@ -2,26 +2,19 @@
 
 
 //Lis�sin napin etumerkin ett� voi hy�dynt��
-Siirto::Siirto(Ruutu pos, Ruutu target, wchar_t nappi)
+Siirto::Siirto(Ruutu pos, Ruutu target)
 {
 
-	_nappi = nappi;
 	alkuRuutu = pos;
 	loppuRuutu = target;
 	lyhytLinna = false;
 	pitkaLinna = false;
 
-	siirtoT[0] = this->GetNappi();
-	siirtoT[1] = this->GetAlkuRuutu().GetSarake();
-	siirtoT[2] = this->GetAlkuRuutu().GetRivi();
-	siirtoT[3] = this->GetLoppuRuutu().GetSarake();
-	siirtoT[4] = this->GetLoppuRuutu().GetRivi();
-
 }
 
-Siirto::Siirto(bool lyhytLinna, bool pitkaLinna, wchar_t nappi)
+Siirto::Siirto(bool lyhytLinna, bool pitkaLinnai)
 {
-	_nappi = nappi;
+
 	this->lyhytLinna = lyhytLinna;
 	this->pitkaLinna = pitkaLinna;
 	this->alkuRuutu = Ruutu(0, 0);
@@ -29,25 +22,9 @@ Siirto::Siirto(bool lyhytLinna, bool pitkaLinna, wchar_t nappi)
 
 }
 
-Siirto::Siirto()
-{
-}
-
-
-Siirto::~Siirto()
-{
-}
-
 void Siirto::TulostaRuudut()
 {
-	std::wcout << "<" << _nappi << "> (x;y) = (" << alkuRuutu.GetSarake() << ";" << alkuRuutu.GetRivi() << ") (tx;ty) = (" <<loppuRuutu.GetSarake() << ";" << loppuRuutu.GetRivi() << ")" << std::endl;
-}
-
-wchar_t* Siirto::GetSiirto()
-{
-
-	return siirtoT;
-
+	std::wcout << "(x;y) = (" << alkuRuutu.GetSarake() << ";" << alkuRuutu.GetRivi() << ") (tx;ty) = (" <<loppuRuutu.GetSarake() << ";" << loppuRuutu.GetRivi() << ")" << std::endl;
 }
 
 Ruutu Siirto::GetAlkuRuutu()
@@ -58,18 +35,6 @@ Ruutu Siirto::GetAlkuRuutu()
 Ruutu Siirto::GetLoppuRuutu()
 {
 	return loppuRuutu;
-}
-
-wchar_t Siirto::GetNappi()
-{
-	return _nappi;
-}
-
-bool Siirto::HasNappi() {
-	if (_nappi == '\0') {
-		return false;
-	}
-	return true;
 }
 
 bool Siirto::OnkoLyhytLinna()

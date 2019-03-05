@@ -117,7 +117,7 @@
   <ItemGroup>
     <ClInclude Include="Asema.h" />
     <ClInclude Include="KayttoLiittyma.h" />
-    <ClInclude Include="Kunigatar.h" />
+    <ClInclude Include="Kuningatar.h" />
     <ClInclude Include="Kuningas.h" />
     <ClInclude Include="Lahetti.h" />
     <ClInclude Include="MinMaxPaluu.h" />
@@ -131,7 +131,7 @@
   <ItemGroup>
     <ClCompile Include="Asema.cpp" />
     <ClCompile Include="KayttoLiittyma.cpp" />
-    <ClCompile Include="Kunigatar.cpp" />
+    <ClCompile Include="Kuningatar.cpp" />
     <ClCompile Include="Kuningas.cpp" />
     <ClCompile Include="Lahetti.cpp" />
     <ClCompile Include="Main.cpp" />

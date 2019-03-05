@@ -11,8 +11,10 @@ class KayttoLiittyma
 {
 public:
 	KayttoLiittyma(Asema* asema);
-	Asema* asema;
 	void PiirraLauta();	
 	Siirto AnnaVastustajanSiirto();
+
+private:
+	Asema* asema;
 };
 
