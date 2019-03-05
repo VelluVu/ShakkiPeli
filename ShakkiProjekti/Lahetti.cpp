@@ -91,11 +91,11 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 	//std::wcout << "<<<<<<LÄHETIN SIIRROT LOPPUU>>>>>> " << std::endl;
 }
 
-bool Lahetti::GetOnkoLiikkunut()
-{
-	return false;
-}
-
-void Lahetti::SetOnkoLiikkunut(bool liikkunut)
-{
-}
+//bool Lahetti::GetOnkoLiikkunut()
+//{
+//	return false;
+//}
+//
+//void Lahetti::SetOnkoLiikkunut(bool liikkunut)
+//{
+//}

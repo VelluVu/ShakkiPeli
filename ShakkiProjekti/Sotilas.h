@@ -13,7 +13,7 @@ public:
 	Sotilas(std::wstring uni, int col, int code) : Nappula(uni, col, code) {
 	onkoLiikkunut = false;
 	};
-	bool GetOnkoLiikkunut();
-	void SetOnkoLiikkunut(bool liikkunut);
+	//bool GetOnkoLiikkunut();
+	//void SetOnkoLiikkunut(bool liikkunut);
 	void LisaaSotilaanKorotukset(Siirto* siirto, std::list<Siirto>& lista, Asema* asema);
 };

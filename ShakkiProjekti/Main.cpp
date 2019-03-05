@@ -32,8 +32,9 @@ int main() {
 
 		}
 
-		MinMaxPaluu cheatMove = asema.MiniMax(2);
-		cheatMove.parasSiirto.TulostaRuudut();
+		//Alphabetalla ainaki yrityshyvä10
+		MinMaxPaluu cheatMove = asema.MiniMax(2, -INFINITY, INFINITY);
+		std::wcout << "HAXMOVE : "; cheatMove.parasSiirto.TulostaRuudut();
 		std::wcout << "MINMAX : " << cheatMove.evaluointiArvo << std::endl;
 
 		//Pelaajalta kysytty siirto

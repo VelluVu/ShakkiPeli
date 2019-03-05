@@ -50,11 +50,11 @@ void Ratsu::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 
 }
 
-bool Ratsu::GetOnkoLiikkunut()
-{
-	return false;
-}
-
-void Ratsu::SetOnkoLiikkunut(bool liikkunut)
-{
-}
+//bool Ratsu::GetOnkoLiikkunut()
+//{
+//	return false;
+//}
+//
+//void Ratsu::SetOnkoLiikkunut(bool liikkunut)
+//{
+//}

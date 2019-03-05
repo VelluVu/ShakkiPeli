@@ -107,7 +107,7 @@ void Asema::PaivitaAsema(Siirto* siirto)
 		{
 			//siirto on lyhytlinna
 			if (siirtovuoro == 0 && !GetOnkoValkeaKuningasLiikkunut() && !GetOnkoValkeaKTliikkunut()) {
-				std::wcout << "Valkoinen lyhytlinna onnistui!" << std::endl;
+				
 				lauta[4][0] = nullptr;
 				lauta[6][0] = vk;
 				lauta[7][0] = nullptr;
@@ -118,7 +118,7 @@ void Asema::PaivitaAsema(Siirto* siirto)
 			}
 			else if (siirtovuoro == 1 && !GetOnkoMustaKuningasLiikkunut() && !GetOnkoMustaKTliikkunut())
 			{
-				std::wcout << "Musta lyhytlinna onnistui!" << std::endl;
+				
 				lauta[4][7] = nullptr;
 				lauta[6][7] = mk;
 				lauta[7][7] = nullptr;
@@ -134,8 +134,7 @@ void Asema::PaivitaAsema(Siirto* siirto)
 			//siirto on pitkälinna
 			if (siirtovuoro == 0 && !GetOnkoValkeaKuningasLiikkunut() && GetOnkoValkeaDTliikkunut() && !GetOnkoValkeaKTliikkunut())
 			{
-				std::wcout << "Valkoinen pitkälinna onnistui!" << std::endl;
-
+				
 				lauta[4][0] = nullptr;
 				lauta[2][0] = vk;
 				lauta[0][0] = nullptr;
@@ -145,8 +144,7 @@ void Asema::PaivitaAsema(Siirto* siirto)
 			}
 			else if (siirtovuoro == 1 && !GetOnkoMustaKuningasLiikkunut() && !GetOnkoMustaKTliikkunut() && GetOnkoMustaDTliikkunut())
 			{
-				std::wcout << "Musta pitkälinna onnistui!" << std::endl;
-
+			
 				lauta[4][7] = nullptr;
 				lauta[2][7] = mk;
 				lauta[0][7] = nullptr;
@@ -232,6 +230,7 @@ void Asema::PaivitaAsema(Siirto* siirto)
 		if (siirto->miksiKorotetaan != nullptr) 
 		{
 			lauta[tx][ty] = siirto->miksiKorotetaan;
+			lauta[x][y] = nullptr;
 			break;
 		}
 		// Tarkistetaan oliko sotilaan kaksoisaskel
@@ -253,7 +252,7 @@ void Asema::PaivitaAsema(Siirto* siirto)
 		if (lauta[x][y] != nullptr && lauta[x][y]->GetKoodi() == VS || 
 			lauta[x][y] != nullptr && lauta[x][y]->GetKoodi() == MS)
 		{
-			lauta[x][y]->SetOnkoLiikkunut(true);
+			//lauta[x][y]->SetOnkoLiikkunut(true);
 		}
 		lauta[tx][ty] = lauta[x][y];
 		lauta[x][y] = nullptr;	
@@ -367,12 +366,13 @@ void Asema::KuninkaanShakit(std::list<Siirto>& lista)
 
 	//lista vastustajanSiirroille
 	std::list<Siirto> vastustajanSiirrot;
+	//siivotutSiirrot
 	std::list<Siirto> siivotutSiirrot;
 	int vastustajanSiirtoVuoro = 0;
 	Ruutu kuninkaanSijainti;
 	Asema testiAsema;
 
-	//päätellään vastustajan siirtovuoro
+	//Katsotaan vuoro
 	if (siirtovuoro == 0)
 	{
 		kuninkaanSijainti = EtsiKuningas(siirtovuoro);
@@ -437,11 +437,13 @@ void Asema::KuninkaanShakit(std::list<Siirto>& lista)
 		testiAsema.AnnaRaakaSiirrot(vastustajanSiirrot, vastustajanSiirtoVuoro);
 
 		Ruutu kuningasPaikka(x, y);
+
 		
 		if (testiAsema.OnkoRuutuUhattu(&kuningasPaikka, vastustajanSiirrot) == false)
 		{
 			siivotutSiirrot.push_back(s);
 		}
+	
 	}
 
 	lista = siivotutSiirrot;
@@ -487,51 +489,108 @@ double Asema::LoppuTulos()
 	return loppuTulos;
 }
 
-MinMaxPaluu Asema::MiniMax(int syvyys)
+double Max(double& val1, double& val2) 
+{
+	if (val1 > val2) 
+	{
+		return val1;
+	} 
+	return val2;
+}
+
+double Min(double& val1, double& val2)
+{
+	if (val1 <= val2)
+	{
+		return val1;
+	}
+	return val2;
+}
+
+
+MinMaxPaluu Asema::MiniMax(int syvyys, double alpha, double beta)
 {
 
 	MinMaxPaluu paluu;
-
 	std::list<Siirto> siirrot;
 	AnnaLaillisetSiirrot(siirrot);
 
-	if (siirrot.size() == 0) 
+	//Ei ole mahdollisia siirtoja, katsotaan mikä on pelin lopputulos palautetaan arvo
+	if (siirrot.size() == 0)
 	{
 		paluu.evaluointiArvo = LoppuTulos();
 		return paluu;
 	}
-	if (syvyys == 0) 
+	//Ollaan tutkittu puuta haluttuun syvyyteen asti, evaluoidaan seuraava järkevä siirto laskemalla
+	if (syvyys == 0)
 	{
 		paluu.evaluointiArvo = Evaluoi();
 		return paluu;
 	}
 
-	if (siirtovuoro == 0) 
+	if (siirtovuoro == 0)
 	{
-		paluu.evaluointiArvo = -1000000;
+		paluu.evaluointiArvo = -INFINITY;
+		//Tutkii jokaista siirtoa seuraavassa asemassa
+		for (Siirto s : siirrot)
+		{
+
+			Asema uusi = *this;
+			uusi.PaivitaAsema(&s);
+
+			//laskee arvoja siirroille kunnes ollaan riittävän syvällä
+			MinMaxPaluu arvo = uusi.MiniMax(syvyys - 1, alpha, beta);
+
+			//Katsoo onko siirron arvo suurempi / pienempi vuorosta riippuen alku arvoon verrattuna
+			if (arvo.evaluointiArvo > paluu.evaluointiArvo) 
+			{
+				paluu.evaluointiArvo = arvo.evaluointiArvo;
+				paluu.parasSiirto = s;
+			}
+			if (paluu.evaluointiArvo > alpha) 
+			{
+				alpha = paluu.evaluointiArvo;
+			}
+			if (beta <= alpha)
+			{
+				break;
+			}
+		}
+		return paluu;
 	}
 	else 
 	{
-		paluu.evaluointiArvo = +1000000;
-	}
+		paluu.evaluointiArvo = +INFINITY;
 
-	for (Siirto s : siirrot) 
-	{
-
-		Asema uusi = *this;
-		uusi.PaivitaAsema(&s);
-
-		MinMaxPaluu arvo = uusi.MiniMax(syvyys - 1);
-
-		if ((siirtovuoro == 0 && arvo.evaluointiArvo > paluu.evaluointiArvo) ||
-			(siirtovuoro == 1 && arvo.evaluointiArvo < paluu.evaluointiArvo)) 
+		//Tutkii jokaista siirtoa seuraavassa asemassa
+		for (Siirto s : siirrot)
 		{
-			paluu.evaluointiArvo = arvo.evaluointiArvo;
-			paluu.parasSiirto = s;
-		}
-	}
 
-	return paluu;
+			Asema uusi = *this;
+			uusi.PaivitaAsema(&s);
+
+			//laskee arvoja siirroille kunnes ollaan riittävän syvällä
+			MinMaxPaluu arvo = uusi.MiniMax(syvyys - 1, alpha, beta);
+
+			//Katsoo onko siirron arvo suurempi / pienempi vuorosta riippuen alku arvoon verrattuna
+			if (arvo.evaluointiArvo < paluu.evaluointiArvo) 
+			{
+				paluu.evaluointiArvo = arvo.evaluointiArvo;
+				paluu.parasSiirto = s;
+			}
+			if (paluu.evaluointiArvo < beta) 
+			{
+				beta = paluu.evaluointiArvo;
+			}
+
+			if (beta <= alpha)
+			{
+				break;
+			}
+		}
+		return paluu;
+	}
+	
 }
 
 double Asema::Evaluoi()

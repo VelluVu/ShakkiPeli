@@ -41,7 +41,7 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 					lista.push_back(liikuYks);
 					//std::wcout << "Liiku yks : "; liikuYks.TulostaRuudut();
 				}
-				else if (ty == 7)
+				else if (y == 6 && ty == 7)
 				{
 					Siirto korotus(_pos, _target, nappi);
 					LisaaSotilaanKorotukset(&korotus, lista, asema);
@@ -107,7 +107,7 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 					lista.push_back(liikuYks);
 					//std::wcout << "Liiku yks : "; liikuYks.TulostaRuudut();
 				}
-				else if (ty == 0) 
+				else if (y == 1 && ty == 0) 
 				{			
 					Siirto korotus(_pos, _target, nappi);
 					LisaaSotilaanKorotukset(&korotus, lista, asema);
@@ -210,19 +210,19 @@ void Sotilas::LisaaSotilaanKorotukset(Siirto* siirto, std::list<Siirto>& lista, 
 	}
 }
 
-void Sotilas::SetOnkoLiikkunut(bool liikkunut)
-{
-	onkoLiikkunut = liikkunut;
-}
-
-bool Sotilas::GetOnkoLiikkunut()
-{
-	if (!onkoLiikkunut) 
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
-}
+//void Sotilas::SetOnkoLiikkunut(bool liikkunut)
+//{
+//	onkoLiikkunut = liikkunut;
+//}
+//
+//bool Sotilas::GetOnkoLiikkunut()
+//{
+//	if (!onkoLiikkunut) 
+//	{
+//		return false;
+//	}
+//	else
+//	{
+//		return true;
+//	}
+//}

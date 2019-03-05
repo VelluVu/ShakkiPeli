@@ -5,12 +5,6 @@ KayttoLiittyma::KayttoLiittyma(Asema * asema)
 	this->asema = asema;
 }
 
-KayttoLiittyma::~KayttoLiittyma()
-{
-	delete asema;
-	asema = 0;
-}
-
 void KayttoLiittyma::PiirraLauta()
 {
 

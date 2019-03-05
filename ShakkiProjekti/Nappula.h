@@ -31,8 +31,8 @@ public:
 	int GetVari();
 	virtual void AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int vari) = 0;
 	//ei taida toimia tässä structuurissa?
-	virtual bool GetOnkoLiikkunut() = 0;
-	virtual void SetOnkoLiikkunut(bool liikkunut) = 0;
+	/*virtual bool GetOnkoLiikkunut() = 0;
+	virtual void SetOnkoLiikkunut(bool liikkunut) = 0;*/
 };
 
 

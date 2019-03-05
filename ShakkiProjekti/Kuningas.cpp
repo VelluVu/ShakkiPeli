@@ -51,11 +51,11 @@ void Kuningas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, i
 	//std::wcout << "<<<<<<KUNINKAAN SIIRROT LOPPUU>>>>>> " << std::endl << std::endl;
 }
 
-bool Kuningas::GetOnkoLiikkunut()
-{
-	return false;
-}
-
-void Kuningas::SetOnkoLiikkunut(bool liikkunut)
-{
-}
+//bool Kuningas::GetOnkoLiikkunut()
+//{
+//	return false;
+//}
+//
+//void Kuningas::SetOnkoLiikkunut(bool liikkunut)
+//{
+//}

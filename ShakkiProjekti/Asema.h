@@ -1,14 +1,16 @@
 #pragma once
-#include "Nappula.h"
-#include "Siirto.h"
+
+#include <list>
 #include <string>
+#include "Siirto.h"
+#include "MinMaxPaluu.h"
+#include "Nappula.h"
 #include "Sotilas.h"
 #include "Torni.h"
 #include "Ratsu.h"
 #include "Lahetti.h"
 #include "Kuningas.h"
 #include "Kunigatar.h"
-#include "MinMaxPaluu.h"
 
 class Asema
 {
@@ -54,7 +56,7 @@ public:
 	void AnnaLinnoitusSiirrot(std::list<Siirto>& lista);
 	void KuninkaanShakit(std::list<Siirto>& lista);
 	double LoppuTulos();
-	MinMaxPaluu MiniMax(int syvyys);
+	MinMaxPaluu MiniMax(int syvyys, double alpha, double beta);
 	double Evaluoi();
 	bool GetOnkoValkeaKuningasLiikkunut();
 	bool GetOnkoMustaKuningasLiikkunut();
