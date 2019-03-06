@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include "Siirto.h"
+#include <vector>
 
 class KayttoLiittyma
 {

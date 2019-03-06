@@ -519,15 +519,10 @@ double Asema::LoppuTulos()
 		return siirtovuoro == 0 ? -1000000 : 1000000;	// matti
 }
 
-MinMaxPaluu Asema::MiniMax(int syvyys, double alpha, double beta, bool maximoija)
+MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta)
 {
 
 	MinMaxPaluu paras;
-	if (maximoija)
-		paras.evaluointiArvo = -1000000.0;
-	else
-		paras.evaluointiArvo = 1000000.0;
-
 	std::list<Siirto> siirrot;
 	AnnaLaillisetSiirrot(siirrot);
 
@@ -537,85 +532,85 @@ MinMaxPaluu Asema::MiniMax(int syvyys, double alpha, double beta, bool maximoija
 		paras.evaluointiArvo = LoppuTulos();
 		return paras;
 	}
-	//Ollaan tutkittu puuta haluttuun syvyyteen asti, evaluoidaan seuraava järkevä siirto laskemalla
-	if (syvyys == 0)
+	//Ollaan tutkittu puuta haluttuun syvyyteen asti, evaluoidaan seuraava siirto
+	if (syvyys <= 0)
 	{
 		paras.evaluointiArvo = Evaluoi();
 		return paras;
 	}
 
+	//MAXIMOIJA
+	if (siirtovuoro == 0)
+		paras.evaluointiArvo = -1000.0;
+	else
+		paras.evaluointiArvo = 1000.0;
 
-		//Tutkii jokaista siirtoa seuraavassa asemassa
+
 	for (Siirto s : siirrot)
 	{
-
 		Asema uusi = *this;
 		uusi.PaivitaAsema(&s);
 
-		if (maximoija)
+		if (siirtovuoro == 0)
 		{
-			
-			//Rekursio
-			MinMaxPaluu arvo = uusi.MiniMax(syvyys - 1, alpha, beta, true);
-			//std::wcout << arvo.evaluointiArvo << std::endl;
-			//Katsoo onko siirron arvo suurempi / pienempi vuorosta riippuen alku arvoon verrattuna
+
+			MinMaxPaluu arvo = uusi.AlphaBeta(syvyys - 1, alpha, beta);
+
 			if (arvo.evaluointiArvo > paras.evaluointiArvo)
 			{
 				paras.evaluointiArvo = arvo.evaluointiArvo;
 				paras.parasSiirto = s;
 
+				if (paras.evaluointiArvo > beta) {
+					std::wcout << "pruned" << std::endl;
+					return paras;
+				}
+				alpha = std::max(alpha, paras.evaluointiArvo);
+
 			}
-			if (arvo.evaluointiArvo > alpha)
+
+			if (beta <= alpha)
 			{
-				alpha = arvo.evaluointiArvo;
-			
+				std::wcout << "pruned" << std::endl;
+				break; //cutoff
 			}
-			if (alpha >= beta)
-			{
-				std::wcout << "CUTOUT: " << std::endl;
-				s.TulostaRuudut();
-				break;
-			}
+
 		}
+		//MINIMOIJA
 		else
 		{
-			
-			//Rekursio
-			MinMaxPaluu arvo = uusi.MiniMax(syvyys - 1, alpha, beta, false);
-			//std::wcout << arvo.evaluointiArvo << std::endl;
-			//Katsoo onko siirron arvo suurempi / pienempi vuorosta riippuen alku arvoon verrattuna
+			MinMaxPaluu arvo = uusi.AlphaBeta(syvyys - 1, alpha, beta);
+
 			if (arvo.evaluointiArvo < paras.evaluointiArvo)
 			{
-
 				paras.evaluointiArvo = arvo.evaluointiArvo;
 				paras.parasSiirto = s;
 
+				if (paras.evaluointiArvo < alpha) {
+					std::wcout << "pruned" << std::endl;
+					return paras;
+				}
+
+				beta = std::min(beta, paras.evaluointiArvo);
+
 			}
 
-			if (arvo.evaluointiArvo < beta)
+			if (beta <= alpha)
 			{
-
-				beta = arvo.evaluointiArvo;
-		
-			}
-			
-			if (alpha >= beta)
-			{
-				std::wcout << "CUTOUT: " << std::endl;
-				s.TulostaRuudut();
-				std::wcout << "BETA: " << alpha << std::endl;
+				std::wcout << "pruned" << std::endl;
 				break;
 			}
+
 		}
-	}		
+	}
+	asemanArvo = paras.evaluointiArvo;
 	return paras;
 }
 
 double Asema::LaskeArvo(int vari)
 {
 
-	double valkeaArvo = 0;
-	double mustaArvo = 0;
+	double materiaaliArvo = 0;
 
 	//MATERIAALI
 	for (int x = 0; x < 8; x++)
@@ -624,54 +619,99 @@ double Asema::LaskeArvo(int vari)
 		{
 			if (lauta[x][y] != nullptr)
 			{
-				int nappulanNimi = this->lauta[x][y]->GetKoodi();
-				//Valkoiset
-				if (nappulanNimi == VD)
-					valkeaArvo += 90;
-				if (nappulanNimi == VT)
-					valkeaArvo += 15;
-				if (nappulanNimi == VL)
-					valkeaArvo += 12;
-				if (nappulanNimi == VR)
-					valkeaArvo += 8;
-				if (nappulanNimi == VS)
-					if (lauta[3][1] || lauta[4][1])
-						valkeaArvo += 5;
-					else
-						valkeaArvo += 2.5;
-				//Mustat
-				if (nappulanNimi == MD)
-					mustaArvo += 90;
-				if (nappulanNimi == MT)
-					mustaArvo += 15;
-				if (nappulanNimi == ML)
-					mustaArvo += 12;
-				if (nappulanNimi == MR)
-					mustaArvo += 8;
-				if (nappulanNimi == MS)
-					if (lauta[3][6] || lauta[4][6])
-						mustaArvo += 5;
-					else
-						mustaArvo += 2.5;
+				if (lauta[x][y]->GetVari() == vari) {
+					int nappulanNimi = this->lauta[x][y]->GetKoodi();
+					//Valkoiset
+					if (nappulanNimi == VD)
+						materiaaliArvo += kuningattarenArvo;
+					if (nappulanNimi == VT)
+						materiaaliArvo += torninArvo;
+					if (nappulanNimi == VL)
+						materiaaliArvo += lahetinArvo;
+					if (nappulanNimi == VR)
+						materiaaliArvo += ratsunArvo;
+					if (nappulanNimi == VS)
+						materiaaliArvo += sotilaanArvo;
+					//Mustat
+					if (nappulanNimi == MD)
+						materiaaliArvo += kuningattarenArvo;
+					if (nappulanNimi == MT)
+						materiaaliArvo += torninArvo;
+					if (nappulanNimi == ML)
+						materiaaliArvo += lahetinArvo;
+					if (nappulanNimi == MR)
+						materiaaliArvo += ratsunArvo;
+					if (nappulanNimi == MS)
+						materiaaliArvo += sotilaanArvo;
+				}
 			}
 		}
 	}
-	if (vari == 0) {
-		return valkeaArvo;
+	
+	return materiaaliArvo;
+	
+}
+
+double Asema::LaskeAsemaArvio(int vari) 
+{
+	double asemanArvo = 0;
+
+	for (int x = 0; x < 8; x++)
+	{
+		for (int y = 0; y < 8; y++)
+		{
+
+			if (lauta[x][y] != nullptr)
+			{
+				if (lauta[x][y]->GetVari() == vari)
+				{
+					
+					int nappulanNimi = this->lauta[x][y]->GetKoodi();
+					//Valkoiset
+					if (nappulanNimi == VK)
+						asemanArvo +=  kuninkaanArvo * vKuningasTable[x][y];
+					if (nappulanNimi == VD)
+						asemanArvo += kuningattarenArvo * vKuningatarTable[x][y];
+					if (nappulanNimi == VT)
+						asemanArvo += torninArvo * vTorniTable[x][y];
+					if (nappulanNimi == VL)
+						asemanArvo +=  lahetinArvo * vLahettiTable[x][y];
+					if (nappulanNimi == VR)
+						asemanArvo += ratsunArvo * vRatsuTable[x][y];
+					if (nappulanNimi == VS)
+						asemanArvo += sotilaanArvo * vSotilasTable[x][y];
+					//Mustat
+					if (nappulanNimi == MK)
+						asemanArvo += kuninkaanArvo * mKuningasTable[x][y];
+					if (nappulanNimi == MD)
+						asemanArvo += kuningattarenArvo * mKuningatarTable[x][y];
+					if (nappulanNimi == MT)
+						asemanArvo += torninArvo * mTorniTable[x][y];
+					if (nappulanNimi == ML)
+						asemanArvo += lahetinArvo * mLahettiTable[x][y];
+					if (nappulanNimi == MR)
+						asemanArvo += ratsunArvo * mRatsuTable[x][y];
+					if (nappulanNimi == MS)
+						asemanArvo += sotilaanArvo * mSotilasTable[x][y];
+				}
+			}
+		}
 	}
-	else {
-		return mustaArvo;
-	}
+
+	return asemanArvo;
 }
 
 double Asema::Evaluoi()
 {
 
 	double materiaaliKerroin = 1.0;
+	double asemaKerroin = 0.2;
+
+	double asemaArvo = (LaskeAsemaArvio(0) - LaskeAsemaArvio(1)) * asemaKerroin;
 	
-	double materiaaliArvo = LaskeArvo(0) - LaskeArvo(1);
+	double materiaaliArvo = (LaskeArvo(0) - LaskeArvo(1)) * materiaaliKerroin;
 	
-	return materiaaliArvo * materiaaliKerroin;
+	return materiaaliArvo + asemaArvo;
 }
 
 bool Asema::GetOnkoValkeaKuningasLiikkunut()
