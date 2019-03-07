@@ -12,6 +12,7 @@ public:
 	void AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int vari);
 	Sotilas(std::wstring uni, int col, int code) : Nappula(uni, col, code) {
 	onkoLiikkunut = false;
+	double arvo = 1.0;
 	};
 	//bool GetOnkoLiikkunut();
 	//void SetOnkoLiikkunut(bool liikkunut);

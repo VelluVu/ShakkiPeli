@@ -4,8 +4,6 @@
 #include <chrono>
 #include <vector>
 
-using Clock=std::chrono::high_resolution_clock;
-
 inline auto currentTime() {
 	return std::chrono::high_resolution_clock::now();
 }
@@ -37,46 +35,65 @@ int main() {
 	std::wstring secretCode = L"IDDQD";
 	std::wcin >> trySecretCode;
 	int haxor = trySecretCode.compare(secretCode);
+	double peliTilanne = 99.99;
+	double min = -1000000;
+	double max =1000000;
 
 	std::wcout << "Valkoinen aloittaa. " << std::endl;
 
 	for (int i = 0; i < 100; i++)
 	{
-		
-		kayttis.PiirraLauta();
 
+		if (!asemat.empty())
+		{
+			for (Asema a : asemat)
+			{
+				std::wcout << "Asema: " << a.asemanArvo << " |";
+			}
+		}
+		std::wcout << std::endl;
+
+		kayttis.PiirraLauta();
 		//MAHDOLLISUUS PERUA SIIRTO!
 		std::wcout << "Haluatko peruuttaa siirtoja? määrä <int>" << std::endl;
 		int undo;
 		std::wcin >> undo;
 
-		if (undo > 0)
+		if (undo > 0 && !asemat.empty())
 		{
-			if(asemat.size() > undo)
-				for (int i = 0; i <= undo; i++)
-				{
-					asemat.pop_back();
-				}
+			while (undo == 0) {
+				asemat.pop_back();
+				undo--;
+			}
+			
 			asema = asemat.front();
 		}
-		//TÄHÄN LOPPUU
+
+		asemat.push_back(asema);
+
 		system("cls");
 		kayttis.PiirraLauta();
 		
-		if (asemat.size() != 0) 
-		{
-			for (Asema a : asemat)
-			{
-				std::wcout << "ARVO: " << a.asemanArvo << " , ";
-			}
-		}
-		std::wcout << std::endl;
-		asemat.push_back(asema);
-	
 		//Vuorossa olevan Siirtolista
 		std::list<Siirto> siirtoLista;
 		Siirto s;
 		MinMaxPaluu cheatMove;
+
+		//Tarkistaa miten peli loppu
+
+		if (peliTilanne <= -1000.0) {
+			std::wcout << "BLACK WIN! " << std::endl;
+			break;
+		}
+		if (peliTilanne >= 1000.0) {
+			std::wcout << "WHITE WIN! " << std::endl;
+			break;
+		}
+		if (siirtoLista.empty() && peliTilanne == 0)
+		{
+			std::wcout << "DRAW! " << std::endl;
+			break;
+		}
 
 		//Generoidaan siirrot
 		asema.AnnaLaillisetSiirrot(siirtoLista);
@@ -96,24 +113,21 @@ int main() {
 
 		}
 		std::wcout << std::endl;
-
-		//laskee koko miettimis ajan ei pysäytä functioo.
-		auto t1 = Clock::now();
-	
-		//Alphabetalla ainaki yrityshyvä10 PRUNING EI TOIMI!!
-		cheatMove = asema.AlphaBeta(3, -INFINITY, +INFINITY);
-		
-		if (haxor <= 0)
-		{
-			std::wcout << "HAXMOVE : "; cheatMove.parasSiirto.TulostaRuudut();
-			std::wcout << "MINMAXARVO : " << cheatMove.evaluointiArvo << std::endl;	
-		}
 	
 		//Valkoisten Siirtovuoro
 		if (asema.GetSiirtovuoro() == valinta) 
 		{	
 			//s = kayttis.AnnaVastustajanSiirto();
+			//laskee koko miettimis ajan ei pysäytä functioo.
+			stopWatch.Reset();
 
+			//Alphabetalla ainaki yrityshyvä10 PRUNING EI TOIMI!!
+			cheatMove = asema.AlphaBeta(3, min, max, true);
+			if (haxor <= 0)
+			{
+				std::wcout << "HAXMOVE : "; cheatMove.parasSiirto.TulostaRuudut();
+				std::wcout << "MINMAXARVO : " << cheatMove.evaluointiArvo << std::endl;
+			}
 			asema.PaivitaAsema(&cheatMove.parasSiirto);
 
 			//Katsotaan onko siirto validi
@@ -127,7 +141,16 @@ int main() {
 		}
 		else //Mustien Siirtovuoro
 		{	
-		
+			//laskee koko miettimis ajan ei pysäytä functioo.
+			stopWatch.Reset();
+
+			//Alphabetalla ainaki yrityshyvä10 PRUNING EI TOIMI!!
+			cheatMove = asema.AlphaBeta(3, min, max, false);
+			if (haxor <= 0)
+			{
+				std::wcout << "HAXMOVE : "; cheatMove.parasSiirto.TulostaRuudut();
+				std::wcout << "MINMAXARVO : " << cheatMove.evaluointiArvo << std::endl;
+			}
 			//Musta käyttää MINMAX VALITSEMAA SIIRTOA
 			//Alphabetalla ainaki yrityshyvä10, minimoijana kutsutaan min;
 			
@@ -139,20 +162,12 @@ int main() {
 			
 			asema.PaivitaAsema(&cheatMove.parasSiirto);
 		}
-		auto t2 = Clock::now();
-		std::wcout << "VUORO KESTI : " << std::chrono::duration_cast<std::chrono::seconds>(t2 - t1).count() << " SEKUNTTIA !" << std::endl;
 
-		if (cheatMove.evaluointiArvo <= -1000000) {
-			std::wcout << "BLACK WIN! " << std::endl;
-		}
-		else if (cheatMove.evaluointiArvo >= 1000000){
-			std::wcout << "WHITE WIN! " << std::endl;
-		}
-		else if (cheatMove.evaluointiArvo == 0) 
-		{
-			std::wcout << "DRAW! " << std::endl;
-		}
-	
+		peliTilanne = cheatMove.evaluointiArvo;
+		
+		//Printtaa mietityn ajan
+		std::wcout << "Vuoron Kesto: " << stopWatch.GetElapsed() << " sec"<< std::endl;
+
 		//Vaihdetaan vuoro
 		if (asema.GetSiirtovuoro() == 0) 
 		{
@@ -163,6 +178,7 @@ int main() {
 			asema.SetSiirtovuoro(0);
 			std::wcout << "Seuraava siirto on valkoinen" << std::endl;
 		}
+
 	}
 
 	system("Pause");

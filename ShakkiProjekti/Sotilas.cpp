@@ -26,8 +26,8 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 			Ruutu _target(tx, ty);
 			//Jos vain liike kyseessä
 			if (i < 2 && ty >= 0 && ty <= 7 && asema->lauta[tx][ty] == nullptr) {
-				//mahdollista liikkua 2 kertaa jos ei ole liikkunut
-				if (y == 1 && i == 1) 
+				//mahdollista liikkua 2 kertaa jos ei ole liikkunut EIKÄ PASSAA HYPÄTÄ OMAN YLI!
+				if (y == 1 && i == 1 && asema->lauta[tx][ty -1] == nullptr) 
 				{
 					Siirto liikuKaksi(_pos, _target);
 					lista.push_back(liikuKaksi);				
@@ -92,8 +92,8 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 			//std::wcout << "Target X:" << tx << " Target Y:" << ty << std::endl;
 			//Jos vain liike kyseessä
 			if (i < 2 && ty >= 0 && ty <= 7 && asema->lauta[tx][ty] == nullptr) {
-				//mahdollista liikkua 2 kertaa jos ei ole liikkunut
-				if (i == 1 && y == 6)
+				//mahdollista liikkua 2 kertaa jos ei ole liikkunut EIKÄ PASSAA HYPÄTÄ OMAN YLI!
+				if (i == 1 && y == 6 && asema->lauta[tx][ty + 1] == nullptr)
 				{
 					Siirto liikuKaksi(_pos, _target);
 					lista.push_back(liikuKaksi);				
@@ -154,7 +154,7 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 			if (asema->lauta[asema->kaksoisaskelSarakkeella][4] && asema->lauta[asema->kaksoisaskelSarakkeella][4]->GetKoodi() == MS) 
 			{
 				Ruutu _target(asema->kaksoisaskelSarakkeella, 5);
-				Siirto ohestaLyonti(_pos, _target);
+				Siirto ohestaLyonti(_pos, _target, true);
 				lista.push_back(ohestaLyonti);
 			}
 		}
@@ -163,7 +163,7 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 			if (asema->lauta[asema->kaksoisaskelSarakkeella][3] && asema->lauta[asema->kaksoisaskelSarakkeella][3]->GetKoodi() == VS)
 			{
 				Ruutu _target(asema->kaksoisaskelSarakkeella, 2);
-				Siirto ohestaLyonti(_pos, _target);
+				Siirto ohestaLyonti(_pos, _target, true);
 				lista.push_back(ohestaLyonti);
 			}
 		}
