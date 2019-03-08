@@ -17,13 +17,73 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 	{
 		nappi = 'T';
 	}*/
+	int _tx[] = {0, 1,  0,  -1};
+	int _ty[] = {1, 0, -1,   0};
 
-	
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			int tx = x + _tx[i];
+			int ty = y + _ty[i];
+
+			//tarkastetaan suunta
+			if (i == 0)
+			{
+				//jos suunta on ty +1 , ylös  tx == x
+				tx = x;
+				ty += j;
+			}
+			else if (i == 1)
+			{
+				//jos oikealle tx +1 ty == y
+				tx += j;
+				ty = y;
+			}
+			else	if (i == 2)
+			{
+				//jos alas ty - 1 tx == x
+				tx = x;
+				ty -= j;
+			}
+			else if (i == 3)
+			{
+				//jos vasemmalle tx - 1 ty == y
+				tx -= j;
+				ty = y;
+			}
+
+			Ruutu _target(tx, ty);
+
+			if (tx > 7 || tx < 0 || ty > 7 || ty < 0) 
+			{
+				break;
+			}
+
+			if (asema->lauta[tx][ty] != nullptr && asema->lauta[tx][ty]->GetVari() == vari)
+			{
+				break;
+			}
+			else if (asema->lauta[tx][ty] != nullptr && asema->lauta[tx][ty]->GetVari() != vari) 
+			{
+				Siirto syo(_pos, _target);
+				lista.push_back(syo);
+				break;
+			}
+			else if (asema->lauta[tx][ty] == nullptr)
+			{
+				//Muuten siirrytään seuraavaan ruutuun kyseisessä suunnassa ja lisätään mahdollinen siirto listaan
+				Siirto liiku(_pos, _target);
+				lista.push_back(liiku);
+			}
+		}
+	}
+
 	//std::wcout << "<AnnaSiirrot>AlkuPositio x : " << x << " <AnnaSiirrot>AlkuPositio y : " <<  y << std::endl;
 	
 	//std::wcout << "Liikkeet Oikealle: " << std::endl;
 	//Tornien liike oikealle
-	for (int i = 1; i <= 7; i++)
+	/*for (int i = 1; i <= 7; i++)
 	{
 		//Kohteeksi asetetaan seuraava positio
 		Ruutu _target(x + i, y);
@@ -188,7 +248,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 		}
 	}
 
-
+	*/
 	//std::wcout << "<<<<<<TORNIN SIIRROT LOPPUU>>>>>> " << std::endl << std::endl;
 }
 

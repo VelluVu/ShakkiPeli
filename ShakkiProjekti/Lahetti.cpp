@@ -26,9 +26,6 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 
 	for (int i = 0; i < 4; i++)
 	{
-		int tx = x + _tx[i];
-		int ty = y + _ty[i];		
-		
 		//Mennään eteenpäin kunnes maksimi siirtymä on tehty tai if tsekkaukset hoksaa probleeman
 		for (int j = 0 ; j < 8 ; j++)
 		{
@@ -88,6 +85,7 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 			}
 		}
 	}
+
 	//std::wcout << "<<<<<<LÄHETIN SIIRROT LOPPUU>>>>>> " << std::endl;
 }
 

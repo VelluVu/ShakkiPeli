@@ -29,51 +29,63 @@ int main() {
 	std::wcout << "Valitse Nappulan Väri: <0/1>" << std::endl;
 	int valinta = 0;
 	std::cin >> valinta;
-	asema.SetSiirtovuoro(valinta);
-	std::wcout << "Type secret code to activate cheatMode: " << std::endl;
+	asema.SetSiirtovuoro(0);
+	//std::wcout << "Type secret code to activate cheatMode: " << std::endl;
 	std::wstring trySecretCode;
 	std::wstring secretCode = L"IDDQD";
-	std::wcin >> trySecretCode;
+	//std::wcin >> trySecretCode;
 	int haxor = trySecretCode.compare(secretCode);
 	double peliTilanne = 99.99;
-	double min = -1000000;
-	double max =1000000;
-
+	int undo = 0;
+	int asemanIndex = 0;
 	std::wcout << "Valkoinen aloittaa. " << std::endl;
+	asemat.push_back(asema);
 
 	for (int i = 0; i < 100; i++)
 	{
+		std::wcout << "INDEX | KOKO " << asemanIndex << " | " << asemat.size() - 1 << std::endl;
 
 		if (!asemat.empty())
 		{
 			for (Asema a : asemat)
 			{
-				std::wcout << "Asema: " << a.asemanArvo << " |";
+				std::wcout << "Asema " << asemanIndex  << ": " << a.asemanArvo << " |";
 			}
 		}
 		std::wcout << std::endl;
+		
+		std::wcout << std::endl;
 
 		kayttis.PiirraLauta();
+	
+		std::wcout << std::endl;
+
 		//MAHDOLLISUUS PERUA SIIRTO!
 		std::wcout << "Haluatko peruuttaa siirtoja? määrä <int>" << std::endl;
-		int undo;
+
 		std::wcin >> undo;
 
-		if (undo > 0 && !asemat.empty())
+		if (undo > 0 && asemanIndex >= 0 && asemanIndex - undo >= 0)
 		{
-			while (undo == 0) {
-				asemat.pop_back();
-				undo--;
+			
+			asemanIndex -= undo;
+			asema = asemat.at(asemanIndex);
+			while (undo > 0)
+			{
+				if (asemat.empty()) {
+					undo = 0;
+				}
+				else {
+					asemat.pop_back();
+					undo--;
+				}
 			}
 			
-			asema = asemat.front();
+
 		}
 
-		asemat.push_back(asema);
-
 		system("cls");
-		kayttis.PiirraLauta();
-		
+
 		//Vuorossa olevan Siirtolista
 		std::list<Siirto> siirtoLista;
 		Siirto s;
@@ -89,11 +101,6 @@ int main() {
 			std::wcout << "WHITE WIN! " << std::endl;
 			break;
 		}
-		if (siirtoLista.empty() && peliTilanne == 0)
-		{
-			std::wcout << "DRAW! " << std::endl;
-			break;
-		}
 
 		//Generoidaan siirrot
 		asema.AnnaLaillisetSiirrot(siirtoLista);
@@ -104,30 +111,30 @@ int main() {
 		std::advance(siirtoLista_front, rng);
 		cheatMove.parasSiirto = *siirtoLista_front;
 
-		std::wcout << siirtoLista.size() << " siirtoa" << std::endl;
+		std::wcout << siirtoLista.size() << " mahdollista siirtoa! " << std::endl;
 		//tulosta vielä kaikki siirrot
-		for (Siirto s : siirtoLista)
+		/*for (Siirto s : siirtoLista)
 		{
 
 			s.TulostaRuudut();
 
 		}
-		std::wcout << std::endl;
+		std::wcout << std::endl;*/
 	
 		//Valkoisten Siirtovuoro
-		if (asema.GetSiirtovuoro() == valinta) 
+		if (asema.GetSiirtovuoro() == 0) 
 		{	
 			//s = kayttis.AnnaVastustajanSiirto();
 			//laskee koko miettimis ajan ei pysäytä functioo.
 			stopWatch.Reset();
 
 			//Alphabetalla ainaki yrityshyvä10 PRUNING EI TOIMI!!
-			cheatMove = asema.AlphaBeta(3, min, max, true);
-			if (haxor <= 0)
-			{
+			cheatMove = asema.AlphaBeta(4, -INFINITY, INFINITY, true);
+			//if (haxor <= 0)
+			//{
 				std::wcout << "HAXMOVE : "; cheatMove.parasSiirto.TulostaRuudut();
 				std::wcout << "MINMAXARVO : " << cheatMove.evaluointiArvo << std::endl;
-			}
+			//}
 			asema.PaivitaAsema(&cheatMove.parasSiirto);
 
 			//Katsotaan onko siirto validi
@@ -145,12 +152,12 @@ int main() {
 			stopWatch.Reset();
 
 			//Alphabetalla ainaki yrityshyvä10 PRUNING EI TOIMI!!
-			cheatMove = asema.AlphaBeta(3, min, max, false);
-			if (haxor <= 0)
-			{
+			cheatMove = asema.AlphaBeta(4, -INFINITY, INFINITY, false);
+			/*if (haxor <= 0)
+			{*/
 				std::wcout << "HAXMOVE : "; cheatMove.parasSiirto.TulostaRuudut();
 				std::wcout << "MINMAXARVO : " << cheatMove.evaluointiArvo << std::endl;
-			}
+			//}
 			//Musta käyttää MINMAX VALITSEMAA SIIRTOA
 			//Alphabetalla ainaki yrityshyvä10, minimoijana kutsutaan min;
 			
@@ -168,6 +175,7 @@ int main() {
 		//Printtaa mietityn ajan
 		std::wcout << "Vuoron Kesto: " << stopWatch.GetElapsed() << " sec"<< std::endl;
 
+		
 		//Vaihdetaan vuoro
 		if (asema.GetSiirtovuoro() == 0) 
 		{
@@ -179,8 +187,10 @@ int main() {
 			std::wcout << "Seuraava siirto on valkoinen" << std::endl;
 		}
 
+		asemat.push_back(asema);
+		asemanIndex++;
+
 	}
 
-	system("Pause");
 	return 0;
 }

@@ -34,7 +34,7 @@ Siirto::Siirto(bool lyhytLinna, bool pitkaLinnai)
 
 void Siirto::TulostaRuudut()
 {
-	std::wcout << "(x;y) = (" << alkuRuutu.GetSarake() << ";" << alkuRuutu.GetRivi() << ") (tx;ty) = (" <<loppuRuutu.GetSarake() << ";" << loppuRuutu.GetRivi() << ")" << std::endl;
+	std::wcout << "(" << alkuRuutu.GetSarake() << ";" << alkuRuutu.GetRivi() << ") - (" <<loppuRuutu.GetSarake() << ";" << loppuRuutu.GetRivi() << ")" << std::endl;
 }
 
 Ruutu Siirto::GetAlkuRuutu()

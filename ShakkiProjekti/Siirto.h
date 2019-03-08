@@ -28,8 +28,11 @@ public:
 	bool operator==(const Siirto& siirto)
 	{		
 
-		return alkuRuutu == siirto.alkuRuutu && loppuRuutu == siirto.loppuRuutu &&
-			lyhytLinna == siirto.lyhytLinna && pitkaLinna == siirto.pitkaLinna;
+		return alkuRuutu == siirto.alkuRuutu && 
+			loppuRuutu == siirto.loppuRuutu &&
+			lyhytLinna == siirto.lyhytLinna && 
+			pitkaLinna == siirto.pitkaLinna && 
+			viereenHutasu == siirto.viereenHutasu;
 		
 	}
 };
