@@ -66,7 +66,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 			else if (asema->lauta[tx][ty] != nullptr && asema->lauta[tx][ty]->GetVari() != vari) 
 			{
 				Siirto syo(_pos, _target);
-				lista.push_back(syo);
+				lista.push_front(syo);
 				break;
 			}
 			else 

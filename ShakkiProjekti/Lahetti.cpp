@@ -74,7 +74,7 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 			{
 				//vihollisen nappi kohteessa, tehdään syönti siirto ja lopetetaan suunnan tarkistus
 				Siirto syo(_pos, _target);
-				lista.push_back(syo);
+				lista.push_front(syo);
 				break;
 			}
 			else

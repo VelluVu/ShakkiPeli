@@ -434,6 +434,15 @@ void Asema::KuninkaanShakit(std::list<Siirto>& lista, int vari)
 	
 	for (Siirto s : lista)
 	{
+		if (s.GetAlkuRuutu().GetSarake() == 0 && 
+			s.GetAlkuRuutu().GetRivi() == 0 && 
+			s.GetLoppuRuutu().GetSarake() == 0 &&
+			s.GetLoppuRuutu().GetRivi() == 0) {
+			if (!s.OnkoLyhytLinna() || !s.OnkoPitkaLinna()) {
+				lista.remove(s);
+				continue;
+			}
+		}
 		testiAsema = *this;
 		testiAsema.PaivitaAsema(&s);
 		int x, y;
@@ -468,9 +477,7 @@ void Asema::KuninkaanShakit(std::list<Siirto>& lista, int vari)
 		else 
 		{
 		
-			Nappula* siirtyva = this->lauta[s.GetAlkuRuutu().GetSarake()][s.GetAlkuRuutu().GetRivi()];
-
-			if (siirtyva->GetKoodi() == VK || siirtyva->GetKoodi() == MK) 
+			if (lauta[s.GetAlkuRuutu().GetSarake()][s.GetAlkuRuutu().GetRivi()]->GetKoodi() == VK || lauta[s.GetAlkuRuutu().GetSarake()][s.GetAlkuRuutu().GetRivi()]->GetKoodi() == MK)
 			{
 				x = s.GetLoppuRuutu().GetSarake();
 				y = s.GetLoppuRuutu().GetRivi();
@@ -584,13 +591,14 @@ MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximiz
 
 			//std::wcout << "MAXIMOIJAN: " << arvo.evaluointiArvo << std::endl;
 
-			if (s.OnkoLyhytLinna() || s.OnkoPitkaLinna() || s.OnkoSotilaanViereenIsku()) {
+			if (s.OnkoLyhytLinna() || s.OnkoPitkaLinna() || s.OnkoSotilaanViereenIsku() || s.GetLoppuRuutu().GetRivi() == 7 && lauta[s.GetAlkuRuutu().GetSarake()][s.GetAlkuRuutu().GetRivi()]->GetKoodi() == VS) {
 				paras.parasSiirto = s;
 				paras.evaluointiArvo = 200.0;
 			}
 			if (arvo.evaluointiArvo > paras.evaluointiArvo)
 			{
 				paras.evaluointiArvo = arvo.evaluointiArvo;
+				paras.parasSiirto = s;
 			}	
 			if (paras.evaluointiArvo > alpha)
 			{
@@ -601,8 +609,8 @@ MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximiz
 			if (alpha >= beta)
 			{
 				//std::wcout << "pruned" << std::endl;
-				break;
-			}
+				return paras;
+			}		
 		}
 		return paras;
 	}
@@ -619,13 +627,14 @@ MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximiz
 			MinMaxPaluu arvo = uusi.AlphaBeta(syvyys - 1, alpha, beta, true);
 			//std::wcout << "MINIMOIJAN: " << arvo.evaluointiArvo << std::endl;
 
-			if (s.OnkoLyhytLinna() || s.OnkoPitkaLinna() || s.OnkoSotilaanViereenIsku()) {
+			if (s.OnkoLyhytLinna() || s.OnkoPitkaLinna() || s.OnkoSotilaanViereenIsku() || s.GetLoppuRuutu().GetRivi() == 0 && lauta[s.GetAlkuRuutu().GetSarake()][s.GetAlkuRuutu().GetRivi()]->GetKoodi() == MS) {
 				paras.parasSiirto = s;
 				paras.evaluointiArvo = -200.0;
 			}
 			if (arvo.evaluointiArvo < paras.evaluointiArvo)
 			{
 				paras.evaluointiArvo = arvo.evaluointiArvo;
+				paras.parasSiirto = s;
 			}
 			if (paras.evaluointiArvo < beta)
 			{
@@ -636,7 +645,7 @@ MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximiz
 			if (alpha >= beta)
 			{
 				//std::wcout << "pruned" << std::endl;
-				break;
+				return paras;
 			}
 		}
 		return paras;

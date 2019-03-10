@@ -1,7 +1,7 @@
 ﻿  Asema.cpp
   Generating code
-  1 of 395 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+  2 of 398 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
+    14 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   ShakkiProjekti.vcxproj -> C:\Users\Veli-Matti\Desktop\Opetus\Shakki\ShakkiProjekti\Release\ShakkiProjekti.exe

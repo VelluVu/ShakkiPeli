@@ -25,7 +25,7 @@ void Ratsu::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 		if (tx <= 7 && ty <= 7 && tx >= 0 && ty >= 0 && asema->lauta[tx][ty] != nullptr && asema->lauta[tx][ty]->GetVari() != vari) 
 		{
 			Siirto syo(_pos, _target);
-			lista.push_back(syo);
+			lista.push_front(syo);
 			//std::wcout << "Syötävä kohde : "; syo.TulostaRuudut();
 		}
 		//Jos liike pysyy rajojen sisällä ja kohteessa on tyhjäpaikka liiku paikkaan ja aseta siirto 
