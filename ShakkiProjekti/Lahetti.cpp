@@ -77,7 +77,7 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 				lista.push_back(syo);
 				break;
 			}
-			else if(asema->lauta[tx][ty] == nullptr)
+			else
 			{
 				//Muuten siirrytään seuraavaan ruutuun kyseisessä suunnassa ja lisätään mahdollinen siirto listaan
 				Siirto liiku(_pos, _target);

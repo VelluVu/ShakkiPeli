@@ -88,19 +88,10 @@ int main() {
 
 		//Vuorossa olevan Siirtolista
 		std::list<Siirto> siirtoLista;
-		Siirto s;
+		//Siirto s;
 		MinMaxPaluu cheatMove;
 
 		//Tarkistaa miten peli loppu
-
-		if (peliTilanne <= -1000.0) {
-			std::wcout << "BLACK WIN! " << std::endl;
-			break;
-		}
-		if (peliTilanne >= 1000.0) {
-			std::wcout << "WHITE WIN! " << std::endl;
-			break;
-		}
 
 		//Generoidaan siirrot
 		asema.AnnaLaillisetSiirrot(siirtoLista);
@@ -111,15 +102,16 @@ int main() {
 		std::advance(siirtoLista_front, rng);
 		cheatMove.parasSiirto = *siirtoLista_front;
 
+		kayttis.PiirraLauta();
 		std::wcout << siirtoLista.size() << " mahdollista siirtoa! " << std::endl;
 		//tulosta vielä kaikki siirrot
-		/*for (Siirto s : siirtoLista)
+		for (Siirto s : siirtoLista)
 		{
 
 			s.TulostaRuudut();
 
 		}
-		std::wcout << std::endl;*/
+		std::wcout << std::endl;
 	
 		//Valkoisten Siirtovuoro
 		if (asema.GetSiirtovuoro() == 0) 
@@ -128,13 +120,13 @@ int main() {
 			//laskee koko miettimis ajan ei pysäytä functioo.
 			stopWatch.Reset();
 
-			//Alphabetalla ainaki yrityshyvä10 PRUNING EI TOIMI!!
 			cheatMove = asema.AlphaBeta(4, -INFINITY, INFINITY, true);
 			//if (haxor <= 0)
 			//{
-				std::wcout << "HAXMOVE : "; cheatMove.parasSiirto.TulostaRuudut();
-				std::wcout << "MINMAXARVO : " << cheatMove.evaluointiArvo << std::endl;
+			std::wcout << "HAXMOVE : "; cheatMove.parasSiirto.TulostaRuudut();
+			std::wcout << "MINMAXARVO : " << cheatMove.evaluointiArvo << std::endl;
 			//}
+		
 			asema.PaivitaAsema(&cheatMove.parasSiirto);
 
 			//Katsotaan onko siirto validi
@@ -175,6 +167,18 @@ int main() {
 		//Printtaa mietityn ajan
 		std::wcout << "Vuoron Kesto: " << stopWatch.GetElapsed() << " sec"<< std::endl;
 
+		if (peliTilanne <= -1000.0) {
+			std::wcout << "BLACK WIN! " << std::endl;
+			break;
+		}
+		else if (peliTilanne >= 1000.0) {
+			std::wcout << "WHITE WIN! " << std::endl;
+			break;
+		}
+		else if (peliTilanne == 0.0) {
+			std::wcout << "DRAW !" << std::endl;
+			break;
+		}
 		
 		//Vaihdetaan vuoro
 		if (asema.GetSiirtovuoro() == 0) 

@@ -59,6 +59,8 @@ public:
 	int VastustajanVuoro(int vari);
 	double LoppuTulos();
 	double SiirronKannattavuus(int vari);
+	double LisaaVuoronPerusteella(int vari, double lisattava);
+	void JarjestaLista(std::list<Siirto>& lista);
 	MinMaxPaluu AlphaBeta(int syvyys, double alpha, double beta, bool maximizer);
 	double LaskeArvo(int vari);
 	double LaskeAsemaArvio(int vari);
@@ -74,11 +76,17 @@ public:
 	// Ohestalyöntiä varten (-1 = sotilaan kaksoisaskelta ei tapahtunut edellisellä siirrolla).
 	int kaksoisaskelSarakkeella = -1;
 	double sotilaanArvo = 1.0; // valkoisen, mustalla neg katso siirtovuoron perusteella
+	double GetSotilaanArvo();
 	double ratsunArvo = 3.2;
+	double GetRatsunArvo();
 	double lahetinArvo = 3.3;
+	double GetLahetinArvo();
 	double torninArvo = 5.0;
+	double GetTorninArvo();
 	double kuningattarenArvo = 9.0;
+	double GetKuningattarenArvo();
 	double kuninkaanArvo = 23.0;
+	double GetKuninkaanArvo();
 	
 	double asemanArvo;
 

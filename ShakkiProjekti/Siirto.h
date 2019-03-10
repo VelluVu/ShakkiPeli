@@ -14,10 +14,11 @@ private:
 	bool viereenHutasu;
 
 public:
-	Siirto(Ruutu pos, Ruutu target);
-	Siirto(Ruutu pos, Ruutu target, bool viereen);
+	double siirronArvo = 0;
 	Siirto() {};
+	Siirto(Ruutu pos, Ruutu target);
 	Siirto(bool lyhytLinna, bool pitkaLinna);
+	Siirto(Ruutu pos, Ruutu target, bool viereen);
 	Nappula* miksiKorotetaan = 0;
 	void TulostaRuudut();
 	Ruutu GetAlkuRuutu();
@@ -25,6 +26,7 @@ public:
 	bool OnkoLyhytLinna();
 	bool OnkoPitkaLinna();
 	bool OnkoSotilaanViereenIsku();
+
 	bool operator==(const Siirto& siirto)
 	{		
 

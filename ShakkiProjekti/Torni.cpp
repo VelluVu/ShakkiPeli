@@ -59,8 +59,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 			{
 				break;
 			}
-
-			if (asema->lauta[tx][ty] != nullptr && asema->lauta[tx][ty]->GetVari() == vari)
+			else if (asema->lauta[tx][ty] != nullptr && asema->lauta[tx][ty]->GetVari() == vari)
 			{
 				break;
 			}
@@ -70,7 +69,7 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 				lista.push_back(syo);
 				break;
 			}
-			else if (asema->lauta[tx][ty] == nullptr)
+			else 
 			{
 				//Muuten siirrytään seuraavaan ruutuun kyseisessä suunnassa ja lisätään mahdollinen siirto listaan
 				Siirto liiku(_pos, _target);
