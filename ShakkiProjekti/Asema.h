@@ -65,6 +65,7 @@ public:
 	MinMaxPaluu AlphaBeta(int syvyys, double alpha, double beta, bool maximizer);
 	double LaskeArvo(int vari);
 	double LaskeAsemaArvio(int vari);
+	double KannattavatJutut(int vari);
 	double Evaluoi();
 	bool GetOnkoValkeaKuningasLiikkunut();
 	bool GetOnkoMustaKuningasLiikkunut();

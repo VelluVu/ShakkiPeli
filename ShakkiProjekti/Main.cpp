@@ -177,11 +177,11 @@ int main() {
 			system("Pause");
 			break;
 		}
-		else if (peliTilanne == 0.0) {
+		/*else if (peliTilanne == 0.0) {
 			std::wcout << "DRAW !" << std::endl;
 			system("Pause");
 			break;
-		}
+		}*/
 		
 		//Vaihdetaan vuoro
 		if (asema.GetSiirtovuoro() == 0) 

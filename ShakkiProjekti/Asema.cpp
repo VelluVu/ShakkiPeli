@@ -555,7 +555,7 @@ void Asema::JarjestaLista(std::list<Siirto>& lista) {
 		temp = s.siirronArvo;
 		
 	}
-	lista.unique();
+	//lista.unique();
 	
 }
 
@@ -617,7 +617,7 @@ MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximiz
 		return paras;
 	}
 
-	JarjestaLista(siirrot);
+	//JarjestaLista(siirrot);
 	
 	//MAXIMOIJA
 	if (maximizer)
@@ -634,7 +634,7 @@ MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximiz
 
 			if (s.OnkoLyhytLinna() || s.OnkoPitkaLinna() || s.OnkoSotilaanViereenIsku() || s.GetLoppuRuutu().GetRivi() == 7 && lauta[s.GetAlkuRuutu().GetSarake()][s.GetAlkuRuutu().GetRivi()]->GetKoodi() == VS) {
 				paras.parasSiirto = s;
-				paras.evaluointiArvo = 200.0;
+				paras.evaluointiArvo = 1000.0;
 			}
 			if (arvo.evaluointiArvo > paras.evaluointiArvo)
 			{
@@ -645,14 +645,16 @@ MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximiz
 			{
 				paras.parasSiirto = s;
 				alpha = paras.evaluointiArvo;
-				asemanArvo = paras.evaluointiArvo;
+				
 			}
 			if (alpha >= beta)
 			{
 				//std::wcout << "pruned" << std::endl;
-				break;
+				asemanArvo = paras.evaluointiArvo;
+				return paras;
 			}		
 		}
+		asemanArvo = paras.evaluointiArvo;
 		return paras;
 	}
 	//MINIMOIJA
@@ -681,14 +683,16 @@ MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximiz
 			{
 				paras.parasSiirto = s;
 				beta = paras.evaluointiArvo;
-				asemanArvo = paras.evaluointiArvo;
+				
 			}
 			if (alpha >= beta)
 			{
 				//std::wcout << "pruned" << std::endl;
-				break;
+				asemanArvo = paras.evaluointiArvo;
+				return paras;
 			}
 		}
+		asemanArvo = paras.evaluointiArvo;
 		return paras;
 	}
 }
@@ -829,12 +833,12 @@ double Asema::LaskeAsemaArvio(int vari)
 double Asema::Evaluoi()
 {
 
-	double materiaaliKerroin = 1.0;
-	double asemaKerroin = 0.1;
+	double materiaaliKerroin = 16.0;
+	double asemaKerroin = 1.3;
+	
 
 	double asemaArvo = (LaskeAsemaArvio(this->siirtovuoro)) * asemaKerroin;
 	//std::wcout << "VUORO " << siirtovuoro << " : " << asemaArvo << std::endl;
-	
 	double materiaaliArvo = (LaskeArvo(0) - LaskeArvo(1)) * materiaaliKerroin;
 	//std::wcout <<"VUORO " << siirtovuoro << " : " << materiaaliArvo << std::endl;
 
