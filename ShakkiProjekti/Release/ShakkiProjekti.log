@@ -1,23 +1,7 @@
 ﻿  Asema.cpp
-  KayttoLiittyma.cpp
-  Kuningas.cpp
-  Kuningatar.cpp
-  Lahetti.cpp
-  Main.cpp
-c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\main.cpp(17): warning C4244: 'return': conversion from '_Rep' to 'double', possible loss of data
-          with
-          [
-              _Rep=__int64
-          ]
-  MinMaxPaluu.cpp
-  Nappula.cpp
-  Ratsu.cpp
-  Siirto.cpp
-  Sotilas.cpp
-  Torni.cpp
   Generating code
-  22 of 395 functions ( 5.6%) were compiled, the rest were copied from previous compilation.
+  2 of 396 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    14 functions had inline decision re-evaluated but remain unchanged
+    2 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   ShakkiProjekti.vcxproj -> C:\Users\Veli-Matti\Desktop\Opetus\Shakki\ShakkiProjekti\Release\ShakkiProjekti.exe

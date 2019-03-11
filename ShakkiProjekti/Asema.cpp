@@ -559,6 +559,44 @@ void Asema::JarjestaLista(std::list<Siirto>& lista) {
 	
 }
 
+MinMaxPaluu Asema::MinMax(int syvyys) 
+{
+
+	MinMaxPaluu paras;
+	std::list<Siirto> siirrot;
+	AnnaLaillisetSiirrot(siirrot);
+
+	if (siirrot.size() == 0)
+	{
+		paras.evaluointiArvo = LoppuTulos();
+		return paras;
+	}
+
+	if (syvyys == 0)
+	{
+		paras.evaluointiArvo = Evaluoi();
+		return paras;
+	}
+
+	paras.evaluointiArvo = (siirtovuoro == 0 ? -1000000 : 1000000);
+	for (auto s : siirrot)
+	{
+	
+		Asema uusi_asema = *this;
+		uusi_asema.PaivitaAsema(&s);
+
+		MinMaxPaluu arvo = uusi_asema.MinMax(syvyys - 1);
+
+		if ((siirtovuoro == 0 && arvo.evaluointiArvo > paras.evaluointiArvo) ||
+			(siirtovuoro == 1 && arvo.evaluointiArvo < paras.evaluointiArvo))
+		{
+			paras.evaluointiArvo = arvo.evaluointiArvo;
+			paras.parasSiirto = s;
+		}
+	}
+	return paras;
+}
+
 MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximizer)
 {
 
@@ -682,8 +720,7 @@ double Asema::LaskeArvo(int vari)
 						valkeaArvo += ratsunArvo;
 					if (nappulanNimi == VS)
 						valkeaArvo += sotilaanArvo;
-					if (kuninkaanArvo == VK)
-						valkeaArvo += kuninkaanArvo;
+					
 					//Mustat
 					if (nappulanNimi == MD)
 						mustaArvo += kuningattarenArvo;
@@ -695,8 +732,6 @@ double Asema::LaskeArvo(int vari)
 						mustaArvo += ratsunArvo;
 					if (nappulanNimi == MS)
 						mustaArvo += sotilaanArvo;
-					if (nappulanNimi == MK)
-						mustaArvo += kuninkaanArvo;
 				
 			}
 		}
@@ -716,9 +751,9 @@ double Asema::LaskeAsemaArvio(int vari)
 	double mustaArvo = 0;
 	int nappulanNimi = 0;
 
-	for (int x = 0; x < 8; x++)
+	for (int y = 7; y >= 0; y--)
 	{
-		for (int y = 0; y < 8; y++)
+		for (int x = 0; x < 8; x++)
 		{
 
 			if (lauta[x][y] != nullptr)
@@ -727,39 +762,66 @@ double Asema::LaskeAsemaArvio(int vari)
 					nappulanNimi = this->lauta[x][y]->GetKoodi();
 					//Valkoiset
 					if (nappulanNimi == VK)
+					{
+						//std::wcout << vKuningasTable[x][y] << std::endl;
 						valkeaArvo += vKuningasTable[x][y];
-					if (nappulanNimi == VD)
+					}
+					if (nappulanNimi == VD) {
+						//std::wcout << vKuningatarTable[x][y] << std::endl;
 						valkeaArvo += vKuningatarTable[x][y];
-					if (nappulanNimi == VT)
+					}
+					if (nappulanNimi == VT) {
+						//std::wcout << vTorniTable[x][y] << std::endl;
 						valkeaArvo += vTorniTable[x][y];
-					if (nappulanNimi == VL)
+					}
+					if (nappulanNimi == VL) {
+						//std::wcout << vLahettiTable[x][y] << std::endl;
 						valkeaArvo += vLahettiTable[x][y];
-					if (nappulanNimi == VR)
+					}
+					if (nappulanNimi == VR) {
+						//std::wcout << vRatsuTable[x][y] << std::endl;
 						valkeaArvo += vRatsuTable[x][y];
-					if (nappulanNimi == VS)
+					}
+					if (nappulanNimi == VS) {
+						//std::wcout << vSotilasTable[x][y] << std::endl;
 						valkeaArvo += vSotilasTable[x][y];
+					}
 					//Mustat
-					if (nappulanNimi == MK)
-						mustaArvo +=  mKuningasTable[x][y];
-					if (nappulanNimi == MD)
-						mustaArvo +=  mKuningatarTable[x][y];
-					if (nappulanNimi == MT)
-						mustaArvo +=  mTorniTable[x][y];
-					if (nappulanNimi == ML)
+					if (nappulanNimi == MK) {
+						//std::wcout << mKuningasTable[x][y] << std::endl;
+						mustaArvo += mKuningasTable[x][y];
+					}
+					if (nappulanNimi == MD) {
+						//std::wcout << mKuningatarTable[x][y] << std::endl;
+						mustaArvo += mKuningatarTable[x][y];
+					}
+					if (nappulanNimi == MT) {
+						//std::wcout << mTorniTable[x][y] << std::endl;
+						mustaArvo += mTorniTable[x][y];
+					}
+					if (nappulanNimi == ML) {
+						//std::wcout << mLahettiTable[x][y] << std::endl;
 						mustaArvo += mLahettiTable[x][y];
-					if (nappulanNimi == MR)
+					}
+					if (nappulanNimi == MR) {
+						//std::wcout << mRatsuTable[x][y] << std::endl;
 						mustaArvo += mRatsuTable[x][y];
-					if (nappulanNimi == MS)
+					}
+					if (nappulanNimi == MS) {
+						//std::wcout << mSotilasTable[x][y] << std::endl;
 						mustaArvo += mSotilasTable[x][y];
+					}
 			
 			}
 		}
 	}
 
 	if (vari == 0) {
+		//std::wcout << "VALKOISTEN POSITIO ARVO : " << valkeaArvo << std::endl;
 		return valkeaArvo;
 	}
 	else {
+		//std::wcout << "MUSTIEN POSITIO ARVO : " << mustaArvo << std::endl;
 		return mustaArvo;
 	}
 }
@@ -767,12 +829,16 @@ double Asema::LaskeAsemaArvio(int vari)
 double Asema::Evaluoi()
 {
 
-	double materiaaliKerroin = 1.4;
-	double asemaKerroin = 0.4;
+	double materiaaliKerroin = 1.0;
+	double asemaKerroin = 0.1;
 
-	double asemaArvo = (LaskeAsemaArvio(0) - LaskeAsemaArvio(1)) * asemaKerroin;
+	double asemaArvo = (LaskeAsemaArvio(this->siirtovuoro)) * asemaKerroin;
+	//std::wcout << "VUORO " << siirtovuoro << " : " << asemaArvo << std::endl;
 	
 	double materiaaliArvo = (LaskeArvo(0) - LaskeArvo(1)) * materiaaliKerroin;
+	//std::wcout <<"VUORO " << siirtovuoro << " : " << materiaaliArvo << std::endl;
+
+	//std::wcout << "VUORO " << siirtovuoro << " : " << materiaaliArvo + asemaArvo << std::endl;
 	
 	return materiaaliArvo + asemaArvo;
 }

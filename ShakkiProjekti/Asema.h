@@ -61,6 +61,7 @@ public:
 	double SiirronKannattavuus(int vari);
 	double LisaaVuoronPerusteella(int vari, double lisattava);
 	void JarjestaLista(std::list<Siirto>& lista);
+	MinMaxPaluu MinMax(int syvyys);
 	MinMaxPaluu AlphaBeta(int syvyys, double alpha, double beta, bool maximizer);
 	double LaskeArvo(int vari);
 	double LaskeAsemaArvio(int vari);

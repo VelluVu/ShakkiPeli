@@ -41,7 +41,7 @@ int main() {
 	std::wcout << "Valkoinen aloittaa. " << std::endl;
 	asemat.push_back(asema);
 
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 500; i++)
 	{
 		std::wcout << "INDEX | KOKO " << asemanIndex << " | " << asemat.size() - 1 << std::endl;
 
@@ -120,7 +120,7 @@ int main() {
 			//laskee koko miettimis ajan ei pysäytä functioo.
 			stopWatch.Reset();
 
-			cheatMove = asema.AlphaBeta(4, -INFINITY, INFINITY, true);
+			cheatMove = asema.MinMax(2);
 			//if (haxor <= 0)
 			//{
 			std::wcout << "HAXMOVE : "; cheatMove.parasSiirto.TulostaRuudut();
