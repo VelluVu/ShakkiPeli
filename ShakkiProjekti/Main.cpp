@@ -169,14 +169,17 @@ int main() {
 
 		if (peliTilanne <= -1000.0) {
 			std::wcout << "BLACK WIN! " << std::endl;
+			system("Pause");
 			break;
 		}
 		else if (peliTilanne >= 1000.0) {
 			std::wcout << "WHITE WIN! " << std::endl;
+			system("Pause");
 			break;
 		}
 		else if (peliTilanne == 0.0) {
 			std::wcout << "DRAW !" << std::endl;
+			system("Pause");
 			break;
 		}
 		

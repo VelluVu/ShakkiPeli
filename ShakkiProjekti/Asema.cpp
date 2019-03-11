@@ -93,17 +93,17 @@ void Asema::PaivitaAsema(Siirto* siirto)
 	//Onko siirto lyhytlinna
 	if (siirto->OnkoLyhytLinna())
 	{	
-		if (siirtovuoro == 0) {
+		if (this->siirtovuoro == 0) {
 
 			lauta[4][0] = nullptr;
 			lauta[6][0] = vk;
 			lauta[7][0] = nullptr;
 			lauta[5][0] = vt;
 
-			onkoValkeaKuningasLiikkunut = true;
+			this->onkoValkeaKuningasLiikkunut = true;
 
 		}
-		else if (siirtovuoro == 1)
+		else if (this->siirtovuoro == 1)
 		{
 
 			lauta[4][7] = nullptr;
@@ -111,13 +111,13 @@ void Asema::PaivitaAsema(Siirto* siirto)
 			lauta[7][7] = nullptr;
 			lauta[5][7] = mt;
 	
-			onkoMustaKuningasLiikkunut = true;
+			this->onkoMustaKuningasLiikkunut = true;
 
 		}
 	}
 	else if (siirto->OnkoPitkaLinna()) //onko siirto pitkälinna
 	{	
-		if (siirtovuoro == 0)
+		if (this->siirtovuoro == 0)
 		{
 
 			lauta[4][0] = nullptr;
@@ -125,10 +125,10 @@ void Asema::PaivitaAsema(Siirto* siirto)
 			lauta[0][0] = nullptr;
 			lauta[3][0] = vt;
 	
-			onkoValkeaKuningasLiikkunut = true;
+			this->onkoValkeaKuningasLiikkunut = true;
 
 		}
-		else if (siirtovuoro == 1)
+		else if (this->siirtovuoro == 1)
 		{
 
 			lauta[4][7] = nullptr;
@@ -136,7 +136,7 @@ void Asema::PaivitaAsema(Siirto* siirto)
 			lauta[0][7] = nullptr;
 			lauta[3][7] = mt;
 	
-			onkoMustaKuningasLiikkunut = true;
+			this->onkoMustaKuningasLiikkunut = true;
 
 		}	
 	}
@@ -187,23 +187,23 @@ void Asema::PaivitaAsema(Siirto* siirto)
 		}
 		// katsotaan jos liikkunut nappula on kuningas niin muutetaan onkoKuningasLiikkunut arvo (molemmille väreille)
 		if (nappula->GetKoodi() == VK) {
-			onkoValkeaKuningasLiikkunut = true;
+			this->onkoValkeaKuningasLiikkunut = true;
 		}
 		if (nappula->GetKoodi() == MK) {
-			onkoMustaKuningasLiikkunut = true;
+			this->onkoMustaKuningasLiikkunut = true;
 		}
 		// katsotaan jos liikkunut nappula on torni niin muutetaan onkoTorniLiikkunut arvo (molemmille väreille ja molemmille torneille)
 		if (nappula->GetKoodi() == VT && alkuSarakeInt == 7 && alkuRiviInt == 0) {
-			onkoValkeaKTLiikkunut = true;
+			this->onkoValkeaKTLiikkunut = true;
 		}
 		if (nappula->GetKoodi() == VT && alkuSarakeInt == 0 && alkuRiviInt == 0) {
-			onkoValkeaDTLiikkunut = true;
+			this->onkoValkeaDTLiikkunut = true;
 		}
 		if (nappula->GetKoodi() == MT && alkuSarakeInt == 7 && alkuRiviInt == 7) {
-			onkoMustaKTLiikkunut = true;
+			this->onkoMustaKTLiikkunut = true;
 		}
 		if (nappula->GetKoodi() == MT && alkuSarakeInt == 0 && alkuRiviInt == 7) {
-			onkoMustaDTLiikkunut = true;
+			this->onkoMustaDTLiikkunut = true;
 		}
 
 	}
@@ -333,16 +333,16 @@ int Asema::GetSiirtovuoro()
 
 void Asema::SetSiirtovuoro(int vari)
 {
-	siirtovuoro = vari;
+	this->siirtovuoro = vari;
 }
 
 void Asema::AnnaLaillisetSiirrot(std::list<Siirto>& lista)
 {
 	
-	int vari = GetSiirtovuoro();
-	AnnaRaakaSiirrot(lista, vari);
-	AnnaLinnoitusSiirrot(lista, vari);
-	KuninkaanShakit(lista, vari);
+	int vari = this->GetSiirtovuoro();
+	this->AnnaRaakaSiirrot(lista, vari);
+	this->AnnaLinnoitusSiirrot(lista, vari);
+	this->KuninkaanShakit(lista, vari);
 
 }
 
@@ -382,43 +382,46 @@ void Asema::TestaaLiiike(Siirto * s)
 
 void Asema::AnnaLinnoitusSiirrot(std::list<Siirto>& lista, int vari)
 {
-	int vastustajanVuoro = this->VastustajanVuoro(vari);
+	
 	//Tarkastetaan linnoitukset ja lisätään listaan
 	if (vari == 0) {
 		//valkean lyhyt linna
 		if (!this->GetOnkoValkeaKuningasLiikkunut() && !this->GetOnkoValkeaKTliikkunut()
-			&& this->OnkoRuutuUhattu(&Ruutu(4, 0), vastustajanVuoro)
-			&& this->OnkoRuutuUhattu(&Ruutu(5, 0), vastustajanVuoro) && this->OnkoRuutuUhattu(&Ruutu(6, 0), vastustajanVuoro)
+			&& this->OnkoRuutuUhattu(&Ruutu(4, 0), 1)
+			&& this->OnkoRuutuUhattu(&Ruutu(5, 0), 1) && this->OnkoRuutuUhattu(&Ruutu(6, 0), 1)
 			&& this->lauta[5][0] == nullptr && this->lauta[6][0] == nullptr)
 		{
 			//päivitetään listaan lyhytlinna
 			lista.push_front(Siirto(true, false)); // lisätään listaan lyhyt linna
 		}
 		//valkean pitkä linna
-		if (!this->GetOnkoValkeaKuningasLiikkunut() && !this->GetOnkoValkeaDTliikkunut()
-			&& this->OnkoRuutuUhattu(&Ruutu(4, 0), vastustajanVuoro)
-			&& this->OnkoRuutuUhattu(&Ruutu(3, 0), vastustajanVuoro) && this->OnkoRuutuUhattu(&Ruutu(3, 0), vastustajanVuoro)
-			&& this->lauta[3][0] == nullptr && this->lauta[2][0] == nullptr) {
-			//päivitetään listaan lyhytlinna
-			lista.push_front(Siirto(false, true)); // lisätään listaan lyhyt linna
+		else if (!this->GetOnkoValkeaKuningasLiikkunut() && !this->GetOnkoValkeaDTliikkunut()
+			&& this->OnkoRuutuUhattu(&Ruutu(4, 0), 1)
+			&& this->OnkoRuutuUhattu(&Ruutu(3, 0), 1) && this->OnkoRuutuUhattu(&Ruutu(3, 0), 1)
+			&& this->lauta[3][0] == nullptr && this->lauta[2][0] == nullptr) 
+		{
+			//päivitetään listaan pitkälinna
+			lista.push_front(Siirto(false, true)); // lisätään listaan pitkälinna
 		}
 	}
-	if (vari == 1) {
+	else if (vari == 1) {
 		//mustan lyhyt linna
 		if (!this->GetOnkoMustaKuningasLiikkunut() && !this->GetOnkoMustaKTliikkunut()
-			&& this->OnkoRuutuUhattu(&Ruutu(4, 7), vastustajanVuoro)
-			&& this->OnkoRuutuUhattu(&Ruutu(5, 7), vastustajanVuoro) && this->OnkoRuutuUhattu(&Ruutu(6, 7), vastustajanVuoro)
-			&& this->lauta[5][7] == nullptr && this->lauta[6][7] == nullptr) {
+			&& this->OnkoRuutuUhattu(&Ruutu(4, 7), 0)
+			&& this->OnkoRuutuUhattu(&Ruutu(5, 7), 0) && this->OnkoRuutuUhattu(&Ruutu(6, 7), 0)
+			&& this->lauta[5][7] == nullptr && this->lauta[6][7] == nullptr) 
+		{
 			//päivitetään listaan lyhytlinna
 			lista.push_front(Siirto(true, false)); // lisätään listaan lyhyt linna
 		}
 		//mustan pitkä linna
-		if (!this->GetOnkoMustaKuningasLiikkunut() && !this->GetOnkoMustaDTliikkunut()
-			&& this->OnkoRuutuUhattu(&Ruutu(4, 7), vastustajanVuoro)
-			&& this->OnkoRuutuUhattu(&Ruutu(3, 7), vastustajanVuoro) && this->OnkoRuutuUhattu(&Ruutu(3, 7), vastustajanVuoro)
-			&& this->lauta[3][7] == nullptr && this->lauta[2][7] == nullptr) {
-			//päivitetään listaan lyhytlinna
-			lista.push_front(Siirto(false, true)); // lisätään listaan lyhyt linna
+		else if (!this->GetOnkoMustaKuningasLiikkunut() && !this->GetOnkoMustaDTliikkunut()
+			&& this->OnkoRuutuUhattu(&Ruutu(4, 7), 0)
+			&& this->OnkoRuutuUhattu(&Ruutu(3, 7), 0) && this->OnkoRuutuUhattu(&Ruutu(3, 7), 0)
+			&& this->lauta[3][7] == nullptr && this->lauta[2][7] == nullptr) 
+		{
+			//päivitetään listaan pitkälinna
+			lista.push_front(Siirto(false, true)); // lisätään listaan pitkälinna
 		}
 	}
 }
@@ -434,7 +437,7 @@ void Asema::KuninkaanShakit(std::list<Siirto>& lista, int vari)
 	
 	for (Siirto s : lista)
 	{
-		if (s.GetAlkuRuutu().GetSarake() == 0 && 
+		/*if (s.GetAlkuRuutu().GetSarake() == 0 && 
 			s.GetAlkuRuutu().GetRivi() == 0 && 
 			s.GetLoppuRuutu().GetSarake() == 0 &&
 			s.GetLoppuRuutu().GetRivi() == 0) {
@@ -442,7 +445,7 @@ void Asema::KuninkaanShakit(std::list<Siirto>& lista, int vari)
 				lista.remove(s);
 				continue;
 			}
-		}
+		}*/
 		testiAsema = *this;
 		testiAsema.PaivitaAsema(&s);
 		int x, y;
@@ -599,7 +602,7 @@ MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximiz
 			{
 				paras.evaluointiArvo = arvo.evaluointiArvo;
 				paras.parasSiirto = s;
-			}	
+			}
 			if (paras.evaluointiArvo > alpha)
 			{
 				paras.parasSiirto = s;
@@ -609,7 +612,7 @@ MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximiz
 			if (alpha >= beta)
 			{
 				//std::wcout << "pruned" << std::endl;
-				return paras;
+				break;
 			}		
 		}
 		return paras;
@@ -645,7 +648,7 @@ MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximiz
 			if (alpha >= beta)
 			{
 				//std::wcout << "pruned" << std::endl;
-				return paras;
+				break;
 			}
 		}
 		return paras;
@@ -703,7 +706,7 @@ double Asema::LaskeArvo(int vari)
 		return valkeaArvo;
 	}
 	else {
-		return -mustaArvo;
+		return mustaArvo;
 	}
 }
 
@@ -757,26 +760,26 @@ double Asema::LaskeAsemaArvio(int vari)
 		return valkeaArvo;
 	}
 	else {
-		return -mustaArvo;
+		return mustaArvo;
 	}
 }
 
 double Asema::Evaluoi()
 {
 
-	double materiaaliKerroin = 1.0;
-	double asemaKerroin = 0.1;
+	double materiaaliKerroin = 1.4;
+	double asemaKerroin = 0.4;
 
-	double asemaArvo = (LaskeAsemaArvio(siirtovuoro) - LaskeAsemaArvio(VastustajanVuoro(siirtovuoro))) * asemaKerroin;
+	double asemaArvo = (LaskeAsemaArvio(0) - LaskeAsemaArvio(1)) * asemaKerroin;
 	
-	double materiaaliArvo = (LaskeArvo(siirtovuoro) - LaskeArvo(VastustajanVuoro(siirtovuoro))) * materiaaliKerroin;
+	double materiaaliArvo = (LaskeArvo(0) - LaskeArvo(1)) * materiaaliKerroin;
 	
 	return materiaaliArvo + asemaArvo;
 }
 
 bool Asema::GetOnkoValkeaKuningasLiikkunut()
 {
-	if (onkoValkeaKuningasLiikkunut) {
+	if (this->onkoValkeaKuningasLiikkunut) {
 		return true;
 	}
 	return false;
@@ -784,7 +787,7 @@ bool Asema::GetOnkoValkeaKuningasLiikkunut()
 
 bool Asema::GetOnkoMustaKuningasLiikkunut()
 {
-	if (onkoMustaKuningasLiikkunut) {
+	if (this->onkoMustaKuningasLiikkunut) {
 		return true;
 	}
 	return false;
@@ -792,7 +795,7 @@ bool Asema::GetOnkoMustaKuningasLiikkunut()
 
 bool Asema::GetOnkoValkeaDTliikkunut()
 {
-	if (onkoValkeaDTLiikkunut) {
+	if (this->onkoValkeaDTLiikkunut) {
 		return true;
 	}
 	return false;
@@ -800,7 +803,7 @@ bool Asema::GetOnkoValkeaDTliikkunut()
 
 bool Asema::GetOnkoValkeaKTliikkunut()
 {
-	if (onkoValkeaKTLiikkunut) {
+	if (this->onkoValkeaKTLiikkunut) {
 		return true;
 	}
 	return false;
@@ -808,7 +811,7 @@ bool Asema::GetOnkoValkeaKTliikkunut()
 
 bool Asema::GetOnkoMustaDTliikkunut()
 {
-	if (onkoMustaDTLiikkunut) {
+	if (this->onkoMustaDTLiikkunut) {
 		return true;
 	}
 	return false;
@@ -816,7 +819,7 @@ bool Asema::GetOnkoMustaDTliikkunut()
 
 bool Asema::GetOnkoMustaKTliikkunut()
 {
-	if (onkoMustaKTLiikkunut) {
+	if (this->onkoMustaKTLiikkunut) {
 		return true;
 	}
 	return false;

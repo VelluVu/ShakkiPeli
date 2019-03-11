@@ -173,12 +173,12 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 			{
 				
 				if (asema->kaksoisaskelSarakkeella > x) {
-					Ruutu _target(x + 1, 3);
+					Ruutu _target(x + 1, 4);
 					Siirto ohestaLyonti(_pos, _target, true);
 					lista.push_front(ohestaLyonti);
 				}
 				else {
-					Ruutu _target(x - 1, 3);
+					Ruutu _target(x - 1, 4);
 					Siirto ohestaLyonti(_pos, _target, true);
 					lista.push_front(ohestaLyonti);
 				}

@@ -1,11 +1,5 @@
 ﻿  Asema.cpp
-  Main.cpp
-c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\main.cpp(17): warning C4244: 'return': conversion from '_Rep' to 'double', possible loss of data
-          with
-          [
-              _Rep=__int64
-          ]
-c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\main.cpp(60): warning C4101: 'undo': unreferenced local variable
+  Siirto.cpp
   Generating Code...
 c:\users\veli-matti\desktop\opetus\shakki\shakkiprojekti\shakkiprojekti\asema.cpp(85): warning C4715: 'Asema::EtsiKuningas': not all control paths return a value
   ShakkiProjekti.vcxproj -> C:\Users\Veli-Matti\Desktop\Opetus\Shakki\ShakkiProjekti\x64\Debug\ShakkiProjekti.exe

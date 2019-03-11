@@ -9,8 +9,8 @@ class Siirto
 private:
 	Ruutu alkuRuutu;
 	Ruutu loppuRuutu;
-	bool lyhytLinna;
-	bool pitkaLinna;
+	bool _lyhytLinna;
+	bool _pitkaLinna;
 	bool viereenHutasu;
 
 public:
@@ -30,11 +30,11 @@ public:
 	bool operator==(const Siirto& siirto)
 	{		
 
-		return alkuRuutu == siirto.alkuRuutu && 
-			loppuRuutu == siirto.loppuRuutu &&
-			lyhytLinna == siirto.lyhytLinna && 
-			pitkaLinna == siirto.pitkaLinna && 
-			viereenHutasu == siirto.viereenHutasu;
+		return this->alkuRuutu == siirto.alkuRuutu &&
+			this->loppuRuutu == siirto.loppuRuutu &&
+			this->_lyhytLinna == siirto._lyhytLinna && 
+			this->_pitkaLinna == siirto._pitkaLinna &&
+			this->viereenHutasu == siirto.viereenHutasu;
 		
 	}
 };

@@ -5,31 +5,31 @@
 Siirto::Siirto(Ruutu pos, Ruutu target)
 {
 
-	alkuRuutu = pos;
-	loppuRuutu = target;
-	lyhytLinna = false;
-	pitkaLinna = false;
-	viereenHutasu = false;
+	this->alkuRuutu = pos;
+	this->loppuRuutu = target;
+	this->_lyhytLinna = false;
+	this->_pitkaLinna = false;
+	this->viereenHutasu = false;
 }
 
-Siirto::Siirto(bool lyhytLinna, bool pitkaLinnai)
+Siirto::Siirto(bool lyhytLinna, bool pitkaLinna)
 {
 
-	lyhytLinna = lyhytLinna;
-	pitkaLinna = pitkaLinna;
-	alkuRuutu = Ruutu(0, 0);
-	loppuRuutu = Ruutu(0, 0);
-	viereenHutasu = false;
+	this->_lyhytLinna = lyhytLinna;
+	this->_pitkaLinna = pitkaLinna;
+	this->alkuRuutu = Ruutu(0, 0);
+	this->loppuRuutu = Ruutu(0, 0);
+	this->viereenHutasu = false;
 }
 
 Siirto::Siirto(Ruutu pos, Ruutu target, bool viereen)
 {
 
-	alkuRuutu = pos;
-	loppuRuutu = target;
-	lyhytLinna = false;
-	pitkaLinna = false;
-	viereenHutasu = viereen;
+	this->alkuRuutu = pos;
+	this->loppuRuutu = target;
+	this->_lyhytLinna = false;
+	this->_pitkaLinna = false;
+	this->viereenHutasu = viereen;
 }
 
 void Siirto::TulostaRuudut()
@@ -74,40 +74,45 @@ void Siirto::TulostaRuudut()
 
 Ruutu Siirto::GetAlkuRuutu()
 {
-	return alkuRuutu;
+	return this->alkuRuutu;
 }
 
 Ruutu Siirto::GetLoppuRuutu()
 {
-	return loppuRuutu;
+	return this->loppuRuutu;
 }
 
 bool Siirto::OnkoLyhytLinna()
 {
-	if (lyhytLinna == true) {
+	if (this->_lyhytLinna == true) {
 		return true;
 	}
-	else {
+	else 
+	{
 		return false;
 	}
 }
 
 bool Siirto::OnkoPitkaLinna()
 {
-	if (pitkaLinna == true) {
+	if (this->_pitkaLinna == true) 
+	{
 		return true;
 	}
-	else {
+	else 
+	{
 		return false;
 	}
 }
 
 bool Siirto::OnkoSotilaanViereenIsku()
 {
-	if (viereenHutasu == true) {
+	if (this->viereenHutasu == true) 
+	{
 		return true;
 	}
-	else {
+	else
+	{
 		return false;
 	}
 }
