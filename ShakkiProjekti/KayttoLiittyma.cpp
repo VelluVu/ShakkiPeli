@@ -60,8 +60,7 @@ Siirto KayttoLiittyma::AnnaVastustajanSiirto()
 	std::wstring siirtoString;
 	std::wstring siirtynytNappulaString;
 
-	do
-	{
+	
 		std::wcout << "Anna siirtosi esim. (esim. Rg1-f3, linnoitus 0-0 tai 0-0-0)\n";
 		std::wcin >> siirtoString;
 		if (siirtoString == L"0-0" || siirtoString == L"0-0-0") {
@@ -84,10 +83,7 @@ Siirto KayttoLiittyma::AnnaVastustajanSiirto()
 		tuloX = siirtoString[3] - 'a';
 		tuloY = siirtoString[4] - '1';
 
-		if (((lahtoX < 0 || lahtoX >7) || (lahtoY < 0 || lahtoY > 7)) || ((tuloX < 0 || tuloX >7) || (tuloY < 0 || tuloY > 7)))
-			std::wcout << "Siirron täytyy olla muotoa esim. Rf1-f3,\n aakkoset väliltä a-h\n numerot väliltä 1-8,\n Nappula on (K,k),(D,d),(T,t),(R,r),(L,l)\n sotilas jätetään merkitsemättä\n";
-	} while (((lahtoX < 0 || lahtoX >7) || (lahtoY < 0 || lahtoY > 7)) || ((tuloX < 0 || tuloX >7) || (tuloY < 0 || tuloY > 7)));
-
+	
 	Ruutu lahtoRuutu(lahtoX, lahtoY);
 	Ruutu tuloRuutu(tuloX, tuloY);
 	Siirto siirto(lahtoRuutu, tuloRuutu);

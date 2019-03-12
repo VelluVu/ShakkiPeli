@@ -51,7 +51,6 @@ public:
 	int GetSiirtovuoro();
 	void SetSiirtovuoro(int vari);
 	void AnnaLaillisetSiirrot(std::list<Siirto>& lista);
-	void JarjestaSiirrot(std::list<Siirto>& lista);
 	void AnnaRaakaSiirrot(std::list<Siirto>& lista, int vari);
 	void TestaaLiiike(Siirto* s);
 	void AnnaLinnoitusSiirrot(std::list<Siirto>& lista, int vari);
@@ -65,7 +64,6 @@ public:
 	MinMaxPaluu AlphaBeta(int syvyys, double alpha, double beta, bool maximizer);
 	double LaskeArvo(int vari);
 	double LaskeAsemaArvio(int vari);
-	double KannattavatJutut(int vari);
 	double Evaluoi();
 	bool GetOnkoValkeaKuningasLiikkunut();
 	bool GetOnkoMustaKuningasLiikkunut();
@@ -77,12 +75,12 @@ public:
 
 	// Ohestalyöntiä varten (-1 = sotilaan kaksoisaskelta ei tapahtunut edellisellä siirrolla).
 	int kaksoisaskelSarakkeella = -1;
-	double sotilaanArvo = 1.0; // valkoisen, mustalla neg katso siirtovuoron perusteella
-	double ratsunArvo = 3.2;
-	double lahetinArvo = 3.3;
-	double torninArvo = 5.0;
-	double kuningattarenArvo = 9.0;
-	double kuninkaanArvo = 23.0;
+	double sotilaanArvo = 10.0; // valkoisen, mustalla neg katso siirtovuoron perusteella
+	double ratsunArvo = 32.0;
+	double lahetinArvo = 33.0;
+	double torninArvo = 50.0;
+	double kuningattarenArvo = 90.0;
+	double kuninkaanArvo = 230.0;
 	
 	double asemanArvo;
 

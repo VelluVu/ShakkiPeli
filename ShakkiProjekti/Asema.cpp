@@ -398,7 +398,7 @@ void Asema::AnnaLinnoitusSiirrot(std::list<Siirto>& lista, int vari)
 		else if (!this->GetOnkoValkeaKuningasLiikkunut() && !this->GetOnkoValkeaDTliikkunut()
 			&& this->OnkoRuutuUhattu(&Ruutu(4, 0), 1)
 			&& this->OnkoRuutuUhattu(&Ruutu(3, 0), 1) && this->OnkoRuutuUhattu(&Ruutu(3, 0), 1)
-			&& this->lauta[3][0] == nullptr && this->lauta[2][0] == nullptr) 
+			&& this->lauta[3][0] == nullptr && this->lauta[2][0] == nullptr && this->lauta[1][0] == nullptr) 
 		{
 			//päivitetään listaan pitkälinna
 			lista.push_front(Siirto(false, true)); // lisätään listaan pitkälinna
@@ -418,7 +418,7 @@ void Asema::AnnaLinnoitusSiirrot(std::list<Siirto>& lista, int vari)
 		else if (!this->GetOnkoMustaKuningasLiikkunut() && !this->GetOnkoMustaDTliikkunut()
 			&& this->OnkoRuutuUhattu(&Ruutu(4, 7), 0)
 			&& this->OnkoRuutuUhattu(&Ruutu(3, 7), 0) && this->OnkoRuutuUhattu(&Ruutu(3, 7), 0)
-			&& this->lauta[3][7] == nullptr && this->lauta[2][7] == nullptr) 
+			&& this->lauta[3][7] == nullptr && this->lauta[2][7] == nullptr && this->lauta[1][7] == nullptr)
 		{
 			//päivitetään listaan pitkälinna
 			lista.push_front(Siirto(false, true)); // lisätään listaan pitkälinna
@@ -518,9 +518,9 @@ double Asema::LoppuTulos()
 {
 	int vari = this->GetSiirtovuoro();
 	if (OnkoRuutuUhattu(&EtsiKuningas(vari), VastustajanVuoro(vari)))
-		return 0; // tasapeli (patti)
+		return 12345678.0; // tasapeli (patti)
 	else
-		return vari == 0 ? -1000.0 : 1000.0;	// matti
+		return vari == 0 ? -1000000.0 : 1000000.0;	// matti
 }
 
 //Katsoo seuraako siirrosta mitään tosi huonoa tai onko siirto erikoinen
@@ -555,7 +555,7 @@ void Asema::JarjestaLista(std::list<Siirto>& lista) {
 		temp = s.siirronArvo;
 		
 	}
-	//lista.unique();
+	lista.unique();
 	
 }
 
@@ -614,6 +614,7 @@ MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximiz
 	if (syvyys <= 0)
 	{
 		paras.evaluointiArvo = Evaluoi();
+		asemanArvo = paras.evaluointiArvo;
 		return paras;
 	}
 
@@ -622,7 +623,7 @@ MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximiz
 	//MAXIMOIJA
 	if (maximizer)
 	{
-		paras.evaluointiArvo = -1000.0;
+		paras.evaluointiArvo = -1000000.0;
 		for (Siirto s : siirrot)
 		{
 			Asema uusi = *this;
@@ -634,11 +635,13 @@ MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximiz
 
 			if (s.OnkoLyhytLinna() || s.OnkoPitkaLinna() || s.OnkoSotilaanViereenIsku() || s.GetLoppuRuutu().GetRivi() == 7 && lauta[s.GetAlkuRuutu().GetSarake()][s.GetAlkuRuutu().GetRivi()]->GetKoodi() == VS) {
 				paras.parasSiirto = s;
-				paras.evaluointiArvo = 1000.0;
+				paras.evaluointiArvo = 200;
+				asemanArvo = paras.evaluointiArvo;
 			}
 			if (arvo.evaluointiArvo > paras.evaluointiArvo)
 			{
 				paras.evaluointiArvo = arvo.evaluointiArvo;
+				asemanArvo = paras.evaluointiArvo;
 				paras.parasSiirto = s;
 			}
 			if (paras.evaluointiArvo > alpha)
@@ -654,29 +657,29 @@ MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximiz
 				return paras;
 			}		
 		}
-		asemanArvo = paras.evaluointiArvo;
 		return paras;
 	}
 	//MINIMOIJA
 	else
 	{
-		paras.evaluointiArvo = 1000.0;
+		paras.evaluointiArvo = 1000000.0;
 		for (Siirto s : siirrot)
 		{
 			Asema uusi = *this;
 			uusi.PaivitaAsema(&s);
 
-		
 			MinMaxPaluu arvo = uusi.AlphaBeta(syvyys - 1, alpha, beta, true);
 			//std::wcout << "MINIMOIJAN: " << arvo.evaluointiArvo << std::endl;
 
 			if (s.OnkoLyhytLinna() || s.OnkoPitkaLinna() || s.OnkoSotilaanViereenIsku() || s.GetLoppuRuutu().GetRivi() == 0 && lauta[s.GetAlkuRuutu().GetSarake()][s.GetAlkuRuutu().GetRivi()]->GetKoodi() == MS) {
 				paras.parasSiirto = s;
 				paras.evaluointiArvo = -200.0;
+				asemanArvo = paras.evaluointiArvo;	
 			}
 			if (arvo.evaluointiArvo < paras.evaluointiArvo)
 			{
 				paras.evaluointiArvo = arvo.evaluointiArvo;
+				asemanArvo = paras.evaluointiArvo;
 				paras.parasSiirto = s;
 			}
 			if (paras.evaluointiArvo < beta)
@@ -688,11 +691,10 @@ MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximiz
 			if (alpha >= beta)
 			{
 				//std::wcout << "pruned" << std::endl;
-				asemanArvo = paras.evaluointiArvo;
 				return paras;
 			}
 		}
-		asemanArvo = paras.evaluointiArvo;
+		
 		return paras;
 	}
 }
@@ -833,11 +835,11 @@ double Asema::LaskeAsemaArvio(int vari)
 double Asema::Evaluoi()
 {
 
-	double materiaaliKerroin = 16.0;
-	double asemaKerroin = 1.3;
+	double materiaaliKerroin = 1.0;
+	double asemaKerroin = 0.15;
 	
 
-	double asemaArvo = (LaskeAsemaArvio(this->siirtovuoro)) * asemaKerroin;
+	double asemaArvo = LaskeAsemaArvio(siirtovuoro) * asemaKerroin;
 	//std::wcout << "VUORO " << siirtovuoro << " : " << asemaArvo << std::endl;
 	double materiaaliArvo = (LaskeArvo(0) - LaskeArvo(1)) * materiaaliKerroin;
 	//std::wcout <<"VUORO " << siirtovuoro << " : " << materiaaliArvo << std::endl;

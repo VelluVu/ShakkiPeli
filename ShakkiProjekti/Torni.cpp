@@ -7,6 +7,8 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 
 	int x = pos->GetSarake();
 	int y = pos->GetRivi();
+	int tx = 0;
+	int ty = 0;
 	Ruutu _pos(x, y);
 	/*wchar_t nappi;
 
@@ -17,40 +19,33 @@ void Torni::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, int 
 	{
 		nappi = 'T';
 	}*/
-	int _tx[] = {0, 1,  0,  -1};
-	int _ty[] = {1, 0, -1,   0};
 
 	for (int i = 0; i < 4; i++)
 	{
+		tx = x;
+		ty = y;
 		for (int j = 0; j < 8; j++)
 		{
-			int tx = x + _tx[i];
-			int ty = y + _ty[i];
-
 			//tarkastetaan suunta
 			if (i == 0)
 			{
 				//jos suunta on ty +1 , ylös  tx == x
-				tx = x;
-				ty += j;
+				ty++;
 			}
 			else if (i == 1)
 			{
 				//jos oikealle tx +1 ty == y
-				tx += j;
-				ty = y;
+				tx++;
 			}
 			else	if (i == 2)
 			{
 				//jos alas ty - 1 tx == x
-				tx = x;
-				ty -= j;
+				ty--;
 			}
 			else if (i == 3)
 			{
 				//jos vasemmalle tx - 1 ty == y
-				tx -= j;
-				ty = y;
+				tx--;
 			}
 
 			Ruutu _target(tx, ty);

@@ -60,7 +60,7 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 					tx >= 0 && tx <= 7 && ty >= 0 && ty <= 7 && ty != 7)
 				{
 					Siirto syo(_pos, _target);
-					lista.push_back(syo);
+					lista.push_front(syo);
 					//std::wcout << "Syötävä kohde viistossa : "; syo.TulostaRuudut();
 				}
 				else if (i > 1 && asema->lauta[tx][ty] != nullptr &&
@@ -126,7 +126,7 @@ void Sotilas::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 					tx >= 0 && tx <= 7 && ty >= 0 && ty <= 7 && ty != 0)
 				{
 					Siirto syo(_pos, _target);
-					lista.push_back(syo);
+					lista.push_front(syo);
 					//std::wcout << "Syötävä kohde viistossa : "; syo.TulostaRuudut();
 				}
 				else if (i > 1 && asema->lauta[tx][ty] != nullptr &&
@@ -194,7 +194,7 @@ void Sotilas::LisaaSotilaanKorotukset(Siirto* siirto, std::list<Siirto>& lista, 
 		// valkea korottaa
 		Siirto daamiksi = *siirto;
 		daamiksi.miksiKorotetaan = asema->vd;
-		lista.push_back(daamiksi);
+		lista.push_front(daamiksi);
 
 		Siirto torniksi = *siirto;
 		torniksi.miksiKorotetaan = asema->vt;
@@ -212,7 +212,7 @@ void Sotilas::LisaaSotilaanKorotukset(Siirto* siirto, std::list<Siirto>& lista, 
 		// musta korottaa
 		Siirto daamiksi = *siirto;
 		daamiksi.miksiKorotetaan = asema->md;
-		lista.push_back(daamiksi);
+		lista.push_front(daamiksi);
 
 		Siirto torniksi = *siirto;
 		torniksi.miksiKorotetaan = asema->mt;

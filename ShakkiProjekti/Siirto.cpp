@@ -5,81 +5,81 @@
 Siirto::Siirto(Ruutu pos, Ruutu target)
 {
 
-	this->alkuRuutu = pos;
-	this->loppuRuutu = target;
-	this->_lyhytLinna = false;
-	this->_pitkaLinna = false;
-	this->viereenHutasu = false;
+	_alkuRuutu = pos;
+	_loppuRuutu = target;
+	_lyhytLinna = false;
+	_pitkaLinna = false;
+	_viereenHutasu = false;
 }
 
 Siirto::Siirto(bool lyhytLinna, bool pitkaLinna)
 {
 
-	this->_lyhytLinna = lyhytLinna;
-	this->_pitkaLinna = pitkaLinna;
-	this->alkuRuutu = Ruutu(0, 0);
-	this->loppuRuutu = Ruutu(0, 0);
-	this->viereenHutasu = false;
+	_lyhytLinna = lyhytLinna;
+	_pitkaLinna = pitkaLinna;
+	_alkuRuutu = Ruutu(0, 0);
+	_loppuRuutu = Ruutu(0, 0);
+	_viereenHutasu = false;
 }
 
 Siirto::Siirto(Ruutu pos, Ruutu target, bool viereen)
 {
 
-	this->alkuRuutu = pos;
-	this->loppuRuutu = target;
-	this->_lyhytLinna = false;
-	this->_pitkaLinna = false;
-	this->viereenHutasu = viereen;
+	_alkuRuutu = pos;
+	_loppuRuutu = target;
+	_lyhytLinna = false;
+	_pitkaLinna = false;
+	_viereenHutasu = viereen;
 }
 
 void Siirto::TulostaRuudut()
 {
 	wchar_t x = 'a';
 	wchar_t tx = 'a';
-	if (alkuRuutu.GetSarake() == 0)
+	if (_alkuRuutu.GetSarake() == 0)
 		x = 'a';
-	if (loppuRuutu.GetSarake() == 0)
+	if (_loppuRuutu.GetSarake() == 0)
 		tx = 'a';
-	if (alkuRuutu.GetSarake() == 1)
+	if (_alkuRuutu.GetSarake() == 1)
 		x = 'b'; 
-	if (loppuRuutu.GetSarake() == 1) 
+	if (_loppuRuutu.GetSarake() == 1) 
 		tx = 'b';
-	if (alkuRuutu.GetSarake() == 2)
+	if (_alkuRuutu.GetSarake() == 2)
 		x = 'c'; 
-	if (loppuRuutu.GetSarake() == 2)
+	if (_loppuRuutu.GetSarake() == 2)
 		tx = 'c';
-	if (alkuRuutu.GetSarake() == 3)
+	if (_alkuRuutu.GetSarake() == 3)
 		x = 'd'; 
-	if (loppuRuutu.GetSarake() == 3)
+	if (_loppuRuutu.GetSarake() == 3)
 		tx = 'd';
-	if (alkuRuutu.GetSarake() == 4)
+	if (_alkuRuutu.GetSarake() == 4)
 		x = 'e'; 
-	if (loppuRuutu.GetSarake() == 4)
+	if (_loppuRuutu.GetSarake() == 4)
 		tx = 'e';
-	if (alkuRuutu.GetSarake() == 5)
+	if (_alkuRuutu.GetSarake() == 5)
 		x = 'f'; 
-	if (loppuRuutu.GetSarake() == 5)
+	if (_loppuRuutu.GetSarake() == 5)
 		tx = 'f';
-	if (alkuRuutu.GetSarake() == 6) 
+	if (_alkuRuutu.GetSarake() == 6) 
 		x = 'g'; 
-	if (loppuRuutu.GetSarake() == 6)
+	if (_loppuRuutu.GetSarake() == 6)
 		tx = 'g';
-	if (alkuRuutu.GetSarake() == 7)
+	if (_alkuRuutu.GetSarake() == 7)
 		x = 'h'; 
-	if (loppuRuutu.GetSarake() == 7)
+	if (_loppuRuutu.GetSarake() == 7)
 		tx = 'h';
 
-	std::wcout << "( " << x << "," << alkuRuutu.GetRivi()+1 << " ) - ( " << tx << "," << loppuRuutu.GetRivi() +1 << " )" << std::endl;
+	std::wcout << x << _alkuRuutu.GetRivi()+1 << "-" << tx << _loppuRuutu.GetRivi() +1 << std::endl;
 }
 
 Ruutu Siirto::GetAlkuRuutu()
 {
-	return this->alkuRuutu;
+	return this->_alkuRuutu;
 }
 
 Ruutu Siirto::GetLoppuRuutu()
 {
-	return this->loppuRuutu;
+	return this->_loppuRuutu;
 }
 
 bool Siirto::OnkoLyhytLinna()
@@ -107,7 +107,7 @@ bool Siirto::OnkoPitkaLinna()
 
 bool Siirto::OnkoSotilaanViereenIsku()
 {
-	if (this->viereenHutasu == true) 
+	if (this->_viereenHutasu == true) 
 	{
 		return true;
 	}

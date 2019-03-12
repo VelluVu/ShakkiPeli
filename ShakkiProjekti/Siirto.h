@@ -7,15 +7,21 @@ class Nappula;
 class Siirto
 {
 private:
-	Ruutu alkuRuutu;
-	Ruutu loppuRuutu;
+	Ruutu _alkuRuutu;
+	Ruutu _loppuRuutu;
 	bool _lyhytLinna;
 	bool _pitkaLinna;
-	bool viereenHutasu;
+	bool _viereenHutasu;
 
 public:
 	double siirronArvo = 0;
-	Siirto() {};
+	Siirto() {
+		_lyhytLinna = false;
+		_pitkaLinna = false;
+		_viereenHutasu = false;
+		_alkuRuutu = Ruutu(0, 0);
+		_loppuRuutu = Ruutu(0, 0);
+	};
 	Siirto(Ruutu pos, Ruutu target);
 	Siirto(bool lyhytLinna, bool pitkaLinna);
 	Siirto(Ruutu pos, Ruutu target, bool viereen);
@@ -30,12 +36,13 @@ public:
 	bool operator==(const Siirto& siirto)
 	{		
 
-		return this->alkuRuutu == siirto.alkuRuutu &&
-			this->loppuRuutu == siirto.loppuRuutu &&
-			this->_lyhytLinna == siirto._lyhytLinna && 
-			this->_pitkaLinna == siirto._pitkaLinna &&
-			this->viereenHutasu == siirto.viereenHutasu;
+		return _alkuRuutu == siirto._alkuRuutu &&
+		_loppuRuutu == siirto._loppuRuutu &&
+		_lyhytLinna == siirto._lyhytLinna && 
+		_pitkaLinna == siirto._pitkaLinna &&
+		_viereenHutasu == siirto._viereenHutasu;
 		
 	}
+
 };
 

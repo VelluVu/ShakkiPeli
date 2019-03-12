@@ -6,10 +6,10 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 
 	//std::wcout << "<<<<<<LÄHETIN SIIRROT>>>>>> " << std::endl;
 
-	int _tx[] = {-1, 1, 1, -1};
-	int _ty[] = {1, 1, -1, -1};
 	int x = pos->GetSarake();
 	int y = pos->GetRivi();
+	int tx = 0;
+	int ty = 0;
 	Ruutu _pos(x, y);
 	/*wchar_t nappi;*/
 	
@@ -26,36 +26,37 @@ void Lahetti::AnnaSiirrot(std::list<Siirto>& lista, Ruutu* pos, Asema* asema, in
 
 	for (int i = 0; i < 4; i++)
 	{
+
+		tx = x;
+		ty = y;
+
 		//Mennään eteenpäin kunnes maksimi siirtymä on tehty tai if tsekkaukset hoksaa probleeman
 		for (int j = 0 ; j < 8 ; j++)
-		{
-			int tx = x + _tx[i];
-			int ty = y + _ty[i];
-			
+		{	
 			//tarkastetaan suunta
 			if (i == 0) 
 			{
 				//jos suunta on tx -1 ty +1 , vasenylös 
-				tx -=  j;
-				ty += j;
+				tx--;
+				ty++;
 			}
 			else if (i == 1) 
 			{
 				//jos ylösoikealle tx +1 ty +1
-				tx += j;
-				ty += j;
+				tx++;
+				ty++;
 			}
 			else	if (i == 2)
 			{
 				//jos alasoikealle tx + 1 ty - 1
-				tx += j;
-				ty -= j;
+				tx++;
+				ty--;
 			}
 			else if (i == 3)
 			{
 				//jos alasvasemmalle tx - 1 ty - 1
-				tx -= j;
-				ty -= j;
+				tx--;
+				ty--;
 			}
 			//std::wcout << "Lähetin kohde : (" << tx << ";" << ty << ")" << std::endl;
 			Ruutu _target(tx, ty);
