@@ -34,7 +34,7 @@ int main() {
 	asema.asemanArvo = 0;
 	KayttoLiittyma kayttis(&asema);
 	
-	std::wcout << "Valitse Nappulan Väri: <0/1>" << std::endl;
+	std::wcout << "Valitse Nappulan Vï¿½ri: <0/1>" << std::endl;
 	std::cin >> valinta;
 	if (valinta == 1 || valinta == 0) {
 		onkoPelaajaa = true;
@@ -67,9 +67,9 @@ int main() {
 	
 		std::wcout << std::endl;
 		
-		//MAHDOLLISUUS PERUA SIIRTO! JOS ENSIMMÄINEN LIIKE ON TEHTY
+		//MAHDOLLISUUS PERUA SIIRTO! JOS ENSIMMï¿½INEN LIIKE ON TEHTY
 		if (i > 0) {
-			std::wcout << "Haluatko peruuttaa siirtoja? määrä <int>" << std::endl;
+			std::wcout << "Haluatko peruuttaa siirtoja? mï¿½ï¿½rï¿½ <int>" << std::endl;
 
 			std::wcin >> undo;
 
@@ -97,6 +97,10 @@ int main() {
 
 		//AI VALINTA
 		MinMaxPaluu cheatMove;
+		MinMaxPaluu a;
+		MinMaxPaluu b;
+		a.evaluointiArvo = -INFINITY;
+		b.evaluointiArvo = +INFINITY;
 
 		//Generoidaan siirrot
 		asema.AnnaLaillisetSiirrot(siirtoLista);
@@ -110,14 +114,14 @@ int main() {
 		kayttis.PiirraLauta();
 
 		std::wcout << siirtoLista.size() << " mahdollista siirtoa! " << std::endl;
-		//tulosta vielä kaikki siirrot
-		for (Siirto m : siirtoLista)
+		//tulosta vielï¿½ kaikki siirrot
+	/*	for (Siirto m : siirtoLista)
 		{
 
 			m.TulostaRuudut();
 
 		}
-		std::wcout << std::endl;
+		std::wcout << std::endl;*/
 		
 		//Valkoisten Siirtovuoro
 		if (asema.GetSiirtovuoro() == 0) 
@@ -125,9 +129,8 @@ int main() {
 			//Nollaa kellon
 			stopWatch.Reset();
 	
-			cheatMove = asema.AlphaBeta(4, -INFINITY, INFINITY, true);
+			cheatMove = asema.MaxAB(4, a,b);
 			
-			std::wcout << "AI-MOVE : "; cheatMove.parasSiirto.TulostaRuudut();
 			
 			if (valinta == 0 && onkoPelaajaa) 
 			{
@@ -138,6 +141,9 @@ int main() {
 			{
 				asema.PaivitaAsema(&cheatMove.parasSiirto);
 			}
+
+			std::wcout << "AsemanArvo : " << cheatMove.evaluointiArvo << std::endl;
+			std::wcout << "AI-MOVE : "; cheatMove.parasSiirto.TulostaRuudut();
 			
 		}
 		else //Mustien Siirtovuoro
@@ -145,11 +151,9 @@ int main() {
 			//Nollaa kellon
 			stopWatch.Reset();
 
-			//Alphabetalla ainaki yrityshyvä10 PRUNING EI TOIMI!!
-			cheatMove = asema.AlphaBeta(4, -INFINITY, INFINITY, false);
+			//Alphabetalla ainaki yrityshyvï¿½10 PRUNING EI TOIMI!!
+			cheatMove = asema.MinMax(2);
 			
-			std::wcout << "AI-MOVE : "; cheatMove.parasSiirto.TulostaRuudut();
-	
 			if (valinta == 1 && onkoPelaajaa)
 			{
 				Siirto s = kayttis.AnnaVastustajanSiirto();
@@ -159,15 +163,20 @@ int main() {
 			{
 				asema.PaivitaAsema(&cheatMove.parasSiirto);
 			}
+
+			std::wcout << "AsemanArvo : " << cheatMove.evaluointiArvo << std::endl;
+			std::wcout << "AI-MOVE : "; cheatMove.parasSiirto.TulostaRuudut();
+
 		}
 
 		//Asettaa aseman arvon pelitilanteen arvoksi
 		peliTilanne = cheatMove.evaluointiArvo;
+		asema.asemanArvo = peliTilanne;
 		
-		//Printtaa vuoroon käytetyn ajan
+		//Printtaa vuoroon kï¿½ytetyn ajan
 		std::wcout << "Vuoron Kesto: " << stopWatch.GetElapsed() << " sec"<< std::endl;
 
-		//Testaa onko tultu tilanteeseen missä pelipäättyy
+		//Testaa onko tultu tilanteeseen missï¿½ pelipï¿½ï¿½ttyy
 		if (peliTilanne <= -1000000.0) {
 			std::wcout << "BLACK WIN! " << std::endl;
 			system("Pause");
@@ -197,7 +206,7 @@ int main() {
 
 		//Tallentaa pelatun aseman listaan
 		asemat.push_back(asema);
-		//Kasvattaa indexiä
+		//Kasvattaa indexiï¿½
 		asemanIndex++;
 
 	}

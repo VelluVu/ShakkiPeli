@@ -597,6 +597,65 @@ MinMaxPaluu Asema::MinMax(int syvyys)
 	return paras;
 }
 
+//testaan eri tapaa
+MinMaxPaluu Asema::MinAB(int syvyys, MinMaxPaluu alpha, MinMaxPaluu beta) {
+
+	MinMaxPaluu paluu;
+	std::list<Siirto> siirrot;
+	AnnaLaillisetSiirrot(siirrot);
+
+	if (siirrot.size() == 0){
+		paluu.evaluointiArvo = LoppuTulos();
+		return paluu;
+	}
+
+	if (syvyys <= 0) {
+		paluu.evaluointiArvo = Evaluoi();
+		return paluu;
+	}
+
+	paluu.evaluointiArvo = +INFINITY;
+
+	for (Siirto s : siirrot) {
+		Asema uusi = *this;
+		uusi.PaivitaAsema(&s);
+		MinMaxPaluu arvo = uusi.MaxAB(syvyys -1, alpha, beta);
+		if (arvo.evaluointiArvo < paluu.evaluointiArvo) { paluu.parasSiirto = s; paluu.evaluointiArvo = arvo.evaluointiArvo; }
+		if (arvo.evaluointiArvo <= alpha.evaluointiArvo) { return paluu; }
+		if (arvo.evaluointiArvo < beta.evaluointiArvo) { beta.parasSiirto = s; beta.evaluointiArvo = arvo.evaluointiArvo; }
+	}
+	return paluu;
+}
+
+MinMaxPaluu Asema::MaxAB(int syvyys, MinMaxPaluu alpha, MinMaxPaluu beta) {
+	
+	MinMaxPaluu paluu;
+	std::list<Siirto> siirrot;
+	AnnaLaillisetSiirrot(siirrot);
+	
+	if (siirrot.size() == 0){
+		paluu.evaluointiArvo = LoppuTulos();
+		return paluu;
+	}
+
+	if (syvyys <= 0) {
+		paluu.evaluointiArvo = Evaluoi();
+		return paluu;
+	}
+
+	paluu.evaluointiArvo = -INFINITY;
+
+	for (Siirto s : siirrot) {
+		Asema uusi = *this;
+		uusi.PaivitaAsema(&s);
+		MinMaxPaluu arvo = uusi.MinAB(syvyys - 1, alpha, beta);
+		if (arvo.evaluointiArvo > paluu.evaluointiArvo) { paluu.parasSiirto = s; paluu.evaluointiArvo = arvo.evaluointiArvo; }
+		if (arvo.evaluointiArvo >= beta.evaluointiArvo) { return paluu; }
+		if (arvo.evaluointiArvo > alpha.evaluointiArvo) { alpha.parasSiirto = s; alpha.evaluointiArvo = arvo.evaluointiArvo; }
+	}
+	return paluu;
+}
+
 MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximizer)
 {
 
@@ -647,14 +706,14 @@ MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximiz
 			if (paras.evaluointiArvo > alpha)
 			{
 				paras.parasSiirto = s;
+				asemanArvo = paras.evaluointiArvo;
 				alpha = paras.evaluointiArvo;
-				
 			}
 			if (alpha >= beta)
 			{
 				//std::wcout << "pruned" << std::endl;
-				asemanArvo = paras.evaluointiArvo;
-				return paras;
+				//asemanArvo = paras.evaluointiArvo;
+				break;
 			}		
 		}
 		return paras;
@@ -685,16 +744,15 @@ MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximiz
 			if (paras.evaluointiArvo < beta)
 			{
 				paras.parasSiirto = s;
-				beta = paras.evaluointiArvo;
-				
+				asemanArvo = paras.evaluointiArvo;
+				beta = paras.evaluointiArvo;	
 			}
 			if (alpha >= beta)
 			{
 				//std::wcout << "pruned" << std::endl;
-				return paras;
+				break;
 			}
-		}
-		
+		}	
 		return paras;
 	}
 }
@@ -744,9 +802,11 @@ double Asema::LaskeArvo(int vari)
 	}
 	
 	if (vari == 0) {
+		//std::wcout << "VALK : " <<  valkeaArvo << std::endl;
 		return valkeaArvo;
 	}
 	else {
+		//std::wcout << "MUST : " << valkeaArvo << std::endl;
 		return mustaArvo;
 	}
 }
@@ -795,15 +855,15 @@ double Asema::LaskeAsemaArvio(int vari)
 					//Mustat
 					if (nappulanNimi == MK) {
 						//std::wcout << mKuningasTable[x][y] << std::endl;
-						mustaArvo += mKuningasTable[x][y];
+						mustaArvo += mKuningasTable[x][y] ;
 					}
 					if (nappulanNimi == MD) {
 						//std::wcout << mKuningatarTable[x][y] << std::endl;
-						mustaArvo += mKuningatarTable[x][y];
+						mustaArvo += mKuningatarTable[x][y] ;
 					}
 					if (nappulanNimi == MT) {
 						//std::wcout << mTorniTable[x][y] << std::endl;
-						mustaArvo += mTorniTable[x][y];
+						mustaArvo += mTorniTable[x][y] ;
 					}
 					if (nappulanNimi == ML) {
 						//std::wcout << mLahettiTable[x][y] << std::endl;
@@ -811,7 +871,7 @@ double Asema::LaskeAsemaArvio(int vari)
 					}
 					if (nappulanNimi == MR) {
 						//std::wcout << mRatsuTable[x][y] << std::endl;
-						mustaArvo += mRatsuTable[x][y];
+						mustaArvo += mRatsuTable[x][y] ;
 					}
 					if (nappulanNimi == MS) {
 						//std::wcout << mSotilasTable[x][y] << std::endl;
@@ -832,21 +892,368 @@ double Asema::LaskeAsemaArvio(int vari)
 	}
 }
 
+double Asema::LaskeLinjat(int vari) {
+
+	double valkeanLinjat = 0;
+	double mustanLinjat = 0;
+	int nappulanNimi = 0;
+
+	//Vapaat Linjat pisteytetty
+	for (int y = 7; y >= 0; y--)
+	{
+		for (int x = 0; x < 8; x++)
+		{
+			if (lauta[x][y] != nullptr)
+			{
+				nappulanNimi = this->lauta[x][y]->GetKoodi();
+				if (nappulanNimi == VT) {
+					int sarake = x;
+					int rivi = y;
+					for (int i = 0; i < 4; i++){
+						for (int j = 0; j < 8; j++){
+							if (i == 0) {
+								sarake++;
+							}
+							if (i == 1) {
+								rivi++;
+							}
+							if (i == 2) {
+								sarake--;
+							}
+							if (i == 3) {
+								rivi--;
+							}
+							if (sarake > 7 || sarake < 0 || rivi < 0 || rivi > 7) {
+								break;
+							}
+							if (lauta[sarake][rivi] != nullptr) {
+								if (lauta[sarake][rivi]->GetVari() != 0) {
+									if(j>0)
+										valkeanLinjat += 4;
+								}
+								break;
+							}
+							if (lauta[sarake][rivi] == nullptr) {
+								if (j > 0) {
+									valkeanLinjat += 1;
+								}
+								valkeanLinjat += 1;
+							}
+						}
+					}
+				}
+				if (nappulanNimi == MT) {
+					int sarake = x;
+					int rivi = y;
+					for (int i = 0; i < 4; i++){
+						for (int j = 0; j < 8; j++){
+							if (i == 0) {
+								sarake++;
+							}
+							if (i == 1) {
+								rivi++;
+							}
+							if (i == 2) {
+								sarake--;
+							}
+							if (i == 3) {
+								rivi--;
+							}
+							if (sarake > 7 || sarake < 0 || rivi < 0 || rivi > 7) {
+								break;
+							}
+							if (lauta[sarake][rivi] != nullptr) {
+								if (lauta[sarake][rivi]->GetVari() != 1) {
+									if (j > 0)
+										mustanLinjat += 4;
+								}
+								break;
+							}
+							if (lauta[sarake][rivi] == nullptr) {
+								if (j > 0) {
+									mustanLinjat += 1;
+								}
+								mustanLinjat += 1;
+							}
+						}
+					}
+				}
+				if (nappulanNimi == VD) {
+					int sarake = x;
+					int rivi = y;
+					for (int i = 0; i < 4; i++) {
+						for (int j = 0; j < 8; j++) {
+							if (i == 0) {
+								sarake--;
+								rivi++;
+							}
+							else if (i == 1) {
+								sarake++;
+								rivi++;
+							}
+							else	if (i == 2) {
+								sarake++;
+								rivi--;
+							}
+							else if (i == 3) {
+								sarake--;
+								rivi--;
+							}
+							if (sarake > 7 || sarake < 0 || rivi < 0 || rivi > 7) {
+								break;
+							}
+							if (lauta[sarake][rivi] != nullptr) {
+								if (lauta[sarake][rivi]->GetVari() != 0) {
+									if (j > 0)
+										valkeanLinjat += 4;
+								}
+								break;
+							}
+							if (OnkoRuutuUhattu(&Ruutu(sarake, rivi), 1)) {
+								valkeanLinjat -= 10;
+							}
+							if (lauta[sarake][rivi] == nullptr) {
+								if (j > 0) {
+									valkeanLinjat += 1;
+								}
+								valkeanLinjat += 1;
+							}
+						}
+					}
+					sarake = x;
+					rivi = y;
+					for (int i = 0; i < 4; i++)
+					{
+						for (int j = 0; j < 8; j++)
+						{
+							if (i == 0) {
+								sarake++;
+							}
+							if (i == 1) {
+								rivi++;
+							}
+							if (i == 2) {
+								sarake--;
+							}
+							if (i == 3) {
+								rivi--;
+							}
+							if (sarake > 7 || sarake < 0 || rivi < 0 || rivi > 7) {
+								break;
+							}	
+							if (lauta[sarake][rivi] != nullptr) {
+								if (lauta[sarake][rivi]->GetVari() != 0) {
+									if (j > 0)
+										valkeanLinjat += 4;
+								}
+								break;
+							}
+							if (OnkoRuutuUhattu(&Ruutu(sarake, rivi), 1)) {
+								valkeanLinjat -= 10;
+							}
+							if (lauta[sarake][rivi] == nullptr) {
+								if (j > 0) {
+									valkeanLinjat += 1;
+								}
+								valkeanLinjat += 1;
+							}
+						}
+					}
+				}
+				if (nappulanNimi == MD) {
+					int sarake = x;
+					int rivi = y;
+					for (int i = 0; i < 4; i++) {
+						for (int j = 0; j < 8; j++) {
+							if (i == 0) {
+								sarake++;
+							}
+							if (i == 1) {
+								rivi++;
+							}
+							if (i == 2) {
+								sarake--;
+							}
+							if (i == 3) {
+								rivi--;
+							}
+							if (sarake > 7 || sarake < 0 || rivi < 0 || rivi > 7) {
+								break;
+							}
+							if (lauta[sarake][rivi] != nullptr) {
+								if (lauta[sarake][rivi]->GetVari() != 0) {
+									if (j > 0)
+										mustanLinjat += 4;
+								}
+								break;
+							}
+							if (OnkoRuutuUhattu(&Ruutu(sarake, rivi), 1)) {
+								mustanLinjat -= 10;
+							}
+							if (lauta[sarake][rivi] == nullptr) {
+								if (j > 0) {
+									mustanLinjat += 1;
+								}
+								mustanLinjat += 1;
+							}
+						}
+					}
+					sarake = x;
+					rivi = y;
+					for (int i = 0; i < 4; i++) {
+						for (int j = 0; j < 8; j++) {
+							if (i == 0) {
+								sarake--;
+								rivi++;
+							}
+							else if (i == 1) {
+								sarake++;
+								rivi++;
+							}
+							else	if (i == 2) {
+								sarake++;
+								rivi--;
+							}
+							else if (i == 3) {
+								sarake--;
+								rivi--;
+							}
+							if (sarake > 7 || sarake < 0 || rivi < 0 || rivi > 7) {
+								break;
+							}
+							if (lauta[sarake][rivi] != nullptr) {
+								if (lauta[sarake][rivi]->GetVari() != 1) {
+									if (j > 0)
+										mustanLinjat += 4;
+								}
+								break;
+							}
+							if (OnkoRuutuUhattu(&Ruutu(sarake, rivi), 0)) {
+								mustanLinjat -= 10;
+							}
+							if (lauta[sarake][rivi] == nullptr) {
+								if (j > 0) {
+									mustanLinjat += 1;
+								}
+								mustanLinjat += 1;
+							}
+						}
+					}
+				}
+				if (nappulanNimi == VL)
+				{
+					int sarake = x;
+					int rivi = y;
+					for (int i = 0; i < 4; i++) {
+						for (int j = 0; j < 8; j++) {
+							if (i == 0) {
+								sarake--;
+								rivi++;
+							}
+							else if (i == 1) {
+								sarake++;
+								rivi++;
+							}
+							else	if (i == 2) {
+								sarake++;
+								rivi--;
+							}
+							else if (i == 3) {
+								sarake--;
+								rivi--;
+							}
+							if (sarake > 7 || sarake < 0 || rivi < 0 || rivi > 7) {
+								break;
+							}
+							if (lauta[sarake][rivi] != nullptr) {
+								if (lauta[sarake][rivi]->GetVari() != 0) {
+									if (j > 0)
+										valkeanLinjat += 4;
+								}
+								break;
+							}
+							if (lauta[sarake][rivi] == nullptr) {
+								if (j > 0) {
+									valkeanLinjat += 1;
+								}
+								valkeanLinjat += 1;
+							}
+						}
+					}
+					if (nappulanNimi == ML) {
+						int sarake = x;
+						int rivi = y;
+						for (int i = 0; i < 4; i++) {
+							for (int j = 0; j < 8; j++) {
+								if (i == 0) {
+									sarake--;
+									rivi++;
+								}
+								else if (i == 1) {
+									sarake++;
+									rivi++;
+								}
+								else	if (i == 2) {
+									sarake++;
+									rivi--;
+								}
+								else if (i == 3) {
+									sarake--;
+									rivi--;
+								}
+								if (sarake > 7 || sarake < 0 || rivi < 0 || rivi > 7) {
+									break;
+								}
+								if (lauta[sarake][rivi] != nullptr) {
+									if (lauta[sarake][rivi]->GetVari() != 0) {
+										if (j > 0)
+											mustanLinjat += 4;
+									}
+									break;
+								}
+								if (lauta[sarake][rivi] == nullptr) {
+									if (j > 0) {
+										mustanLinjat += 1;
+									}
+									mustanLinjat += 1;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	if (vari == 0) {
+		//std::wcout << "VALK : " << valkeanLinjat << std::endl;
+		return valkeanLinjat;
+	}
+	else {
+		//std::wcout << "MUST : " << mustanLinjat << std::endl; 
+		return mustanLinjat;
+	}
+}
+
 double Asema::Evaluoi()
 {
-
+	
 	double materiaaliKerroin = 1.0;
-	double asemaKerroin = 0.15;
-	
+	double asemaKerroin = 0.30;
+	double linjatKerroin = 0.40;
 
-	double asemaArvo = LaskeAsemaArvio(siirtovuoro) * asemaKerroin;
-	//std::wcout << "VUORO " << siirtovuoro << " : " << asemaArvo << std::endl;
-	double materiaaliArvo = (LaskeArvo(0) - LaskeArvo(1)) * materiaaliKerroin;
-	//std::wcout <<"VUORO " << siirtovuoro << " : " << materiaaliArvo << std::endl;
-
-	//std::wcout << "VUORO " << siirtovuoro << " : " << materiaaliArvo + asemaArvo << std::endl;
-	
-	return materiaaliArvo + asemaArvo;
+	double asemaArvo = (LaskeAsemaArvio(siirtovuoro) - LaskeAsemaArvio(VastustajanVuoro(siirtovuoro))) * asemaKerroin;
+	//if (asemaArvo != 0) {
+		//std::wcout << "VUORO " << siirtovuoro << " POSITIO : " << asemaArvo << std::endl;
+	//}
+	double materiaaliArvo = (LaskeArvo(siirtovuoro) - LaskeArvo(VastustajanVuoro(siirtovuoro))) * materiaaliKerroin;
+	/*if (materiaaliArvo != 0) {
+		std::wcout <<"VUORO " << siirtovuoro << " MATERIAL : " << materiaaliArvo << std::endl;
+	}*/
+	double linjaArvo = (LaskeLinjat(siirtovuoro) - LaskeLinjat(VastustajanVuoro(siirtovuoro))) * linjatKerroin;
+	/*if (linjaArvo != 0) {
+		std::wcout << "VUORO " << siirtovuoro << " LINJAT : " << linjaArvo << std::endl;
+	}*/
+	return materiaaliArvo + asemaArvo + linjaArvo;
 }
 
 bool Asema::GetOnkoValkeaKuningasLiikkunut()
