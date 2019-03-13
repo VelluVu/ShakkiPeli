@@ -89,8 +89,9 @@ Siirto KayttoLiittyma::AnnaVastustajanSiirto()
 	Siirto siirto(lahtoRuutu, tuloRuutu);
 
 	//Testaa onko sotilas viimesellä rivillä
-	if (siirtynytNappulaString == L"s" && tuloY == 7 || tuloY == 0)
+	if (siirtynytNappulaString == L"s" && (tuloY == 7 || tuloY == 0))
 	{
+
 		wchar_t korotettuNappula;
 
 		//Korota sotilas...

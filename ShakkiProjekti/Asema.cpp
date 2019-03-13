@@ -1236,24 +1236,31 @@ double Asema::LaskeLinjat(int vari) {
 
 double Asema::Evaluoi()
 {
-	
+	int kerroin;
+	int vastustajanVuoro = VastustajanVuoro(siirtovuoro);
+	if (siirtovuoro == 0) {
+		kerroin = 1;
+	}
+	else {
+		kerroin = -1;
+	}
 	double materiaaliKerroin = 1.0;
 	double asemaKerroin = 0.30;
 	double linjatKerroin = 0.40;
 
-	double asemaArvo = (LaskeAsemaArvio(0) - LaskeAsemaArvio(1)) * asemaKerroin;
+	double asemaArvo = (LaskeAsemaArvio(siirtovuoro) - LaskeAsemaArvio(vastustajanVuoro)) * asemaKerroin;
 	//if (asemaArvo != 0) {
 		//std::wcout << "VUORO " << siirtovuoro << " POSITIO : " << asemaArvo << std::endl;
 	//}
-	double materiaaliArvo = (LaskeArvo(0) - LaskeArvo(1)) * materiaaliKerroin;
+	double materiaaliArvo = (LaskeArvo(siirtovuoro) - LaskeArvo(vastustajanVuoro)) * materiaaliKerroin;
 	/*if (materiaaliArvo != 0) {
 		std::wcout <<"VUORO " << siirtovuoro << " MATERIAL : " << materiaaliArvo << std::endl;
 	}*/
-	double linjaArvo = (LaskeLinjat(0) - LaskeLinjat(1)) * linjatKerroin;
+	double linjaArvo = (LaskeLinjat(siirtovuoro) - LaskeLinjat(vastustajanVuoro)) * linjatKerroin;
 	/*if (linjaArvo != 0) {
 		std::wcout << "VUORO " << siirtovuoro << " LINJAT : " << linjaArvo << std::endl;
 	}*/
-	return materiaaliArvo + asemaArvo + linjaArvo;
+	return (materiaaliArvo + asemaArvo + linjaArvo) * kerroin;
 }
 
 bool Asema::GetOnkoValkeaKuningasLiikkunut()

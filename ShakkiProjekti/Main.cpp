@@ -68,7 +68,7 @@ int main() {
 		std::wcout << std::endl;
 		
 		//MAHDOLLISUUS PERUA SIIRTO! JOS ENSIMM�INEN LIIKE ON TEHTY
-		if (i > 0) {
+		/*if (i > 0) {
 			std::wcout << "Haluatko peruuttaa siirtoja? m��r� <int>" << std::endl;
 
 			std::wcin >> undo;
@@ -89,6 +89,7 @@ int main() {
 				}
 			}
 		}
+		*/
 
 		system("cls");
 
@@ -129,7 +130,7 @@ int main() {
 			//Nollaa kellon
 			stopWatch.Reset();
 	
-			cheatMove = asema.MaxAB(4, a,b);
+			cheatMove = asema.MaxAB(4,a,b);
 			
 			if (valinta == 0 && onkoPelaajaa) 
 			{
@@ -151,7 +152,7 @@ int main() {
 			stopWatch.Reset();
 
 			//Alphabetalla ainaki yrityshyv�10 PRUNING EI TOIMI!!
-			cheatMove = asema.MinMax(2);
+			cheatMove = asema.MinAB(4,a,b);
 			
 			if (valinta == 1 && onkoPelaajaa)
 			{
