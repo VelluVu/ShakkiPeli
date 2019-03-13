@@ -1,12 +1,7 @@
-﻿  Main.cpp
-c:\users\vellu\desktop\koulujutut\c++projekti\shakki\shakkiprojekti\main.cpp(17): warning C4244: 'return': conversion from '_Rep' to 'double', possible loss of data
-          with
-          [
-              _Rep=__int64
-          ]
+﻿  Asema.cpp
   Generating code
-  1 of 412 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+  4 of 412 functions ( 1.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+    4 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   ShakkiProjekti.vcxproj -> C:\Users\vellu\Desktop\Koulujutut\C++Projekti\Shakki\Release\ShakkiProjekti.exe

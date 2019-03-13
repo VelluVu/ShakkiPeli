@@ -597,6 +597,35 @@ MinMaxPaluu Asema::MinMax(int syvyys)
 	return paras;
 }
 
+MinMaxPaluu Asema::MaxAB(int syvyys, MinMaxPaluu alpha, MinMaxPaluu beta) {
+
+	MinMaxPaluu paluu;
+	std::list<Siirto> siirrot;
+	AnnaLaillisetSiirrot(siirrot);
+
+	if (siirrot.size() == 0) {
+		paluu.evaluointiArvo = LoppuTulos();
+		return paluu;
+	}
+
+	if (syvyys <= 0) {
+		paluu.evaluointiArvo = Evaluoi();
+		return paluu;
+	}
+
+	paluu.evaluointiArvo = -INFINITY;
+
+	for (Siirto s : siirrot) {
+		Asema uusi = *this;
+		uusi.PaivitaAsema(&s);
+		MinMaxPaluu arvo = uusi.MinAB(syvyys - 1, alpha, beta);
+		if (arvo.evaluointiArvo > paluu.evaluointiArvo) { paluu.parasSiirto = s; paluu.evaluointiArvo = arvo.evaluointiArvo; }
+		if (arvo.evaluointiArvo >= beta.evaluointiArvo) { return beta; }
+		if (arvo.evaluointiArvo > alpha.evaluointiArvo) { alpha.parasSiirto = s; alpha.evaluointiArvo = arvo.evaluointiArvo; }
+	}
+	return alpha;
+}
+
 //testaan eri tapaa
 MinMaxPaluu Asema::MinAB(int syvyys, MinMaxPaluu alpha, MinMaxPaluu beta) {
 
@@ -621,39 +650,10 @@ MinMaxPaluu Asema::MinAB(int syvyys, MinMaxPaluu alpha, MinMaxPaluu beta) {
 		uusi.PaivitaAsema(&s);
 		MinMaxPaluu arvo = uusi.MaxAB(syvyys -1, alpha, beta);
 		if (arvo.evaluointiArvo < paluu.evaluointiArvo) { paluu.parasSiirto = s; paluu.evaluointiArvo = arvo.evaluointiArvo; }
-		if (arvo.evaluointiArvo <= alpha.evaluointiArvo) { return paluu; }
+		if (arvo.evaluointiArvo <= alpha.evaluointiArvo) { return alpha; }
 		if (arvo.evaluointiArvo < beta.evaluointiArvo) { beta.parasSiirto = s; beta.evaluointiArvo = arvo.evaluointiArvo; }
 	}
-	return paluu;
-}
-
-MinMaxPaluu Asema::MaxAB(int syvyys, MinMaxPaluu alpha, MinMaxPaluu beta) {
-	
-	MinMaxPaluu paluu;
-	std::list<Siirto> siirrot;
-	AnnaLaillisetSiirrot(siirrot);
-	
-	if (siirrot.size() == 0){
-		paluu.evaluointiArvo = LoppuTulos();
-		return paluu;
-	}
-
-	if (syvyys <= 0) {
-		paluu.evaluointiArvo = Evaluoi();
-		return paluu;
-	}
-
-	paluu.evaluointiArvo = -INFINITY;
-
-	for (Siirto s : siirrot) {
-		Asema uusi = *this;
-		uusi.PaivitaAsema(&s);
-		MinMaxPaluu arvo = uusi.MinAB(syvyys - 1, alpha, beta);
-		if (arvo.evaluointiArvo > paluu.evaluointiArvo) { paluu.parasSiirto = s; paluu.evaluointiArvo = arvo.evaluointiArvo; }
-		if (arvo.evaluointiArvo >= beta.evaluointiArvo) { return paluu; }
-		if (arvo.evaluointiArvo > alpha.evaluointiArvo) { alpha.parasSiirto = s; alpha.evaluointiArvo = arvo.evaluointiArvo; }
-	}
-	return paluu;
+	return beta;
 }
 
 MinMaxPaluu Asema::AlphaBeta(int syvyys, double alpha, double beta, bool maximizer)
@@ -1241,15 +1241,15 @@ double Asema::Evaluoi()
 	double asemaKerroin = 0.30;
 	double linjatKerroin = 0.40;
 
-	double asemaArvo = (LaskeAsemaArvio(siirtovuoro) - LaskeAsemaArvio(VastustajanVuoro(siirtovuoro))) * asemaKerroin;
+	double asemaArvo = (LaskeAsemaArvio(0) - LaskeAsemaArvio(1)) * asemaKerroin;
 	//if (asemaArvo != 0) {
 		//std::wcout << "VUORO " << siirtovuoro << " POSITIO : " << asemaArvo << std::endl;
 	//}
-	double materiaaliArvo = (LaskeArvo(siirtovuoro) - LaskeArvo(VastustajanVuoro(siirtovuoro))) * materiaaliKerroin;
+	double materiaaliArvo = (LaskeArvo(0) - LaskeArvo(1)) * materiaaliKerroin;
 	/*if (materiaaliArvo != 0) {
 		std::wcout <<"VUORO " << siirtovuoro << " MATERIAL : " << materiaaliArvo << std::endl;
 	}*/
-	double linjaArvo = (LaskeLinjat(siirtovuoro) - LaskeLinjat(VastustajanVuoro(siirtovuoro))) * linjatKerroin;
+	double linjaArvo = (LaskeLinjat(0) - LaskeLinjat(1)) * linjatKerroin;
 	/*if (linjaArvo != 0) {
 		std::wcout << "VUORO " << siirtovuoro << " LINJAT : " << linjaArvo << std::endl;
 	}*/

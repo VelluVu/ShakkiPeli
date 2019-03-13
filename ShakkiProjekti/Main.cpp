@@ -131,7 +131,6 @@ int main() {
 	
 			cheatMove = asema.MaxAB(4, a,b);
 			
-			
 			if (valinta == 0 && onkoPelaajaa) 
 			{
 				Siirto s = kayttis.AnnaVastustajanSiirto();
